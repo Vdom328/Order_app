@@ -48,6 +48,7 @@ class UserService extends BaseService implements IUserService
     }
     public function find($id)
     {
+        dd($id);
         return $this->userRepository->findUsersAndRole($id);
     }
     public function findUpdateSocialLink($request, $id)
