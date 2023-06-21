@@ -18,10 +18,10 @@ use App\Enums\UserStatus;
 
 class UserRepository extends BaseRepository implements IUserRepository
 {
-    protected function broker()
-    {
-        return Password::broker('users'); //set password broker name according to guard which you have set in config/auth.php
-    }
+    // protected function broker()
+    // {
+    //     return Password::broker('users'); //set password broker name according to guard which you have set in config/auth.php
+    // }
     public function model()
     {
         return User::class;

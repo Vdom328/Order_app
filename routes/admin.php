@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\RoleController;
 
@@ -12,7 +13,13 @@ use App\Http\Controllers\Admin\RoleController;
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', [HomeController::class, 'index'])->name('admin.home');
 
-    Route::group(['prefix' => 'user'], function () {
+    Route::group(['prefix' => 'auth'], function () {
+        Route::get('/login', [LoginController::class, 'getLogin'])->name('admin.auth.getLogin');
+        Route::match(['get', 'post'], '/postLogin', [LoginController::class, 'postLogin'])->name('admin.auth.postLogin');
+
+    });
+
+    Route::group(['prefix' => 'user', 'middleware' => "auth"], function () {
         Route::get('/list', [UserController::class, 'getlistUser'])->name('admin.user.list');
         Route::post('/postCreate', [UserController::class, 'postCreate'])->name('admin.user.postCreate');
         Route::get('/getCreate', [UserController::class, 'getCreate'])->name('admin.user.getCreate');
@@ -22,9 +29,11 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/updateAccount/{id}', [UserController::class, 'updateAccount'])->name('admin.user.updateAccount');
         Route::post('/toggle-account-status/{id}', [UserController::class, 'toggleStatus'])->name('admin.user.toggleStatus');
         Route::post('/updateAvatar/{id}', [UserController::class, 'updateAvatar'])->name('admin.user.updateAvatar');
+        // delete account
+        Route::post('/delete/{id}', [UserController::class, 'delete'])->name('admin.user.delete');
     });
 
-    Route::group(['prefix' => 'role'], function () {
+    Route::group(['prefix' => 'role', 'middleware' => "auth"], function () {
         Route::get('/list', [RoleController::class, 'getlistRole'])->name('admin.role.list');
         Route::post('/postCreate', [RoleController::class, 'postCreate'])->name('admin.role.postCreate');
         Route::get('/editRole/{id}', [RoleController::class, 'getEditRole'])->name('admin.role.getEditRole');

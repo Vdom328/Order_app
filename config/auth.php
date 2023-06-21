@@ -40,6 +40,11 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'api' => [
+            'driver' => 'token',
+            'provider' => 'users',
+            'hash' => false,
+        ],
     ],
 
     /*
@@ -64,7 +69,6 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
@@ -94,7 +98,7 @@ return [
         'users' => [
             'provider' => 'users',
             'table' => 'password_reset_tokens',
-            'expire' => 60,
+            'expire' => 1440,
             'throttle' => 60,
         ],
     ],

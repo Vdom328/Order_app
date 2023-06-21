@@ -14,6 +14,11 @@
         .status-inactive {
             color: red;
         }
+
+        a:hover {
+            cursor: pointer;
+            color: #5c76fb;
+        }
     </style>
 @endsection
 
@@ -28,8 +33,9 @@
                     <div class="custom-fieldset-style mg-b-30">
                         <div class="clearfix">
                             <div class="clearfix">
-                                <table id="basicDataTable" class="table table-bordered responsive nowrap hover table-striped">
-                                    <thead >
+                                <table id="basicDataTable"
+                                    class="table table-bordered responsive nowrap hover table-striped">
+                                    <thead>
                                         <tr>
                                             <th>User</th>
                                             <th>Account status</th>
@@ -41,14 +47,17 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($users as $user)
-                                            <tr>
+                                            <tr id="user-{{ $user->id }}">
                                                 <td>
                                                     <div class="d-flex">
-                                                       <img class="wd-35 rounded-circle img-fluid" src="{{ asset('storage/' . $user->avatar)}}" alt="">
-                                                       <div class="mg-l-10">
-                                                          <p class="lh-1 mg-0">{{ $user->last_name && $user->first_name ? $user->last_name . ' ' . $user->first_name : 'User name' }}</p>
-                                                          <small class="">{{ $user->role_name }}</small>
-                                                       </div>
+                                                        <img class="wd-35 rounded-circle img-fluid"
+                                                            src="{{ asset('storage/' . $user->avatar) }}" alt="">
+                                                        <div class="mg-l-10">
+                                                            <p class="lh-1 mg-0">
+                                                                {{ $user->last_name && $user->first_name ? $user->last_name . ' ' . $user->first_name : 'User name' }}
+                                                            </p>
+                                                            <small class="">{{ $user->role_name }}</small>
+                                                        </div>
                                                     </div>
                                                 </td>
                                                 <td
@@ -56,16 +65,20 @@
                                                     {{ $user->account_status == 1 ? 'Active' : 'Inactive' }}
                                                 </td>
                                                 <td>{{ $user->email }}</td>
-                                                <td>{{ $user->telephone ?? ''}}</td>
+                                                <td>{{ $user->telephone ?? '' }}</td>
                                                 <td>{{ $user->account_status == 1 ? 'Male' : 'Female' }}</td>
                                                 <td class=" text-center">
-                                                    <a href="{{ route('admin.user.getProfile',$user->id) }}" class="table-action  mg-r-10" href="#"><i class="fa fa-pencil"></i></a>
-                                                    <a class="table-action " href="#"><i class="fa fa-trash"></i></a>
+                                                    <a href="{{ route('admin.user.getProfile', $user->id) }}"
+                                                        class="table-action  mg-r-10" href="#"><i
+                                                            class="fa fa-pencil"></i></a>
+                                                    <a data-id="{{ $user->id }}" class="table-action " id="deleteUser"
+                                                        data-toggle="modal" data-target="#deleteModal"><i
+                                                            class="fa fa-trash"></i></a>
                                                 </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
-                                    <tfoot >
+                                    <tfoot>
                                         <tr>
                                             <th>User</th>
                                             <th>Account status</th>
@@ -83,6 +96,27 @@
             </div>
             <!--/ Page Content Area End -->
             <!--================================-->
+        </div>
+    </div>
+    {{-- modal delete  --}}
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModal">Delete User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
+                    <button type="button" id="confirmDeleteBtn" data-id="#"
+                        class="btn btn-primary waves-effect">Delete</button>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
@@ -108,11 +142,27 @@
             $('.sub-menu').css('display', 'block');
             $('.list_user').addClass('active');
             // add User
-            $("#submitForm").on("click", function() {
-                $("#myForm").attr("method", "post");
-                $("#myForm").attr("action", "{{ route('admin.user.postCreate') }}");
-                $("#myForm").submit();
+            $(document).on('click', '#deleteUser', function() {
+                var id = $(this).attr('data-id');
+                console.log(id);
+                var deleteUrl = "{{ route('admin.user.delete', ['id' => ':id']) }}".replace(':id', id);
+                $("#deleteModal").modal("show");
+                $("#confirmDeleteBtn").on("click", function(event) {
+                    event.preventDefault();
+                    myAjaxCall(deleteUrl, 'POST', {},
+                        function(data) {
+                            $('#user-' + data.id).hide();
+                            $("#deleteModal").modal("hide");
+                        },
+                        function(errorResponse) {
+                            // Xử lý errorResponse khi lỗi
+                        },
+                        'Delete user successfully !',
+                        'An error occurred, please try again !'
+                    )
+                });
             });
+
         });
     </script>
 @endsection

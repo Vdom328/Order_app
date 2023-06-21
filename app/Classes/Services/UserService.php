@@ -109,5 +109,9 @@ class UserService extends BaseService implements IUserService
             return $this->userRepository->update($id, $attribute);
         }
     }
+    public function delete($id)
+    {
+        return $this->userRepository->delete($id);
+    }
 
 }

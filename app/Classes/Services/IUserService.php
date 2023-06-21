@@ -11,5 +11,5 @@ interface IUserService
     public function updateAccount($request, $id);
     public function toggleStatus($account_status, $id);
     public function updateAvatar($request, $id);
+    public function delete($id);
 }
- 

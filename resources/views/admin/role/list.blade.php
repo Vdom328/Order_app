@@ -147,26 +147,25 @@
                 $('#addRole').modal('show');
                 var id = $(this).attr('data-id');
                 $('#submitForm').attr('data-id', id);
-                $.ajax({
-                    type: "get",
-                    url: "{{ route('admin.role.getEditRole', ['id' => ':id']) }}".replace(':id',
-                        id),
-                    data: {},
-                    success: function(data) {
-                        $("#name").val(data.name);
-                        // posst edit User
-                        $("#submitForm").on("click", function() {
-                            $("#myForm").attr("method", "post");
-                            $("#myForm").attr("action",
-                                "{{ route('admin.role.postCreate', ['id' => ':id']) }}"
-                                .replace(':id', id));
-                            $("#myForm").submit();
-                        });
-                    },
-                    error: function(error) {
-                        alert(error.responseJSON.error);
-                    }
-                });
+                var url = "{{ route('admin.role.getEditRole', ['id' => ':id']) }}".replace(':id', id);
+                myAjaxCall(url, 'get', {},
+                        function(data) {
+                            $("#name").val(data.name);
+                            // posst edit User
+                            $("#submitForm").on("click", function() {
+                                $("#myForm").attr("method", "post");
+                                $("#myForm").attr("action",
+                                    "{{ route('admin.role.postCreate', ['id' => ':id']) }}"
+                                    .replace(':id', id));
+                                $("#myForm").submit();
+                            });
+                        },
+                        function(errorResponse) {
+                            // Xử lý errorResponse khi lỗi
+                        },
+                        'Delete user successfully !',
+                        'An error occurred, please try again !'
+                    )
             });
             $(document).on('click', '#deleteRole', function() {
                 var id = $(this).attr('data-id');

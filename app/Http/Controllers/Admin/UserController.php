@@ -87,4 +87,9 @@ class UserController extends Controller
             'status' => 'success'
         ]);
     }
+    public function delete($id)
+    {
+        $this->IUserService->delete($id);
+        return response()->json(['id' => $id]);
+    }
 }
