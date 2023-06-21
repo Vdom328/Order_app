@@ -1,49 +1,49 @@
-//Constant value
-const POS_API = 'https://backendinfo.mobileorder.club/api/client/store';
-const POS_API_AUTH = 'https://backendinfo.mobileorder.club/api/client/customer';
 
 //Constant URL
-const URL_GET_CATEGORY = 'category';
-const URL_GET_PRODUCT = 'category/product';
-const URL_GET_BUSINESS_HOURS = 'businesshours';
-const URL_GET_PRODUCT_DETAIL = 'product/detail/';
-const URL_GET_HISTORY = 'order/history';
-const URL_ORDER = 'order';
-
-const URL_POST_REGISTER = 'register';
-const URL_POST_LOGIN = 'auth';
-const URL_POST_FORGOT_PASSWORD = 'forgotpassword';
-const URL_POST_CHANGE_PASSWORD = 'changepasswordforgot';
-const URL_GET_LOGOUT = 'logout';
-const URL_GET_PROFILE = 'profile';
-const URL_POST_UPDATE_PROFILE = 'profile';
-const URL_POST_RESET_PASSWORD = 'changepassword';
-
 
 
 // const URL_POST_REGISTER = 'register';
 //Ajax function
-function myAjaxCall(url, data, method, headers, successFunction, errorFunction) {
-    var $spinnerOverlay = $('<div>').addClass('spinner-overlay');
-    var $spinner = $('<div>').addClass('spinner');
-    $('body').append($spinnerOverlay, $spinner);
+function myAjaxCall(url, method,data, successFunction, errorFunction,successMessage, errorMessage) {
     $.ajax({
         url: url,
         type: method,
         data: data,
-        headers: headers,
+        beforeSend: function() {
+            $("#spinner").show();
+            $("body").append("<div class='overlay'></div>");
+        },
         success: function(response) {
+            $.growl.success({
+                message: successMessage
+            });
             successFunction(response);
         },
         error: function(jqXHR, textStatus, errorThrown) {
+            $.growl.error({
+                message: errorMessage
+            });
             console.log(textStatus, errorThrown);
             if (errorFunction) {
                 errorFunction(jqXHR.responseText);
             }
+            if (jqXHR.status === 422) {
+                var response = JSON.parse(jqXHR.responseText);
+                var errors = response.errors;
+                var errorMsgs = '';
+                for (var key in errors) {
+                    if (errors.hasOwnProperty(key)) {
+                        errorMsgs += errors[key][0] + '<br/>';
+                    }
+                }
+                $.growl.error({
+                    message: errorMsgs
+                });
+            }
         },
         complete: function() {
-            $spinnerOverlay.remove();
-            $spinner.remove();
+            $("#spinner").hide();
+            $(".overlay").remove();
         }
     });
 }

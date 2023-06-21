@@ -44,7 +44,7 @@
                                             <tr>
                                                 <td>
                                                     <div class="d-flex">
-                                                       <img class="wd-35 rounded-circle img-fluid" src="{{ asset('storage/' . $user->avatar) }}" alt="">
+                                                       <img class="wd-35 rounded-circle img-fluid" src="{{ asset('storage/' . $user->avatar)}}" alt="">
                                                        <div class="mg-l-10">
                                                           <p class="lh-1 mg-0">{{ $user->last_name && $user->first_name ? $user->last_name . ' ' . $user->first_name : 'User name' }}</p>
                                                           <small class="">{{ $user->role_name }}</small>

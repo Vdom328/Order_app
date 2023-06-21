@@ -18,6 +18,7 @@
     <link type="text/css" rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
     <link type="image/x-icon" rel="icon" href="{{ asset('assets/images/favicon.ico') }}">
     <link type="text/css" rel="stylesheet" href="{{ asset('assets/plugins/jquery.growl/jquery.growl.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
     @yield('css')
     <script src="{{ asset('assets/js/plugin-bundle.js') }}"></script>
@@ -26,11 +27,13 @@
     <script src="{{ asset('js/common.js') }}"></script>
     <script src="{{ asset('assets/plugins/jquery.growl/jquery.growl.js') }}"></script>
     <!-- END: Global JS-->
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
 
 </head>
 
 <body>
+    <div id="spinner" style="display:none;">
+        <i class="fa fa-spinner fa-spin"></i>
+    </div>
     <!--================================-->
     <!-- Page Container Start -->
     <!--================================-->

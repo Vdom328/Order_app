@@ -12,12 +12,10 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::prefix('admin')->group(function () {
-    require __DIR__.'/admin.php';
-});
-
+// Route::prefix('admin')->group(function () {
+//     require __DIR__.'/admin.php';
+// });
 
 Route::get('/', function () {
     return view('welcome');
 });
-

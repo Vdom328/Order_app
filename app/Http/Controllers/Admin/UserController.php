@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+
 use App\Http\Requests\createUserRequest;
+use App\Http\Requests\updateAccountRequest;
+
 use App\Classes\Services\IUserService;
 use App\Classes\Services\IRoleService;
 use Illuminate\Support\Facades\Session;
@@ -47,19 +50,41 @@ class UserController extends Controller
     }
     public function getProfile($id)
     {
+        $roles = $this->IRoleService->listRole();
         $user = $this->IUserService->find($id);
-        return view('admin.user.detail', compact('user'));
+        return view('admin.user.detail', compact('user','roles'));
     }
     public function updateSocialLink(request $request, $id)
     {
-        $updateSocialLink = $this->IUserService->findUpdateSocialLink($request, $id);
-        if (!$updateSocialLink) {
-            Session::flash('error', "An error occurred, please try again !");
-            return view('admin.admin.detail', compact('admins'));
+        $this->IUserService->findUpdateSocialLink($request, $id);
+        return response()->json();
+    }
+    public function updateAccount(updateAccountRequest $request, $id)
+    {
+        $validator = $request->validated();
+        if($validator->fails()){
+            $errors = $validator->errors(); // Get errors
+            $errorMsgs = json_decode($errors); // Convert errors to JSON
+            return response()->json(['errors' => $errorMsgs], 422); // Return errors in JSON format
         }
-        // Return a success
-        Session::flash('success', "Update Social Link successfully !");
-        return redirect()->route('admin.user.getProfile',$id);
-        // return response()->json($response, 200);
+        $this->IUserService->updateAccount($request, $id);
+        return response()->json();
+    }
+    public function toggleStatus($id)
+    {
+        $user = $this->IUserService->find($id);
+        $account_status = $user->account_status;
+        $this->IUserService->toggleStatus($account_status,$id);
+        return response()->json([
+            'status' => 'success'
+        ]);
+    }
+    public function updateAvatar(request $request,$id)
+    {
+        $data= $request->all();
+        $this->IUserService->updateAvatar($request,$id);
+        return response()->json([
+            'status' => 'success'
+        ]);
     }
 }

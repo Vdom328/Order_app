@@ -1,3 +1,7 @@
+@php
+    use App\Enums\StatusUserEnum;
+@endphp
+
 @extends('admin.layouts.master')
 @section('title')
     Profile
@@ -15,19 +19,25 @@
                         <div class="d-flex align-items-center mg-b-20">
                             <div class="profile-avatar-setting mr-3">
                                 <div class="avatar-wrapper">
-                                    <img class="profile-pic img-fluid rounded" src="{{ asset('storage/' . $user->avatar) }}"
-                                        alt="" />
+                                    <img class="profile-pic img-fluid rounded"
+                                        src="{{ asset('storage/' . $user->avatar) ?? '' }}">
                                     <div class="upload-button">
                                         <i class="fa fa-camera" aria-hidden="true"></i>
                                     </div>
-                                    <input class="file-upload" type="file" accept="image/*" />
+                                    <input id="avatar-file" class="file-upload" name="avatar" type="file"
+                                        accept="image/*" />
                                 </div>
                             </div>
                             <div>
                                 <h2 class="tx-15">
-                                    {{ $user->last_name && $user->first_name ? $user->last_name . ' ' . $user->first_name : 'User name' }}
+                                    {{ $user->first_name && $user->last_name ? $user->first_name . ' ' . $user->last_name : 'User name' }}
                                 </h2>
                                 <p class="tx-12 mb-0">{{ $user->role_name }}</p>
+                                @if ($user->account_status == StatusUserEnum::Active)
+                                    <p class="tx-12 mb-0" id="data-account-status">Active</p>
+                                @elseif ($user->account_status == StatusUserEnum::Inactive)
+                                    <p class="tx-12 mb-0" id="data-account-status">Inactive</p>
+                                @endif
                             </div>
                         </div>
                         <ul class="nav nav-pills flex-column tx-medium ac-setting-navi">
@@ -54,8 +64,14 @@
                             </li>
                         </ul>
                         <hr>
-                        <button type="button" class=" tx-medium btn btn-danger waves-effect">Deactivate Your
-                            Account?</button>
+                        @if ($user->account_status == StatusUserEnum::Active)
+                            <button type="button" id="account-toggle-button"
+                                class="tx-medium btn btn-danger waves-effect">Deactivate Your Account?</button>
+                        @elseif ($user->account_status == StatusUserEnum::Inactive)
+                            <button type="button" id="account-toggle-button"
+                                class="tx-medium btn btn-success waves-effect">Activate Your Account?</button>
+                        @endif
+
                     </div>
 
                 </div>
@@ -68,7 +84,8 @@
                                 <h6 class="mb-0">Account Information</h6>
                             </div>
                             <div class="card-body">
-                                <form novalidate="">
+                                <form action="{{ route('admin.user.updateAccount', $user->id) }}" id="account-form"
+                                    novalidate="">
                                     <div class="row mg-t-20">
                                         <label class="col-lg-3 form-control-label tx-left tx-lg-right form-label">First
                                             Name:</label>
@@ -130,10 +147,24 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="row mg-t-20">
+                                        <label class="col-lg-3 form-control-label tx-left tx-lg-right form-label">
+                                            Role:</label>
+                                        <div class="col-lg-6 mg-t-10 mg-sm-t-0">
+                                            <select class="selectpicker form-control" name="role_id">
+                                                @foreach ($roles as $role)
+                                                    <option value="{{ $role->id }}"
+                                                        {{ $user->role_id == $role->id ? 'selected' : '' }}>
+                                                        {{ $role->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="row mg-t-30">
                                         <div class="col-sm-8 mg-l-auto">
                                             <div class="form-layout-footer">
-                                                <button class="btn btn-primary waves-effect">Save Changes</button>
+                                                <button type="button" id="save-account-form"
+                                                    class="btn btn-primary waves-effect">Save Changes</button>
                                                 <a href="{{ route('admin.user.list') }}"
                                                     class="btn btn-default waves-effect">Cancel</a>
                                             </div>
@@ -164,7 +195,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <form>
+                                <div>
                                     <div class="row">
                                         <label class="col-lg-3 form-control-label tx-left tx-lg-right form-label">Old
                                             Password:</label>
@@ -205,7 +236,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -215,7 +246,8 @@
                                 <h6 class="mb-0">Social Links </h6>
                             </div>
                             <div class="card-body">
-                                <form method="post" action="{{ route('admin.user.updateSocialLink',$user->id) }}" id="social-links-form">
+                                <form action="{{ route('admin.user.updateSocialLink', $user->id) }}"
+                                    id="social-links-form">
                                     @csrf
                                     <div class="row">
                                         <label
@@ -244,7 +276,8 @@
                                     <div class="row mg-t-30">
                                         <div class="col-sm-8 mg-l-auto">
                                             <div class="form-layout-footer">
-                                                <button  id="save-social-links-form" class="btn btn-primary waves-effect">Save Social Links</button>
+                                                <button type="button" id="save-social-links-form"
+                                                    class="btn btn-primary waves-effect">Save Social Links</button>
                                                 <a href="{{ route('admin.user.list') }}"
                                                     class="btn btn-default waves-effect">Cancel</a>
                                             </div>
@@ -274,11 +307,9 @@
             var readURL = function(input) {
                 if (input.files && input.files[0]) {
                     var reader = new FileReader();
-
                     reader.onload = function(e) {
                         $('.profile-pic').attr('src', e.target.result);
                     }
-
                     reader.readAsDataURL(input.files[0]);
                 }
             }
@@ -290,28 +321,90 @@
             $(".upload-button").on('click', function() {
                 $(".file-upload").click();
             });
+            // update file avater
+            $("#avatar-file").on("change", function() {
+                var formData = new FormData();
+                formData.append("avatar", this.files[0]);
+                console.log(formData);
+                $.ajax({
+                    url: "{{ route('admin.user.updateAvatar', $user->id) }}",
+                    method: "POST",
+                    data: formData,
+                    dataType: "json",
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        $.growl.success({
+                            message: 'Update avatar successfully !'
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        $.growl.error({
+                            message: 'An error occurred, please try again !'
+                        });
+                    }
+                });
+            });
             // update social-links-form
-            // $('#save-social-links-form').click(function(event) {
-            //     event.preventDefault();
+            $('#save-social-links-form').click(function(event) {
+                event.preventDefault();
+                var form = $('#social-links-form');
+                var url = form.attr('action');
+                myAjaxCall(url, 'POST', form.serialize(),
+                    function(data) {},
+                    function(errorResponse) {
+                        // Xử lý errorResponse khi lỗi
+                    },
+                    'Update social links successfully !',
+                    'An error occurred, please try again !'
+                )
+            });
+            // update acccout
+            $('#save-account-form').click(function(event) {
+                event.preventDefault();
+                var form = $('#account-form');
+                var url = form.attr('action');
+                myAjaxCall(url, 'POST', form.serialize(),
+                    function(data) {},
+                    function(error) {
 
-            //     var form = $('#social-links-form');
-            //     var url = form.attr('action');
-            //     $.ajax({
-            //         type: 'POST',
-            //         url: {{ route('admin.user.updateSocialLink',$user->id) }},
-            //         data: form.serialize(),
-            //         beforeSend: function() {
-
-            //         },
-            //         success: function(data) {
-            //             console.log('Data saved successfully!');
-            //         },
-            //         error: function(xhr, textStatus, errorThrown) {
-            //             // handle error response here
-            //             console.log('Error:', errorThrown);
-            //         }
-            //     });
-            // });
+                    },
+                    'Update account successfully !',
+                    'An error occurred, please try again !'
+                )
+            });
+            // update acccout
+            $('#account-toggle-button').click(function() {
+                var url = "{{ route('admin.user.toggleStatus', $user->id) }}";
+                myAjaxCall(url, 'POST', {},
+                    function(data) {
+                        if (data.status === 'success') {
+                            if ($('#account-toggle-button').hasClass('btn-danger')) {
+                                $('#account-toggle-button')
+                                    .removeClass('btn-danger')
+                                    .addClass('btn-success')
+                                    .text('Activate Your Account?');
+                                $('#data-account-status').text('Inactive');
+                            } else {
+                                $('#account-toggle-button')
+                                    .removeClass('btn-success')
+                                    .addClass('btn-danger')
+                                    .text('Deactivate Your Account?');
+                                $('#data-account-status').text('Active');
+                            }
+                        } else {
+                            $.growl.error({
+                                message: 'An error occurred, please try again !'
+                            });
+                        }
+                    },
+                    function(errorResponse) {
+                        alert('An error occurred, please try again !');
+                    },
+                    'Update account successfully !',
+                    'An error occurred, please try again !'
+                )
+            });
         });
     </script>
 @endsection
