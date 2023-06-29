@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Classes\Repository;
+namespace App\Classes\Repository\Interfaces;
 
-use App\Classes\Repository\IBaseRepository;
 
 interface IUserRepository extends IBaseRepository
 {

@@ -6,8 +6,18 @@
         "build": "vite build"
     },
     "devDependencies": {
+        "@popperjs/core": "^2.11.6",
+        "animate-sass": "^0.8.2",
         "axios": "^1.1.2",
-        "laravel-vite-plugin": "^0.7.5",
+        "bootstrap": "^5.2.3",
+        "css-loader": "^6.7.1",
+        "file-loader": "^6.2.0",
+        "laravel-vite-plugin": "^0.7.8",
+        "mini-css-extract-plugin": "^2.6.0",
+        "nodemon": "^2.0.15",
+        "sass": "^1.56.1",
+        "sass-loader": "^12.6.0",
+        "style-loader": "^3.3.1",
         "vite": "^4.0.0"
     }
 }

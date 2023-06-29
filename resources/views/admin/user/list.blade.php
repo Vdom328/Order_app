@@ -50,8 +50,11 @@
                                             <tr id="user-{{ $user->id }}">
                                                 <td>
                                                     <div class="d-flex">
-                                                        <img class="wd-35 rounded-circle img-fluid"
-                                                            src="{{ asset('storage/' . $user->avatar) }}" alt="">
+                                                        @if ($user->avatar)
+                                                            <img class="wd-35 rounded-circle img-fluid" src="{{ asset('storage/' . $user->avatar) }}" alt="">
+                                                        @else
+                                                            <img class="wd-35 rounded-circle img-fluid" src="{{ asset('images/th (3).jpg') }}" alt="">
+                                                        @endif
                                                         <div class="mg-l-10">
                                                             <p class="lh-1 mg-0">
                                                                 {{ $user->last_name && $user->first_name ? $user->last_name . ' ' . $user->first_name : 'User name' }}

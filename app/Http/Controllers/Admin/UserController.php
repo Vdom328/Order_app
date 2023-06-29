@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\createUserRequest;
 use App\Http\Requests\updateAccountRequest;
 
-use App\Classes\Services\IUserService;
-use App\Classes\Services\IRoleService;
+use App\Classes\Services\Interfaces\IUserService;
+use App\Classes\Services\Interfaces\IRoleService;
 use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller

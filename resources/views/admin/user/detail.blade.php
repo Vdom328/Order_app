@@ -1,5 +1,5 @@
 @php
-    use App\Enums\StatusUserEnum;
+    use App\Classes\Enums\StatusUserEnum;
 @endphp
 
 @extends('admin.layouts.master')

@@ -2,6 +2,9 @@
 
 namespace App\Classes\Repository;
 
+use App\Classes\Repository\Interfaces\IBaseRepository;
+use Illuminate\Database\Eloquent\Model;
+
 abstract class BaseRepository implements IBaseRepository
 {
     /**
@@ -66,4 +69,29 @@ abstract class BaseRepository implements IBaseRepository
     {
         return $this->model->insert($attribute);
     }
+
+     /**
+     * @inheritdoc
+     */
+    public function paginate(int $pageSize, array $conditions = [], array $relation = [])
+    {
+        return $this->model->with($relation)->where($conditions)->paginate($pageSize);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function findOne(array $conditions)
+    {
+        return $this->model->where($conditions)->first();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function findById(int $id)
+    {
+        return $this->model->findOrFail($id);
+    }
+    
 }

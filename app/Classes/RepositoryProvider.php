@@ -2,12 +2,10 @@
 
 namespace App\Classes;
 
-use App\Classes\Repository\IUserRepository;
-use App\Classes\Repository\UserRepository;
-use App\Classes\Repository\IRoleRepository;
-use App\Classes\Repository\RoleRepository;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
+use App\Classes\Repository\Interfaces as IRepository;
+use App\Classes\Repository as  Repository;
 
 
 class RepositoryProvider extends ServiceProvider
@@ -29,7 +27,7 @@ class RepositoryProvider extends ServiceProvider
      */
     public function register()
     {
-        App::bind(IUserRepository::class, UserRepository::class);
-        App::bind(IRoleRepository::class, RoleRepository::class);
+        App::bind(IRepository\IUserRepository::class, Repository\UserRepository::class);
+        App::bind(IRepository\IRoleRepository::class, Repository\RoleRepository::class);
     }
 }

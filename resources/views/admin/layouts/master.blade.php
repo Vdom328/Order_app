@@ -18,14 +18,16 @@
     <link type="text/css" rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
     <link type="image/x-icon" rel="icon" href="{{ asset('assets/images/favicon.ico') }}">
     <link type="text/css" rel="stylesheet" href="{{ asset('assets/plugins/jquery.growl/jquery.growl.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}">
+    @vite([ 'resources/css/style.css'])
 
     @yield('css')
     <script src="{{ asset('assets/js/plugin-bundle.js') }}"></script>
     <script src="{{ asset('assets/js/app.js') }}"></script>
     <script src="{{ asset('assets/js/adata-init.js') }}"></script>
-    <script src="{{ asset('js/common.js') }}"></script>
     <script src="{{ asset('assets/plugins/jquery.growl/jquery.growl.js') }}"></script>
+    <script src="{{ asset('js/common.js') }}"></script>
+    @vite([ 'resources/js/common.js'])
     <!-- END: Global JS-->
 
 </head>

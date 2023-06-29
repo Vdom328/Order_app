@@ -2,6 +2,6 @@
 
 namespace App\Classes\Services;
 
-class BaseService implements IBaseService
+abstract class BaseService
 {
 }

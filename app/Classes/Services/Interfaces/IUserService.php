@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Classes\Services;
+namespace App\Classes\Services\Interfaces;
 
 interface IUserService
 {

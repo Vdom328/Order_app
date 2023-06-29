@@ -2,11 +2,9 @@
 
 namespace App\Classes;
 
-use App\Classes\Services\IUserService;
-use App\Classes\Services\UserService;
-use App\Classes\Services\RoleService;
-use App\Classes\Services\IRoleService;
 use Illuminate\Support\Facades\App;
+use App\Classes\Services as Service;
+use App\Classes\Services\Interfaces as IService;
 use Illuminate\Support\ServiceProvider as LServiceProvider;
 
 
@@ -29,7 +27,7 @@ class ServiceProvider extends LServiceProvider
      */
     public function register()
     {
-        App::bind(IUserService::class, UserService::class);
-        App::bind(IRoleService::class, RoleService::class);
+        App::bind(IService\IUserService::class, Service\UserService::class);
+        App::bind(IService\IRoleService::class, Service\RoleService::class);
     }
 }

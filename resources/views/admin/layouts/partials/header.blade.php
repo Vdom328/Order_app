@@ -561,7 +561,7 @@
                                     data-feather="headphones" class="wd-16 ht-16 mr-2"></span>Support</a>
                             <a href="" class="dropdown-item d-flex align-items-center"><span
                                     data-feather="life-buoy" class="wd-16 ht-16 mr-2"></span>Help</a>
-                            <a href="" class="dropdown-item d-flex align-items-center"><span
+                            <a href="{{ route('admin.auth.getLogout') }}" class="dropdown-item d-flex align-items-center"><span
                                     data-feather="log-out" class="wd-16 ht-16 mr-2"></span>Sign Out</a>
                         </div>
                     </div>

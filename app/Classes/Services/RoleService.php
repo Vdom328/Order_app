@@ -2,10 +2,11 @@
 
 namespace App\Classes\Services;
 
-use App\Classes\Repository\IRoleRepository;
+use App\Classes\Repository\Interfaces\IRoleRepository;
+use App\Classes\Services\Interfaces\IRoleService;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use App\Enums\UserStatus;
+use App\Classes\Enums\UserStatus;
 use Carbon\Carbon;
 
 class RoleService extends BaseService implements IRoleService
@@ -30,7 +31,7 @@ class RoleService extends BaseService implements IRoleService
     public function createRole($request)
     {
         $attribute = [
-                    'name' => $request['name'],
+                    'name' => $request['name'] ?? '',
                 ];
         return $this->roleRepository->create($attribute);
     }
@@ -41,7 +42,7 @@ class RoleService extends BaseService implements IRoleService
     public function postEditRole($request, $id)
     {
         $attribute = [
-            'name' => $request['name'],
+            'name' => $request['name'] ?? '',
         ];
         return $this->roleRepository->update($id, $attribute);
     }

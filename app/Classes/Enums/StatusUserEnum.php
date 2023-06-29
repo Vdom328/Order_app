@@ -1,5 +1,5 @@
 <?php
-namespace App\Enums;
+namespace App\Classes\Enums;
 
 use Illuminate\Validation\Rules\Enum;
 

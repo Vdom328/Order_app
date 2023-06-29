@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Classes\Repository;
+namespace App\Classes\Repository\Interfaces;
 
 interface IBaseRepository
 {
@@ -52,4 +52,33 @@ interface IBaseRepository
      * @return mixed
      */
     public function findOrFail($id);
+
+    /**
+     * Find all records that match a given conditions with paginate
+     *
+     * @param array $conditions
+     *
+     * @return \Illuminate\Pagination\LengthAwarePaginator
+     */
+    public function paginate(int $pageSize, array $conditions = [], array $relation);
+
+    /**
+     * Find a specific record that matches a given conditions
+     *
+     * @param array $conditions
+     *
+     * @return Model
+     */
+    public function findOne(array $conditions);
+
+    /**
+     * Find a specific record by its ID
+     *
+     * @param int $id
+     *
+     * @return Model
+     */
+    public function findById(int $id);
+
+    
 }

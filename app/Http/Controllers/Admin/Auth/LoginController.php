@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers\Admin\Auth;
 
-use App\Classes\Services\IUserService;
-use App\Classes\Services\IRoleService;
-use Illuminate\Support\Facades\Session;
+use App\Classes\Services\Interfaces\IUserService;
+use App\Classes\Services\Interfaces\IRoleService;
 
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Classes\Enums\StatusUserEnum;
 use Illuminate\Http\RedirectResponse;
 
 class LoginController extends Controller
@@ -36,15 +39,25 @@ class LoginController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
-
         if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            if ($user->account_status == StatusUserEnum::Inactive) {
+                Auth::logout();
+                Session::flash('error', "Your account is suspended.");
+                return redirect()->back();
+            }
             $request->session()->regenerate();
 
             Session::flash('success', "Log in successfully !");
             return redirect()->route('admin.home');
         }
-
         Session::flash('error', "The provided credentials do not match our records.");
         return redirect()->back();
+    }
+    public function getLogout(): RedirectResponse
+    {
+        Auth::logout();
+        Session::flash('success', "You have been logged out successfully.");
+        return redirect()->route('admin.auth.getLogin');
     }
 }

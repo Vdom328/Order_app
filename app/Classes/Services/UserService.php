@@ -2,9 +2,10 @@
 
 namespace App\Classes\Services;
 
-use App\Classes\Repository\IUserRepository;
+use App\Classes\Repository\Interfaces\IUserRepository;
+use App\Classes\Services\Interfaces\IUserService;
 use Illuminate\Support\Facades\Hash;
-use App\Enums\StatusUserEnum;
+use App\Classes\Enums\StatusUserEnum;
 use Illuminate\Support\Facades\Storage;
 
 class UserService extends BaseService implements IUserService
@@ -34,7 +35,7 @@ class UserService extends BaseService implements IUserService
             'last_name' => $data['last_name'],
             'email' => $data['email'],
             'address' => $data['address'],
-            'password' => Hash::make('password'),
+            'password' => Hash::make($data['password']),
             'telephone' => $data['telephone'],
             'gender' => $data['gender'],
             'facebook' => $data['facebook'],

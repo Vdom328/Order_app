@@ -5,18 +5,15 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\RoleController;
-
-
-
-
+use GuzzleHttp\Middleware;
 
 Route::group(['prefix' => 'admin'], function () {
-    Route::get('/', [HomeController::class, 'index'])->name('admin.home');
+    Route::get('/', [HomeController::class, 'index'])->name('admin.home')->middleware('auth');
 
     Route::group(['prefix' => 'auth'], function () {
         Route::get('/login', [LoginController::class, 'getLogin'])->name('admin.auth.getLogin');
         Route::match(['get', 'post'], '/postLogin', [LoginController::class, 'postLogin'])->name('admin.auth.postLogin');
-
+        Route::get('/logout', [LoginController::class, 'getLogout'])->name('admin.auth.getLogout');
     });
 
     Route::group(['prefix' => 'user', 'middleware' => "auth"], function () {

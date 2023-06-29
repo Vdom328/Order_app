@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Classes\Services\IRoleService;
+use App\Classes\Services\Interfaces\IRoleService;
 use Illuminate\Support\Facades\Session;
 
 class RoleController extends Controller

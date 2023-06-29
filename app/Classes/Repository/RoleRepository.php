@@ -2,7 +2,7 @@
 
 namespace App\Classes\Repository;
 
-use App\Classes\Repository\BaseRepository;
+use App\Classes\Repository\Interfaces\IRoleRepository;
 use App\Models\Role;
 
 class RoleRepository extends BaseRepository implements IRoleRepository
@@ -13,5 +13,5 @@ class RoleRepository extends BaseRepository implements IRoleRepository
         return Role::class;
     }
 
-   
+
 }
