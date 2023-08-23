@@ -23,7 +23,7 @@ class UserService extends BaseService implements IUserService
     )
     {
         $this->userRepository = $userRepository;
-        $this->userRepository = $userRepository;
+        $this->passwordResetToken = $passwordResetToken;
     }
 
 
@@ -137,6 +137,7 @@ class UserService extends BaseService implements IUserService
                 'token' => $token,
             ];
             $password_token = $this->passwordResetToken->create($attr);
+            dd($password_token);
             // Gửi email chứa liên kết để đặt lại mật khẩu
             Mail::to($user->email)->send(new ResetPassword($user));
             return true;
