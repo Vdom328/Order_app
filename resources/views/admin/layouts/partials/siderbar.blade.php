@@ -44,7 +44,7 @@
                     </a>
                 </li>
                 <li class="user">
-                    <a href="">
+                    <a href="#">
                         <svg class="adata-svg-icon">
                             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                 <polygon points="0 0 24 0 24 24 0 24"></polygon>
@@ -58,9 +58,19 @@
                         </svg>
                         <span>User</span><i class="accordion-icon fa fa-angle-left"></i>
                     </a>
-                    <ul class="sub-menu">
+                    <ul class="sub-menu li-user">
                         <li class="list_user"><a href="{{ route('admin.user.list') }}">List</a></li>
                         <li class="getCreate"><a href="{{ route('admin.user.getCreate') }}">Create</a></li>
+                    </ul>
+                </li>
+                <li class="project">
+                    <a href="">
+
+                        <span>Project</span><i class="accordion-icon fa fa-angle-left"></i>
+                    </a>
+                    <ul class="sub-menu li_project">
+                        <li class="list_project"><a href="{{ route('admin.project.index') }}">List</a></li>
+                        {{-- <li class="create_project"><a href="{{ route('admin.user.getCreate') }}">Create</a></li> --}}
                     </ul>
                 </li>
             </ul>

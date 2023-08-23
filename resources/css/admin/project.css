@@ -1,0 +1,10 @@
+.images_project{
+    max-width: 200px;
+    max-height: 200px;
+}
+.swiper-container-horizontal>.swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction {
+    font-size: 12px;
+}
+.swiper-button-next, .swiper-button-prev {
+    background-size: 10px 10px;
+}

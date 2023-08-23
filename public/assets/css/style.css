@@ -802,7 +802,7 @@ _:future,
   margin-top: 0px; }
 
 .page-inner-content .inner-content {
-  padding: 30px 30px;
+  padding: 0px 30px;
   position: relative;
   display: block;
   overflow: hidden;
@@ -1117,7 +1117,7 @@ _:future,
   -webkit-box-align: end;
   -ms-flex-align: end;
   align-items: end;
-  white-space: normal; 
+  white-space: normal;
   letter-spacing: 0;}
 
 .header-right .message-box .dropdown-item,
@@ -1692,8 +1692,8 @@ body:not(.page-sidebar-fixed) .page-sidebar .slimScrollDiv {
 .billing-shipping-details .table-bordered td:last-child,
 .billing-shipping-details .table-bordered th:first-child {
   border-bottom: 1px solid #eee; }
-  
- 
+
+
 /**********************************************************************
 ***********************************************************************
 ### Analytic Dashboard CSS

@@ -301,7 +301,7 @@
         $(document).ready(function() {
             // active menu items
             $('.user').addClass('open active');
-            $('.sub-menu').css('display', 'block');
+            $('.li-user').css('display', 'block');
             $('.list_user').addClass('active');
             // File Uploader
             var readURL = function(input) {

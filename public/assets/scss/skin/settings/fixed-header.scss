@@ -23,7 +23,7 @@
 		right: 0;
 		margin: auto;
 	}
-	
+
 	.page-sidebar{
 		width: 265px;
 		-webkit-transform: translateZ(0);
@@ -40,7 +40,7 @@
 
 	.page-inner {
 		margin-top: 118px;
-	}	
+	}
 
 
 	.page-inner-content {
@@ -52,7 +52,7 @@
 	}
 
 	.page-inner-content .inner-content {
-		padding: 30px 30px;
+		padding: 0px 30px;
 		position: relative;
 		display: block;
 		overflow: hidden;
@@ -70,7 +70,7 @@
 		border-left: 1px solid #eee;
 		height: auto!important;
 	}
-	 
+
 	.page-container.container .page-inner-content .inner-sidebar {
 		position: fixed;
 		top: 118px;

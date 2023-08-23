@@ -249,7 +249,7 @@
     <script>
         $(document).ready(function() {
             $('.user').addClass('open active');
-            $('.sub-menu').css('display', 'block');
+            $('.li-user').css('display', 'block');
             $('.getCreate').addClass('active');
         });
     </script>

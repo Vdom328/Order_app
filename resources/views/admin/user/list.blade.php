@@ -48,7 +48,7 @@
                                     <tbody>
                                         @foreach ($users as $user)
                                             <tr id="user-{{ $user->id }}">
-                                                <td>
+                                                <td class="pl-4">
                                                     <div class="d-flex">
                                                         @if ($user->avatar)
                                                             <img class="wd-35 rounded-circle img-fluid" src="{{ asset('storage/' . $user->avatar) }}" alt="">
@@ -64,13 +64,13 @@
                                                     </div>
                                                 </td>
                                                 <td
-                                                    class="{{ $user->account_status == 1 ? 'status-active' : 'status-inactive' }}">
+                                                    class="{{ $user->account_status == 1 ? 'status-active' : 'status-inactive' }} pl-4">
                                                     {{ $user->account_status == 1 ? 'Active' : 'Inactive' }}
                                                 </td>
-                                                <td>{{ $user->email }}</td>
-                                                <td>{{ $user->telephone ?? '' }}</td>
-                                                <td>{{ $user->account_status == 1 ? 'Male' : 'Female' }}</td>
-                                                <td class=" text-center">
+                                                <td class="pl-4">{{ $user->email }}</td>
+                                                <td class="pl-4">{{ $user->telephone ?? '' }}</td>
+                                                <td class="pl-4">{{ $user->account_status == 1 ? 'Male' : 'Female' }}</td>
+                                                <td class=" text-center ">
                                                     <a href="{{ route('admin.user.getProfile', $user->id) }}"
                                                         class="table-action  mg-r-10" href="#"><i
                                                             class="fa fa-pencil"></i></a>
@@ -142,7 +142,7 @@
 
             // active menu items
             $('.user').addClass('open active');
-            $('.sub-menu').css('display', 'block');
+            $('.li-user').css('display', 'block');
             $('.list_user').addClass('active');
             // add User
             $(document).on('click', '#deleteUser', function() {
