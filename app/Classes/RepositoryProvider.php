@@ -29,5 +29,6 @@ class RepositoryProvider extends ServiceProvider
     {
         App::bind(IRepository\IUserRepository::class, Repository\UserRepository::class);
         App::bind(IRepository\IRoleRepository::class, Repository\RoleRepository::class);
+        App::bind(IRepository\IPasswordResetToken::class, Repository\PasswordResetToken::class);
     }
 }

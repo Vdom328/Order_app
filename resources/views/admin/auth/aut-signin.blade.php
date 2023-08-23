@@ -25,14 +25,14 @@ Sign In
                         <div class="form-group">
                             <div class="d-flex justify-content-between mg-b-5">
                                 <label class="mg-b-0">Password</label>
-                                <a href="aut-password.html" class="tx-15 mg-b-0">Forgot password?</a>
+                                <a href="{{ route('admin.auth.getForgot') }}" class="tx-15 mg-b-0">Forgot password?</a>
                             </div>
                             <input name="password" type="password" class="form-control" placeholder="Enter your password">
                         </div>
                         <button class="btn btn-lg btn-outline-primary rounded-pill btn-block waves-effect">Sign In</button>
 
-                        <div class="tx-15 mg-t-20 tx-center">Don't have an account? <a href="aut-signup.html"
-                                class="tx-dark">Create an Account</a></div>
+                        {{-- <div class="tx-15 mg-t-20 tx-center">Don't have an account? <a href="aut-signup.html"
+                                class="tx-dark">Create an Account</a></div> --}}
                     </form>
                 </div>
             </div>

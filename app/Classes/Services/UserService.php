@@ -2,18 +2,27 @@
 
 namespace App\Classes\Services;
 
+use App\Classes\Repository\Interfaces\IPasswordResetToken;
 use App\Classes\Repository\Interfaces\IUserRepository;
 use App\Classes\Services\Interfaces\IUserService;
 use Illuminate\Support\Facades\Hash;
 use App\Classes\Enums\StatusUserEnum;
+use App\Mail\ResetPassword;
+use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class UserService extends BaseService implements IUserService
 {
-    protected $userRepository;
+    protected $userRepository, $passwordResetToken;
 
-    public function __construct(IUserRepository $userRepository)
+    public function __construct(
+        IUserRepository $userRepository,
+        IPasswordResetToken $passwordResetToken
+    )
     {
+        $this->userRepository = $userRepository;
         $this->userRepository = $userRepository;
     }
 
@@ -41,12 +50,12 @@ class UserService extends BaseService implements IUserService
             'facebook' => $data['facebook'],
             'twitter' => $data['twitter'],
             'linkedin' => $data['linkedin'],
-            'role_id'=>$data['role_id'],
+            'role_id' => $data['role_id'],
             'avatar' => null,
         ];
 
         if ($data && $data->hasFile('avatar')) {
-            $imageName = uniqid().'.'.$data->file('avatar')->extension();
+            $imageName = uniqid() . '.' . $data->file('avatar')->extension();
             $data->file('avatar')->storeAs('public', $imageName);
             $attribute['avatar'] = $imageName;
         }
@@ -100,10 +109,10 @@ class UserService extends BaseService implements IUserService
             // Lấy thông tin user hiện tại và xóa ảnh cũ (nếu có)
             $user = $this->userRepository->find($id);
             if (!empty($user->avatar)) {
-                Storage::delete('public/'.$user->avatar);
+                Storage::delete('public/' . $user->avatar);
             }
             // Upload ảnh mới và lưu vào database
-            $imageName = uniqid().'.'.$request->file('avatar')->extension();
+            $imageName = uniqid() . '.' . $request->file('avatar')->extension();
             $request->file('avatar')->storeAs('public', $imageName);
 
             $attribute['avatar'] = $imageName;
@@ -115,4 +124,23 @@ class UserService extends BaseService implements IUserService
         return $this->userRepository->delete($id);
     }
 
+    public function postForgotByEmail($email)
+    {
+        // Kiểm tra xem email được cung cấp có tồn tại trong hệ thống hay không
+        $user = User::where('email', $email)->first();
+        if ($user) {
+            // Generate a unique token for password reset
+            $token = Str::random(60);
+            // Lưu token vào cơ sở dữ liệu cho người dùng
+            $attr = [
+                'email' => $email,
+                'token' => $token,
+            ];
+            $password_token = $this->passwordResetToken->create($attr);
+            // Gửi email chứa liên kết để đặt lại mật khẩu
+            Mail::to($user->email)->send(new ResetPassword($user));
+            return true;
+        }
+        return false;
+    }
 }

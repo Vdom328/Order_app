@@ -14,6 +14,11 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/login', [LoginController::class, 'getLogin'])->name('admin.auth.getLogin');
         Route::match(['get', 'post'], '/postLogin', [LoginController::class, 'postLogin'])->name('admin.auth.postLogin');
         Route::get('/logout', [LoginController::class, 'getLogout'])->name('admin.auth.getLogout');
+        // forgot password
+        Route::get('/forgot', [LoginController::class, 'getForgot'])->name('admin.auth.getForgot');
+        Route::post('/postForgot', [LoginController::class, 'postForgot'])->name('admin.auth.postForgot');
+
+
     });
 
     Route::group(['prefix' => 'user', 'middleware' => "auth"], function () {
