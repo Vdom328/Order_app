@@ -5,7 +5,7 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\RoleController;
-use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\Admin\FoodController;
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', [HomeController::class, 'index'])->name('admin.home')->middleware('auth');
@@ -42,7 +42,10 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/postEditRole/{id}', [RoleController::class, 'postEditRole'])->name('admin.role.postEditRole');
         Route::get('/deleteRole/{id}', [RoleController::class, 'deleteRole'])->name('admin.role.deleteRole');
     });
-    Route::group(['prefix' => 'project', 'middleware' => "auth"], function () {
-        Route::get('/', [ProjectController::class, 'index'])->name('admin.project.index');
+    Route::group(['prefix' => 'setting_food', 'middleware' => "auth"], function () {
+        Route::get('/', [FoodController::class, 'index'])->name('admin.setting_food.index');
+        Route::get('/create', [FoodController::class, 'getCreate'])->name('admin.setting_food.getCreate');
+        // Ingredient
+        Route::get('/getIngredient', [FoodController::class, 'getIngredient'])->name('admin.setting_food.getIngredient');
     });
 });

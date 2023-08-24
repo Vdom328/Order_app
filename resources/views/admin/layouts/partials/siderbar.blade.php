@@ -13,7 +13,7 @@
         <div class="page-sidebar-menu">
             <ul class="accordion-menu">
                 <li class="menu-label"></li>
-                <li class="home">
+                <li class="home {{ Request::routeIs('admin.home') ? 'active' : '' }}">
                     <a href="{{ route('admin.home') }}">
                         <svg class="adata-svg-icon">
                             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -23,12 +23,12 @@
                                     fill="#000000"></path>
                             </g>
                         </svg>
-                        <span class="mt-5">Home</span>
+                        <span class="mt-5">HOME</span>
                     </a>
                 </li>
 
-                <li class="menu-label mt-4">Admin</li>
-                <li class="list_role">
+                <li class="menu-label mt-4">ADMIN</li>
+                <li class="list_role {{ Request::routeIs('admin.role.list') ? 'active' : '' }}">
                     <a href="{{ route('admin.role.list') }}">
                         <svg width="24px" height="24px" class="adata-svg-icon">
                             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -40,10 +40,10 @@
                                <circle fill="#000000" opacity="0.3" cx="12" cy="7" r="5"></circle>
                             </g>
                          </svg>
-                        <span class="mt-5">Role</span>
+                        <span class="mt-5">ROLE</span>
                     </a>
                 </li>
-                <li class="user">
+                <li class="user @if (Request::routeIs('admin.user.list') || Request::routeIs('admin.user.getCreate') || Request::routeIs('admin.user.getProfile')) open active @endif">
                     <a href="#">
                         <svg class="adata-svg-icon">
                             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -56,22 +56,26 @@
                                     fill="#000000" fill-rule="nonzero"></path>
                             </g>
                         </svg>
-                        <span>User</span><i class="accordion-icon fa fa-angle-left"></i>
+                        <span>USER</span><i class="accordion-icon fa fa-angle-left"></i>
                     </a>
                     <ul class="sub-menu li-user">
-                        <li class="list_user"><a href="{{ route('admin.user.list') }}">List</a></li>
-                        <li class="getCreate"><a href="{{ route('admin.user.getCreate') }}">Create</a></li>
+                        <li class="list_user  @if (Request::routeIs('admin.user.list') || Request::routeIs('admin.user.getProfile')) active @endif"><a href="{{ route('admin.user.list') }}">List</a></li>
+                        <li class="getCreate {{ Request::routeIs('admin.user.getCreate') ? 'active' : '' }}"><a href="{{ route('admin.user.getCreate') }}">Create</a></li>
                     </ul>
                 </li>
-                <li class="project">
+                <li class="project @if (Request::routeIs('admin.setting_food.index') || Request::routeIs('admin.setting_food.getCreate')) open active @endif">
                     <a href="">
-
-                        <span>Project</span><i class="accordion-icon fa fa-angle-left"></i>
+                        <span>SETTING FOODS</span><i class="accordion-icon fa fa-angle-left"></i>
                     </a>
-                    <ul class="sub-menu li_project">
-                        <li class="list_project"><a href="{{ route('admin.project.index') }}">List</a></li>
-                        {{-- <li class="create_project"><a href="{{ route('admin.user.getCreate') }}">Create</a></li> --}}
+                    <ul class="sub-menu ">
+                        <li class="@if (Request::routeIs('admin.setting_food.index') ) active @endif"><a href="{{ route('admin.setting_food.index') }}">List</a></li>
+                        <li class="@if (Request::routeIs('admin.setting_food.getCreate') ) active @endif"><a href="{{ route('admin.setting_food.getCreate') }}">Create</a></li>
                     </ul>
+                </li>
+                <li class=" {{ Request::routeIs('admin.setting_food.getIngredient') ? 'active' : '' }}">
+                    <a href="{{ route('admin.setting_food.getIngredient') }}">
+                        <span class="mt-5">SETTING INGREDIENT</span>
+                    </a>
                 </li>
             </ul>
         </div>

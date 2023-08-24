@@ -299,10 +299,6 @@
     <!-- BEGIN: Init JS-->
     <script>
         $(document).ready(function() {
-            // active menu items
-            $('.user').addClass('open active');
-            $('.li-user').css('display', 'block');
-            $('.list_user').addClass('active');
             // File Uploader
             var readURL = function(input) {
                 if (input.files && input.files[0]) {

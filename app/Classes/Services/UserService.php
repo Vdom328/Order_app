@@ -126,19 +126,15 @@ class UserService extends BaseService implements IUserService
 
     public function postForgotByEmail($email)
     {
-        // Kiểm tra xem email được cung cấp có tồn tại trong hệ thống hay không
         $user = User::where('email', $email)->first();
         if ($user) {
-            // Generate a unique token for password reset
             $token = Str::random(60);
-            // Lưu token vào cơ sở dữ liệu cho người dùng
             $attr = [
                 'email' => $email,
                 'token' => $token,
             ];
             $password_token = $this->passwordResetToken->create($attr);
             dd($password_token);
-            // Gửi email chứa liên kết để đặt lại mật khẩu
             Mail::to($user->email)->send(new ResetPassword($user));
             return true;
         }

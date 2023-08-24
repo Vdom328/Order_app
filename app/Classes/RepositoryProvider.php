@@ -30,5 +30,8 @@ class RepositoryProvider extends ServiceProvider
         App::bind(IRepository\IUserRepository::class, Repository\UserRepository::class);
         App::bind(IRepository\IRoleRepository::class, Repository\RoleRepository::class);
         App::bind(IRepository\IPasswordResetToken::class, Repository\PasswordResetToken::class);
+        App::bind(IRepository\ISettingFoodRepository::class, Repository\SettingFoodRepository::class);
+        App::bind(IRepository\IIngredientRepository::class, Repository\IngredientRepository::class);
+        App::bind(IRepository\IFoodIngredientRepository::class, Repository\FoodIngredientRepository::class);
     }
 }

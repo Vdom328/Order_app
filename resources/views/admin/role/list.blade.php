@@ -95,27 +95,7 @@
             </div>
         </div>
     </div>
-    {{-- modal delete role --}}
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModal">Role</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Are you sure you want to delete?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
-                    <button type="button" id="confirmDeleteBtn" data-id="#"
-                        class="btn btn-primary waves-effect">Delete</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    @include('modals.delete')
 @endsection
 @section('js')
     <script src="{{ asset('assets/plugins/dataTable/datatables.min.js') }}"></script>
@@ -134,8 +114,6 @@
                 }
             });
 
-            // active menu items
-            $('.list_role').addClass('active');
             // add User
             $("#submitForm").on("click", function() {
                 $("#myForm").attr("method", "post");

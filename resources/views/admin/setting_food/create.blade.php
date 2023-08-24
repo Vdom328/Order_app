@@ -57,11 +57,7 @@
                                     <div class="col-12 col-md-6 p-0 m-0">
                                         <div class="col col-12 col-md-6">Role </div>
                                         <div class="col col-12 col-lg-12 mt-2">
-                                            <select class="selectpicker form-control" name="role_id">
-                                                @foreach ($roles as $role)
-                                                    <option value="{{ $role->id }}">{{ $role->name }}</option>
-                                                @endforeach
-                                            </select>
+                                            
                                             <p class="w-100 error text-danger">{{ $errors->first('last_name') }}</p>
                                         </div>
                                     </div>
@@ -244,13 +240,4 @@
     <script src="{{ asset('assets/plugins/dataTable/extensions/dataTables.jqueryui.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/bootstrap-select/js/bootstrap-select.min.js') }}"></script>
 
-    <!-- END: Vendor JS-->
-    <!-- BEGIN: Init JS-->
-    <script>
-        // $(document).ready(function() {
-        //     $('.user').addClass('open active');
-        //     $('.li-user').css('display', 'block');
-        //     $('.getCreate').addClass('active');
-        // });
-    </script>
 @endsection

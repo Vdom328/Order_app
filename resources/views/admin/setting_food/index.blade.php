@@ -8,7 +8,7 @@
         href="{{ asset('assets/plugins/dataTable/extensions/dataTables.jqueryui.min.css') }}">
     <link type="text/css" rel="stylesheet" href="{{ asset('assets/plugins/swiper/css/swiper.min.css') }}">
     @vite([
-        'resources/css/admin/project.css',
+        'resources/css/admin/setting_food.css',
     ])
 @endsection
 
@@ -184,10 +184,5 @@
                 sSearch: ''
             }
         });
-
-        // active menu items
-        $('.project').addClass('open active');
-        $('.li_project').css('display', 'block');
-        $('.list_project').addClass('active');
     </script>
 @endsection

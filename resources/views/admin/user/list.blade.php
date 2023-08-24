@@ -42,6 +42,7 @@
                                             <th>Email</th>
                                             <th>Telephone</th>
                                             <th>Gender</th>
+                                            <th>Right Rank</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -65,11 +66,12 @@
                                                 </td>
                                                 <td
                                                     class="{{ $user->account_status == 1 ? 'status-active' : 'status-inactive' }} pl-4">
-                                                    {{ $user->account_status == 1 ? 'Active' : 'Inactive' }}
+                                                    {{ $user->account_status == config('const.user.account_status.Active') ? 'Active' : 'Inactive' }}
                                                 </td>
                                                 <td class="pl-4">{{ $user->email }}</td>
                                                 <td class="pl-4">{{ $user->telephone ?? '' }}</td>
-                                                <td class="pl-4">{{ $user->account_status == 1 ? 'Male' : 'Female' }}</td>
+                                                <td class="pl-4">{{ $user->gender == config('const.user.gender.Male') ? 'Male' : 'Female' }}</td>
+                                                <td class="pl-4">{{ $user->role->name }}</td>
                                                 <td class=" text-center ">
                                                     <a href="{{ route('admin.user.getProfile', $user->id) }}"
                                                         class="table-action  mg-r-10" href="#"><i
@@ -88,6 +90,7 @@
                                             <th>Email</th>
                                             <th>Telephone</th>
                                             <th>Gender</th>
+                                            <th>Right Rank</th>
                                             <th></th>
                                         </tr>
                                     </tfoot>
@@ -101,27 +104,7 @@
             <!--================================-->
         </div>
     </div>
-    {{-- modal delete  --}}
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModal">Delete User</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Are you sure you want to delete?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
-                    <button type="button" id="confirmDeleteBtn" data-id="#"
-                        class="btn btn-primary waves-effect">Delete</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    @include('modals.delete')
 @endsection
 @section('js')
     <script src="{{ asset('assets/plugins/dataTable/datatables.min.js') }}"></script>
@@ -139,15 +122,9 @@
                     sSearch: ''
                 }
             });
-
-            // active menu items
-            $('.user').addClass('open active');
-            $('.li-user').css('display', 'block');
-            $('.list_user').addClass('active');
             // add User
             $(document).on('click', '#deleteUser', function() {
                 var id = $(this).attr('data-id');
-                console.log(id);
                 var deleteUrl = "{{ route('admin.user.delete', ['id' => ':id']) }}".replace(':id', id);
                 $("#deleteModal").modal("show");
                 $("#confirmDeleteBtn").on("click", function(event) {

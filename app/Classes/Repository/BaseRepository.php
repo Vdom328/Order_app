@@ -93,5 +93,10 @@ abstract class BaseRepository implements IBaseRepository
     {
         return $this->model->findOrFail($id);
     }
-    
+
+
+    public function whereParam($column, $parameter)
+    {
+        return $this->model->where($column, $parameter)->get();
+    }
 }
