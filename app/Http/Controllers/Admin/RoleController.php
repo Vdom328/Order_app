@@ -36,8 +36,7 @@ class RoleController extends Controller
     public function getEditRole($id)
     {
         $role = $this->IRoleService->find($id);
-        $dasdds = 'sadasd';
-        return response()->json([ 'role' => $role,'success' => $dasdds]);
+        return response()->json([ 'role' => $role]);
     }
     public function postEditRole(Request $request ,$id)
     {

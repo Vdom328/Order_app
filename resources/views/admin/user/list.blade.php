@@ -129,17 +129,22 @@
                 $("#deleteModal").modal("show");
                 $("#confirmDeleteBtn").on("click", function(event) {
                     event.preventDefault();
-                    myAjaxCall(deleteUrl, 'POST', {},
-                        function(data) {
+                    $.ajax({
+                        url: deleteUrl,
+                        type: 'POST',
+                        success: function(data) {
                             $('#user-' + data.id).hide();
                             $("#deleteModal").modal("hide");
+                            $.growl.success({
+                                message: 'Delete user successfully !'
+                            });
                         },
-                        function(errorResponse) {
-                            // Xử lý errorResponse khi lỗi
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            $.growl.error({
+                                message: 'An error occurred, please try again !'
+                            });
                         },
-                        'Delete user successfully !',
-                        'An error occurred, please try again !'
-                    )
+                    });
                 });
             });
 

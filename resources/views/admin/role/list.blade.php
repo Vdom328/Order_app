@@ -131,7 +131,6 @@
                     type: 'get',
                     data: {},
                     success: function(data) {
-                        console.log(data);
                         $("#name").val(data.name);
                             // posst edit User
                             $("#submitForm").on("click", function() {
@@ -148,7 +147,6 @@
             });
             $(document).on('click', '#deleteRole', function() {
                 var id = $(this).attr('data-id');
-                console.log(id);
                 var deleteUrl = "{{ route('admin.role.deleteRole', ['id' => ':id']) }}".replace(':id', id);
                 $("#deleteModal").modal("show");
                 $("#confirmDeleteBtn").on("click", function() {
