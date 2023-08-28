@@ -13,4 +13,10 @@ return [
             'Inactive' => StatusUserEnum::Inactive,
         ]
     ],
+    'food' => [
+        'status' => [
+            'Active' => 0,
+            'Inactive' => 1,
+        ],
+    ],
 ];

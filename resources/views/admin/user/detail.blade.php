@@ -321,7 +321,6 @@
             $("#avatar-file").on("change", function() {
                 var formData = new FormData();
                 formData.append("avatar", this.files[0]);
-                console.log(formData);
                 $.ajax({
                     url: "{{ route('admin.user.updateAvatar', $user->id) }}",
                     method: "POST",
@@ -346,34 +345,55 @@
                 event.preventDefault();
                 var form = $('#social-links-form');
                 var url = form.attr('action');
-                myAjaxCall(url, 'POST', form.serialize(),
-                    function(data) {},
-                    function(errorResponse) {
-                        // Xử lý errorResponse khi lỗi
+                // myAjaxCall(url, 'POST', form.serialize(),
+                //     function(data) {},
+                //     function(errorResponse) {
+                //         // Xử lý errorResponse khi lỗi
+                //     },
+                //     'Update social links successfully !',
+                //     'An error occurred, please try again !'
+                // )
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: form.serialize(),
+                    success: function(data) {
                     },
-                    'Update social links successfully !',
-                    'An error occurred, please try again !'
-                )
+                    error: function(jqXHR, textStatus, errorThrown) {
+                    },
+                });
             });
             // update acccout
             $('#save-account-form').click(function(event) {
                 event.preventDefault();
                 var form = $('#account-form');
                 var url = form.attr('action');
-                myAjaxCall(url, 'POST', form.serialize(),
-                    function(data) {},
-                    function(error) {
-
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: form.serialize(),
+                    success: function(data) {
                     },
-                    'Update account successfully !',
-                    'An error occurred, please try again !'
-                )
+                    error: function(jqXHR, textStatus, errorThrown) {
+                    },
+                });
+                // myAjaxCall(url, 'POST', form.serialize(),
+                //     function(data) {},
+                //     function(error) {
+
+                //     },
+                //     'Update account successfully !',
+                //     'An error occurred, please try again !'
+                // )
             });
             // update acccout
             $('#account-toggle-button').click(function() {
                 var url = "{{ route('admin.user.toggleStatus', $user->id) }}";
-                myAjaxCall(url, 'POST', {},
-                    function(data) {
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {},
+                    success: function(data) {
                         if (data.status === 'success') {
                             if ($('#account-toggle-button').hasClass('btn-danger')) {
                                 $('#account-toggle-button')
@@ -394,12 +414,38 @@
                             });
                         }
                     },
-                    function(errorResponse) {
-                        alert('An error occurred, please try again !');
+                    error: function(jqXHR, textStatus, errorThrown) {
+                                                alert('An error occurred, please try again !');
                     },
-                    'Update account successfully !',
-                    'An error occurred, please try again !'
-                )
+                });
+                // myAjaxCall(url, 'POST', {},
+                //     function(data) {
+                //         if (data.status === 'success') {
+                //             if ($('#account-toggle-button').hasClass('btn-danger')) {
+                //                 $('#account-toggle-button')
+                //                     .removeClass('btn-danger')
+                //                     .addClass('btn-success')
+                //                     .text('Activate Your Account?');
+                //                 $('#data-account-status').text('Inactive');
+                //             } else {
+                //                 $('#account-toggle-button')
+                //                     .removeClass('btn-success')
+                //                     .addClass('btn-danger')
+                //                     .text('Deactivate Your Account?');
+                //                 $('#data-account-status').text('Active');
+                //             }
+                //         } else {
+                //             $.growl.error({
+                //                 message: 'An error occurred, please try again !'
+                //             });
+                //         }
+                //     },
+                //     function(errorResponse) {
+                //         alert('An error occurred, please try again !');
+                //     },
+                //     'Update account successfully !',
+                //     'An error occurred, please try again !'
+                // )
             });
         });
     </script>

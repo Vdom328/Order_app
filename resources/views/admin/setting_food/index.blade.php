@@ -74,9 +74,9 @@
                                         <tr>
                                             <th class="col-2">Images</th>
                                             <th>Name</th>
-                                            <th>Quansity</th>
+                                            <th>Quantity</th>
                                             <th>Price</th>
-                                            <th>Infor</th>
+                                            <th>Ingredient</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -127,11 +127,11 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <th>Images</th>
+                                            <th class="col-2">Images</th>
                                             <th>Name</th>
-                                            <th>Quansity</th>
+                                            <th>Quantity</th>
                                             <th>Price</th>
-                                            <th>Infor</th>
+                                            <th>Ingredient</th>
                                             <th></th>
                                         </tr>
                                     </tfoot>

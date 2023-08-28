@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->json('images')->nullable();
             $table->integer('quantity')->nullable();
-            $table->json('images')->nullable();
             $table->decimal('price', 8, 2)->nullable();
+            $table->integer('status');
             $table->timestamps();
 
         });

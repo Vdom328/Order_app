@@ -21,15 +21,17 @@
     {{-- <link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}"> --}}
     @vite([
         'resources/css/style.css',
-        'resources/js/common.js'
+        // 'resources/js/common.js'
     ])
 
     @yield('css')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script src="{{ asset('js/common.js') }}"></script>
     <script src="{{ asset('assets/js/plugin-bundle.js') }}"></script>
     <script src="{{ asset('assets/js/app.js') }}"></script>
     <script src="{{ asset('assets/js/adata-init.js') }}"></script>
     <script src="{{ asset('assets/plugins/jquery.growl/jquery.growl.js') }}"></script>
-    {{-- <script src="{{ asset('js/common.js') }}"></script> --}}
 
     <!-- END: Global JS-->
 
@@ -77,11 +79,22 @@
     @include('admin.layouts.partials.message')
     @yield('js')
     <script>
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+            $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        cache: false
+    });
+
+    $(document).on("ajaxStop", function(){
+        $("#spinner").hide();
+        $(".overlay").remove();
+    });
+
+    $(document).on("ajaxStart", function(){
+        $("#spinner").show();
+        $("body").append("<div class='overlay'></div>");
+    });
     </script>
 </body>
 

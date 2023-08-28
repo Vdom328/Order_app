@@ -7,6 +7,7 @@
     <link type="text/css" rel="stylesheet"
         href="{{ asset('assets/plugins/dataTable/extensions/dataTables.jqueryui.min.css') }}">
     <link type="text/css" rel="stylesheet" href="{{ asset('assets/plugins/bootstrap-select/css/bootstrap-select.min.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ asset('assets/plugins/dropzone/dropzone.css')}}">
 @endsection
 
 @section('content')
@@ -27,21 +28,21 @@
                                         <label class="form-check-label m-0" style="font-size: 13px ; padding: 6px 28px">
                                             <input type="radio"
                                                    class="form-check-input"
-                                                   name="account_status"
-                                                   value="1"
-                                                   {{ old('account_status') == '1' ? 'checked' : '' }}>
+                                                   name="status"
+                                                   value="0"
+                                                   {{ old('status') == '0' ? 'checked' : '' }}>
                                             Active
                                         </label>
                                         <label class="form-check-label m-0" style="font-size: 13px; padding: 6px 28px">
                                             <input type="radio"
                                                    class="form-check-input"
-                                                   name="account_status"
-                                                   value="2"
-                                                   {{ old('account_status') == '2' ? 'checked' : '' }}>
+                                                   name="status"
+                                                   value="1"
+                                                   {{ old('status') == '1' ? 'checked' : '' }}>
                                             Inactive
                                         </label>
                                     </div>
-                                    <p class="w-100 error text-danger d-flex justify-content-end">{{ $errors->first('account_status') }}</p>
+                                    <p class="w-100 error text-danger d-flex justify-content-end">{{ $errors->first('status') }}</p>
                                 </div>
                             </div>
                             <!-- avater ,role input field -->
@@ -57,7 +58,7 @@
                                     <div class="col-12 col-md-6 p-0 m-0">
                                         <div class="col col-12 col-md-6">Role </div>
                                         <div class="col col-12 col-lg-12 mt-2">
-                                            
+
                                             <p class="w-100 error text-danger">{{ $errors->first('last_name') }}</p>
                                         </div>
                                     </div>
@@ -65,23 +66,16 @@
                             </div>
                             <!-- name input field -->
                             <div class="mb-4">
-                                <div class="row d-flex flex-wrap">
-                                    <div class="col-12 col-md-6 p-0 m-0">
-                                        <div class="col col-12 col-md-6">Fist name </div>
-                                        <div class="col col-12 col-lg-12 mt-2">
-                                            <input class="form-control w-100" name="first_name" id="first_name" type="text"  value="{{ old('first_name') }}">
-                                            <p class="w-100 error text-danger">{{ $errors->first('first_name') }}</p>
-                                        </div>
+                                <form action="/upload" class="dropzone needsclick" id="dropzone-demo">
+                                    <div class="dz-message needsclick">
+                                       Drop files here or click to upload
+                                       <span class="note needsclick">(This is just a demo dropzone. Selected files are
+                                       <strong>not</strong> actually uploaded.)</span>
                                     </div>
-                                    <div class="col-12 col-md-6 p-0 m-0">
-                                        <div class="col col-12 col-md-6">Last name </div>
-                                        <div class="col col-12 col-lg-12 mt-2">
-                                            <input class="form-control w-100" name="last_name" id="last_name"
-                                                type="text" value="{{ old('last_name') }}">
-                                            <p class="w-100 error text-danger">{{ $errors->first('last_name') }}</p>
-                                        </div>
+                                    <div class="fallback">
+                                       <input name="file" type="file" multiple>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                             <!-- Email input field -->
                             <div class="mb-4">
@@ -239,5 +233,6 @@
     <script src="{{ asset('assets/plugins/dataTable/responsive/dataTables.responsive.js') }}"></script>
     <script src="{{ asset('assets/plugins/dataTable/extensions/dataTables.jqueryui.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/bootstrap-select/js/bootstrap-select.min.js') }}"></script>
-
+    
+    <script src="{{ asset('assets/plugins/dropzone/dropzone.js') }}"></script>
 @endsection

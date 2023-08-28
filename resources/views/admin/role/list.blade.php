@@ -126,9 +126,13 @@
                 var id = $(this).attr('data-id');
                 $('#submitForm').attr('data-id', id);
                 var url = "{{ route('admin.role.getEditRole', ['id' => ':id']) }}".replace(':id', id);
-                myAjaxCall(url, 'get', {},
-                        function(data) {
-                            $("#name").val(data.name);
+                $.ajax({
+                    url: url,
+                    type: 'get',
+                    data: {},
+                    success: function(data) {
+                        console.log(data);
+                        $("#name").val(data.name);
                             // posst edit User
                             $("#submitForm").on("click", function() {
                                 $("#myForm").attr("method", "post");
@@ -137,13 +141,10 @@
                                     .replace(':id', id));
                                 $("#myForm").submit();
                             });
-                        },
-                        function(errorResponse) {
-                            // Xử lý errorResponse khi lỗi
-                        },
-                        'Delete user successfully !',
-                        'An error occurred, please try again !'
-                    )
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                    },
+                });
             });
             $(document).on('click', '#deleteRole', function() {
                 var id = $(this).attr('data-id');
