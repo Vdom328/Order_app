@@ -25,7 +25,7 @@
                 <li class="user @if (Request::routeIs('admin.user.list') || Request::routeIs('admin.user.getCreate') || Request::routeIs('admin.user.getProfile')) open active @endif">
                     <a href="#">
                         <i class="fa  fa-users mr-2"></i>
-                        <span>USER</span><i class="accordion-icon fa fa-angle-left"></i>
+                        <span>SETTING USER</span><i class="accordion-icon fa fa-angle-left"></i>
                     </a>
                     <ul class="sub-menu li-user">
                         <li class="list_user  @if (Request::routeIs('admin.user.list') || Request::routeIs('admin.user.getProfile')) active @endif"><a href="{{ route('admin.user.list') }}">List</a></li>
@@ -35,7 +35,7 @@
                 <li class="list_role {{ Request::routeIs('admin.role.list') ? 'active' : '' }}">
                     <a href="{{ route('admin.role.list') }}">
                         <div class="mr-2 fa fa-spin fa-asterisk"></div>
-                        <span class="mt-5">ROLE</span>
+                        <span class="mt-5">SETTING ROLE</span>
                     </a>
                 </li>
                 <li class="project @if (Request::routeIs('admin.setting_food.index') || Request::routeIs('admin.setting_food.getCreate')) open active @endif">
@@ -47,12 +47,6 @@
                         <li class="@if (Request::routeIs('admin.setting_food.index') ) active @endif"><a href="{{ route('admin.setting_food.index') }}">List</a></li>
                         <li class="@if (Request::routeIs('admin.setting_food.getCreate') ) active @endif"><a href="{{ route('admin.setting_food.getCreate') }}">Create</a></li>
                     </ul>
-                </li>
-                <li class=" {{ Request::routeIs('admin.setting_food.getIngredient') ? 'active' : '' }}">
-                    <a href="{{ route('admin.setting_food.getIngredient') }}">
-                        <i class="fa  fa-gears mr-2"></i>
-                        <span class="mt-5">SETTING INGREDIENT</span>
-                    </a>
                 </li>
                 <li class="">
                     <a href="">
@@ -72,25 +66,25 @@
                 <li class="">
                     <a href="">
                         <i class="fa fa-spin fa-life-ring mr-2"></i>
-                        <span class="mt-5">SETTING FOODS</span>
+                        <span class="mt-5">RESTAURANT FOODS</span>
                     </a>
                 </li>
                 <li class="">
                     <a href="">
                         <i class="fa fa-spin fa-star-o mr-2"></i>
-                        <span class="mt-5">SETTING DISCOUNT</span>
+                        <span class="mt-5">RESTAURANT DISCOUNT</span>
                     </a>
                 </li>
                 <li class="">
                     <a href="">
                         <i class="fa fa-spin fa-star mr-2"></i>
-                        <span class="mt-5">SETTING RESTAURANT</span>
+                        <span class="mt-5">RESTAURANT</span>
                     </a>
                 </li>
                 <li class="">
                     <a href="">
                         <i class="fa fa-qrcode mr-2"></i>
-                        <span class="mt-5">SETTING QR</span>
+                        <span class="mt-5">RESTAURANT QR</span>
                     </a>
                 </li>
 

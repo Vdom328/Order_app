@@ -25,11 +25,7 @@
     ])
 
     @yield('css')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="{{ asset('assets/js/plugin-bundle.js') }}"></script>
-    <script src="{{ asset('assets/js/app.js') }}"></script>
-    <script src="{{ asset('assets/js/adata-init.js') }}"></script>
-    <script src="{{ asset('assets/plugins/jquery.growl/jquery.growl.js') }}"></script>
+
 
     <!-- END: Global JS-->
 
@@ -75,8 +71,12 @@
     <!--/ Scroll To Top End -->
     @include('admin.layouts.partials.setting')
     @include('admin.layouts.partials.message')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{{ asset('assets/js/plugin-bundle.js') }}"></script>
+    <script src="{{ asset('assets/js/app.js') }}"></script>
+    <script src="{{ asset('assets/js/adata-init.js') }}"></script>
+    <script src="{{ asset('assets/plugins/jquery.growl/jquery.growl.js') }}"></script>
     @yield('js')
-
 </body>
 
 </html>

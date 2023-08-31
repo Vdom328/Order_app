@@ -17,8 +17,7 @@
             <div class="col-lg-12 page-content-area">
                 <div class="inner-content">
                     <div class="col-12 d-flex justify-content-end p-0">
-                        <button type="button" class="btn btn-primary waves-effect mb-3" data-toggle="modal"
-                            data-target="#addRole">
+                        <button type="button" class="btn btn-primary waves-effect mb-3" id="buttonAddRole" >
                             Add Role
                         </button>
                     </div>
@@ -120,18 +119,24 @@
                 $("#myForm").attr("action", "{{ route('admin.role.postCreate') }}");
                 $("#myForm").submit();
             });
+            // add role
+            $(document).on('click', '#buttonAddRole   ', function() {
+                $("#name").val('');
+                $('#addRole').modal('show');
+            });
             // edit role
             $(document).on('click', '.edit_role', function() {
-                $('#addRole').modal('show');
                 var id = $(this).attr('data-id');
                 $('#submitForm').attr('data-id', id);
                 var url = "{{ route('admin.role.getEditRole', ['id' => ':id']) }}".replace(':id', id);
+                $("#name").val('');
                 $.ajax({
                     url: url,
                     type: 'get',
                     data: {},
                     success: function(data) {
                         $("#name").val(data.name);
+                        $('#addRole').modal('show');
                             // posst edit User
                             $("#submitForm").on("click", function() {
                                 $("#myForm").attr("method", "post");

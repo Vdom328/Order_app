@@ -17,12 +17,20 @@ class UserRepository extends BaseRepository implements IUserRepository
         return User::class;
     }
 
+    /**
+     * find user and role
+     */
     public function listUsersAndRole()
     {
         return User::join('roles', 'users.role_id', '=', 'roles.id')
                 ->select('users.*', 'roles.name as role_name')
                 ->get();
     }
+
+    /**
+     * find user and by id
+     * @param int $id
+     */
     public function findUsersAndRole($id)
     {
         return User::join('roles', 'users.role_id', '=', 'roles.id')

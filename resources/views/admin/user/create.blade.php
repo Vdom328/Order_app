@@ -247,6 +247,11 @@
     <!-- END: Vendor JS-->
     <!-- BEGIN: Init JS-->
     <script>
+        $(document).ready(function() {
+            $('.user').addClass('open active');
+            $('.li-user').css('display', 'block');
+            $('.getCreate').addClass('active');
+        });
         // $(document).ready(function() {
         //     $('.user').addClass('open active');
         //     $('.li-user').css('display', 'block');

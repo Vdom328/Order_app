@@ -334,9 +334,7 @@
                         });
                     },
                     error: function(xhr, status, error) {
-                        $.growl.error({
-                            message: 'An error occurred, please try again !'
-                        });
+                        
                     }
                 });
             });
@@ -355,9 +353,7 @@
                         });
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
-                        $.growl.error({
-                            message: 'An error occurred, please try again !'
-                        });
+
                     },
                 });
             });
@@ -376,9 +372,6 @@
                         });
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
-                        $.growl.error({
-                            message: 'An error occurred, please try again !'
-                        });
                     },
                 });
             });

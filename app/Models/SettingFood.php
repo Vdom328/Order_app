@@ -10,8 +10,8 @@ class SettingFood extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function foodIngredient()
+    public function foodImages()
     {
-        return $this->belongsTo(FoodIngredient::class);
+        return $this->belongsTo(FoodImages::class);
     }
 }

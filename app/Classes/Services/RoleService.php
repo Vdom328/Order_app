@@ -18,14 +18,18 @@ class RoleService extends BaseService implements IRoleService
         $this->roleRepository = $roleRepository;
     }
 
-
+    /**
+     * list role database
+     * @return
+     */
     public function listRole()
     {
         return $this->roleRepository->all();
     }
+
     /**
      * create account user
-     * @param  mixed $data
+     * @param  mixed $request
      * @return mixed
      */
     public function createRole($request)
@@ -35,10 +39,21 @@ class RoleService extends BaseService implements IRoleService
                 ];
         return $this->roleRepository->create($attribute);
     }
+
+    /**
+     * find role by id
+     * @param int $id
+     */
     public function find($id)
     {
         return $this->roleRepository->find($id);
     }
+
+    /**
+     * update role by id
+     * @param int  $id
+     * @param mixed $request
+     */
     public function postEditRole($request, $id)
     {
         $attribute = [
@@ -46,6 +61,11 @@ class RoleService extends BaseService implements IRoleService
         ];
         return $this->roleRepository->update($id, $attribute);
     }
+
+    /**
+     * delete role by id
+     * @param int $id
+     */
     public function delete($id)
     {
         return $this->roleRepository->delete($id);

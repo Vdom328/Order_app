@@ -52,7 +52,7 @@
                                                 <td class="pl-4">
                                                     <div class="d-flex">
                                                         @if ($user->avatar)
-                                                            <img class="wd-35 rounded-circle img-fluid" src="{{ asset('storage/' . $user->avatar) }}" alt="">
+                                                            <img class="wd-35 rounded-circle img-fluid" src="{{ asset('avatar/storage/' . $user->avatar) }}" alt="">
                                                         @else
                                                             <img class="wd-35 rounded-circle img-fluid" src="{{ asset('images/th (3).jpg') }}" alt="">
                                                         @endif

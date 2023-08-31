@@ -33,22 +33,30 @@
         }
     });
 
-    // $(document).on("ajaxError", function(){
-    //     console.log(textStatus, errorThrown);
-    //     if (errorFunction) {
-    //         errorFunction(jqXHR.responseText);
-    //     }
-    //     if (jqXHR.status === 422) {
-    //         var response = JSON.parse(jqXHR.responseText);
-    //         var errors = response.errors;
-    //         var errorMsgs = '';
-    //         for (var key in errors) {
-    //             if (errors.hasOwnProperty(key)) {
-    //                 errorMsgs += errors[key][0] + '<br/>';
-    //             }
-    //         }
-    //         $.growl.error({
-    //             message: errorMsgs
-    //         });
-    //     }
-    // });
+    $(document).on("ajaxError", function(event, jqXHR, ajaxSettings, thrownError){
+        if (jqXHR.status !== 422) {
+            $.growl.error({
+                message: 'An error occurred, please try again !'
+            });
+        }
+        if (jqXHR.status === 422) {
+            try {
+              var response = JSON.parse(jqXHR.responseText);
+              console.log(response);
+            } catch(e) {
+              console.log("Error parsing response:", e);
+              return;
+            }
+            var errors = response.errors;
+            var errorMsgs = '';
+            for (var key in errors) {
+                if (errors.hasOwnProperty(key)) {
+                    errorMsgs += errors[key][0] + '<br/>';
+                }
+            }
+            $.growl.error({
+                message: errorMsgs
+            });
+        }
+    });
+

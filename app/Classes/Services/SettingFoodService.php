@@ -2,8 +2,7 @@
 
 namespace App\Classes\Services;
 
-use App\Classes\Repository\Interfaces\IFoodIngredientRepository;
-use App\Classes\Repository\Interfaces\IIngredientRepository;
+use App\Classes\Repository\Interfaces\IFoodImagesRepository;
 use App\Classes\Repository\Interfaces\ISettingFoodRepository;
 use App\Classes\Services\Interfaces\ISettingFoodService;
 
@@ -11,58 +10,49 @@ class SettingFoodService extends BaseService implements ISettingFoodService
 {
 
     protected
-        $settingFoodRepository,
-        $ingredientRepository,
-        $foodIngredientRepository;
-
+        $foodImagesRepository,
+        $settingFoodRepository;
     public function __construct(
         ISettingFoodRepository $settingFoodRepository,
-        IIngredientRepository $ingredientRepository,
-        IFoodIngredientRepository $foodIngredientRepository,
+        IFoodImagesRepository $foodImagesRepository,
     )
     {
         $this->settingFoodRepository = $settingFoodRepository;
-        $this->ingredientRepository = $ingredientRepository;
-        $this->foodIngredientRepository = $foodIngredientRepository;
-    }
-
-
-    /**
-     * Create Ingredient
-     * @param array $data
-     */
-    public function getCreateIngredient(Array $data)
-    {
-        $attributes = [];
-        foreach ($data['formDataArray'] as $item) {
-            $dataItem = [
-                'name' => $item['name'],
-                'quantity' => $item['quantity'],
-                'status' => $item['status']
-            ];
-            if ($item['id']) {
-                $this->ingredientRepository->update($item['id'],$dataItem);
-            }else{
-                $attributes[] = $dataItem;
-            }
-        }
-        return $this->ingredientRepository->insert($attributes);
-    }
-
-    /**
-     * delete Ingredient
-     * @param int $data
-     */
-    public function deleteIngredientById(int $id)
-    {
-        return $this->ingredientRepository->delete($id);
+        $this->foodImagesRepository = $foodImagesRepository;
     }
 
     /**
      *
      */
-    public function getIngredient()
+    public function storeFood($data)
     {
-        return $this->ingredientRepository->all();
+        $attr = [
+            'name' => $data['name'],
+            'quantity' => $data['quantity'],
+            'price' => $data['price'],
+        ];
+        $data = $this->settingFoodRepository->create($attr);
+    }
+
+    /**
+     * update images storage
+     * @param array $data
+     * @param int $id
+     * @return array
+     */
+    public function updateImagesStorage($data, $id)
+    {
+        $attribute = [];
+        foreach ($data as $img) {
+            if ($img && $img->hasFile() && $img->isValid()) {
+                $imageName = time() . '_' . uniqid() . '.' . $img->extension();
+                $img->storeAs('food_images', $imageName, 'disk_name');
+                $attribute[] = [
+                    'id' => $id,
+                    'image' => $imageName
+                ];
+            }
+        }
+        return $attribute;
     }
 }

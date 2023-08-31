@@ -1,13 +1,19 @@
 @extends('admin.layouts.master')
 @section('title')
-    Create User
+    Create Foods
 @endsection
 @section('css')
     <link type="text/css" rel="stylesheet" href="{{ asset('assets/plugins/dataTable/datatables.min.css') }}">
     <link type="text/css" rel="stylesheet"
         href="{{ asset('assets/plugins/dataTable/extensions/dataTables.jqueryui.min.css') }}">
     <link type="text/css" rel="stylesheet" href="{{ asset('assets/plugins/bootstrap-select/css/bootstrap-select.min.css') }}">
-    <link type="text/css" rel="stylesheet" href="{{ asset('assets/plugins/dropzone/dropzone.css')}}">
+    <link type="text/css" rel="stylesheet" href="{{ asset('assets/plugins/swiper/css/swiper.min.css') }}">
+    <link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css" rel="stylesheet" type="text/css" />
+    <style>
+        .dz-progress {
+            display: none;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -18,204 +24,61 @@
             <!--================================-->
             <div class="col-lg-12 page-content-area ">
                 <div class="inner-content">
-                    <form action="{{ route('admin.user.postCreate') }}" method="post" class="modal-body col-12" id="myForm" enctype="multipart/form-data">
-                        @csrf
+                    <form  class="modal-body col-12" id="myForm" >
+                        {{-- @csrf --}}
                         <div class="col col-12  custom-fieldset">
                             <!-- Account status radio buttons -->
                             <div class="row">
                                 <div class="col col-12 col-lg-12">
                                     <div class="form-check d-flex justify-content-end">
                                         <label class="form-check-label m-0" style="font-size: 13px ; padding: 6px 28px">
-                                            <input type="radio"
-                                                   class="form-check-input"
-                                                   name="status"
-                                                   value="0"
-                                                   {{ old('status') == '0' ? 'checked' : '' }}>
+                                            <input type="radio" class="form-check-input" name="status" value="0"
+                                                {{ old('status') == '0' ? 'checked' : '' }}>
                                             Active
                                         </label>
                                         <label class="form-check-label m-0" style="font-size: 13px; padding: 6px 28px">
-                                            <input type="radio"
-                                                   class="form-check-input"
-                                                   name="status"
-                                                   value="1"
-                                                   {{ old('status') == '1' ? 'checked' : '' }}>
+                                            <input type="radio" class="form-check-input" name="status" value="1"
+                                                {{ old('status') == '1' ? 'checked' : '' }}>
                                             Inactive
                                         </label>
                                     </div>
-                                    <p class="w-100 error text-danger d-flex justify-content-end">{{ $errors->first('status') }}</p>
+                                    <p class="w-100 error text-danger d-flex justify-content-end">
+                                        {{ $errors->first('status') }}</p>
                                 </div>
                             </div>
-                            <!-- avater ,role input field -->
-                            <div class="mb-4">
-                                <div class="row d-flex flex-wrap">
-                                    <div class="col-12 col-md-6 p-0 m-0">
-                                        <div class="col col-12 col-md-6">Avatar </div>
-                                        <div class="col col-12 col-lg-12 mt-2">
-                                            <input class="form-control w-100" name="avatar" id="avatar" type="file"  value="{{ old('avatar') }}" style="padding: 0.575rem 0.75rem 2px;">
-                                            <p class="w-100 error text-danger">{{ $errors->first('avatar') }}</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6 p-0 m-0">
-                                        <div class="col col-12 col-md-6">Role </div>
-                                        <div class="col col-12 col-lg-12 mt-2">
+                            <!-- images input field -->
+                            <div id="myDropzone" class="mb-4 dropzone"></div>
 
-                                            <p class="w-100 error text-danger">{{ $errors->first('last_name') }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             <!-- name input field -->
                             <div class="mb-4">
-                                <form action="/upload" class="dropzone needsclick" id="dropzone-demo">
-                                    <div class="dz-message needsclick">
-                                       Drop files here or click to upload
-                                       <span class="note needsclick">(This is just a demo dropzone. Selected files are
-                                       <strong>not</strong> actually uploaded.)</span>
-                                    </div>
-                                    <div class="fallback">
-                                       <input name="file" type="file" multiple>
-                                    </div>
-                                </form>
-                            </div>
-                            <!-- Email input field -->
-                            <div class="mb-4">
-                                <div class="row d-flex flex-wrap">
-                                    <div class="col-12 col-md-6 p-0 m-0">
-                                        <div class="col col-12 ">Email <span class="text-danger">*</span></div>
-                                        <div class="col col-12 col-lg-12 mt-2">
-                                            <input class="form-control w-100" name="email" id="email" type="text" value="{{ old('email') }}">
-                                            <p class="w-100 error text-danger">{{ $errors->first('email') }}</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6 p-0 m-0">
-                                        <div class="col col-12 ">Address </div>
-                                        <div class="col col-12 col-lg-12 mt-2">
-                                            <input class="form-control w-100" name="address" id="address" type="text" value="{{ old('address') }}">
-                                            <p class="w-100 error text-danger">{{ $errors->first('address') }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {{-- password --}}
-                            <div class="mb-4">
-                                <div class="row d-flex flex-wrap">
-                                    <div class="col-12 col-md-6 p-0 m-0">
-                                        <div class="col col-12 ">password <span class="text-danger">*</span></div>
-                                        <div class="col col-12 col-lg-12 mt-2">
-                                            <input class="form-control w-100" name="password" id="password" value="{{ old('password') }}"
-                                                type="password">
-                                            <p class="w-100 error text-danger">{{ $errors->first('password') }}</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6 p-0 m-0">
-                                        <div class="col col-12 ">Confirm Password <span class="text-danger">*</span>
-                                        </div>
-                                        <div class="col col-12 col-lg-12 mt-2">
-                                            <input class="form-control w-100" name="confirm_pass" id="confirm_pass" value="{{ old('confirm_pass') }}"
-                                                type="password">
-                                            <p class="w-100 error text-danger">{{ $errors->first('confirm_pass') }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Telephone input field -->
-                            <div class="mb-4">
                                 <div class="row">
-                                    <div class="col col-12 ">Phone Number </div>
+                                    <div class="col col-12 ">Food name</div>
                                     <div class="col col-12 col-lg-12 mt-2">
-                                        <input class="form-control w-100" name="telephone" id="telephone" type="number" value="{{ old('telephone') }}">
-                                        <p class="w-100 error text-danger">{{ $errors->first('telephone') }}</p>
+                                        <input class="form-control w-100" name="name" id="name" type="text" value="{{ old('name') }}">
+                                        <p class="w-100 error text-danger">{{ $errors->first('name') }}</p>
                                     </div>
                                 </div>
                             </div>
-                            <!-- Gender radio buttons -->
+
+                            <!-- Quantity and Price input field -->
                             <div class="mb-4">
-                                <div class="row">
-                                    <div class="col col-12">Gender</div>
-                                    <div class="col col-12 col-lg-12 mt-3">
-                                        <div class="form-check-inline">
-                                            <label class="form-check-label mr-3">
-                                                <input type="radio"
-                                                       class="form-check-input"
-                                                       name="gender"
-                                                       value="1"
-                                                       {{ old('gender') == '1' ? 'checked' : '' }}>
-                                                Male
-                                            </label>
-                                            <label class="form-check-label">
-                                                <input type="radio"
-                                                       class="form-check-input"
-                                                       name="gender"
-                                                       value="2"
-                                                       {{ old('gender') == '2' ? 'checked' : '' }}>
-                                                Female
-                                            </label>
+                                <div class="row d-flex flex-wrap">
+                                    <div class="col-12 col-md-6 p-0 m-0">
+                                        <div class="col col-12 ">Quantity <span class="text-danger">*</span></div>
+                                        <div class="col col-12 col-lg-12 mt-2">
+                                            <input class="form-control w-100" name="quantity" id="quantity" type="number"
+                                                value="{{ old('quantity') }}">
+                                            <p class="w-100 error text-danger">{{ $errors->first('quantity') }}</p>
                                         </div>
-                                        <p class="w-100 error text-danger">{{ $errors->first('gender') }}</p>
                                     </div>
-                                </div>
-                            </div>
-                            <!-- input field -->
-                            <div class="mb-4 col-12 d-flex flex-wrap p-0">
-                                <div class="col col-12 p-0 ">Facebook </div>
-                                <div class="col col-12 p-0 col-lg-12 mt-2">
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text bg-light"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="feather feather-facebook wd-16 ht-16 ">
-                                                    <path
-                                                        d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z">
-                                                    </path>
-                                                </svg></span>
+                                    <div class="col-12 col-md-6 p-0 m-0">
+                                        <div class="col col-12 ">Price </div>
+                                        <div class="col col-12 col-lg-12 mt-2">
+                                            <input class="form-control w-100" name="price" id="price" type="number"
+                                                value="{{ old('price') }}">
+                                            <p class="w-100 error text-danger">{{ $errors->first('price') }}</p>
                                         </div>
-                                        <input type="text" class="form-control" name="facebook" id="facebook" value="{{ old('facebook') }}"
-                                            placeholder="http://facebook.com">
                                     </div>
-                                    <p class="w-100 error text-danger">{{ $errors->first('facebook') }}</p>
-                                </div>
-                                <div class="col col-12 p-0 ">Twitter </div>
-                                <div class="col col-12 p-0 col-lg-12 mt-2">
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text bg-light"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="feather feather-twitter wd-16 ht-16 ">
-                                                    <path
-                                                        d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
-                                                    </path>
-                                                </svg></span>
-                                        </div>
-                                        <input type="text" name="twitter" id="twitter" class="form-control" value="{{ old('twitter') }}"
-                                            placeholder="http://twitter.com">
-                                    </div>
-                                    <p class="w-100 error text-danger">{{ $errors->first('twitter') }}</p>
-                                </div>
-                                <div class="col col-12 p-0 ">Linkedin </div>
-                                <div class="col col-12 p-0 col-lg-12 mt-2">
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text bg-light"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="feather feather-linkedin wd-16 ht-16 ">
-                                                    <path
-                                                        d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z">
-                                                    </path>
-                                                    <rect x="2" y="9" width="4" height="12">
-                                                    </rect>
-                                                    <circle cx="4" cy="4" r="2"></circle>
-                                                </svg></span>
-                                        </div>
-                                        <input type="text" name="linkedin" id="linkedin" class="form-control" value="{{ old('linkedin') }}"
-                                            placeholder="http://linkedin.com">
-                                    </div>
-                                    <p class="w-100 error text-danger">{{ $errors->first('Linkedin') }}</p>
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-success waves-effect" id="submitForm">Save</button>
@@ -227,12 +90,51 @@
             <!--================================-->
         </div>
     </div>
+
 @endsection
 @section('js')
     <script src="{{ asset('assets/plugins/dataTable/datatables.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/dataTable/responsive/dataTables.responsive.js') }}"></script>
     <script src="{{ asset('assets/plugins/dataTable/extensions/dataTables.jqueryui.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/bootstrap-select/js/bootstrap-select.min.js') }}"></script>
-    
-    <script src="{{ asset('assets/plugins/dropzone/dropzone.js') }}"></script>
+    <script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
+    <script>
+        // Khởi tạo Dropzone
+        Dropzone.autoDiscover = false;
+        // Cấu hình Dropzone
+        var myDropzone = new Dropzone("#myDropzone", {
+            url: "dummy-url", // Dummy URL or any valid URL
+            acceptedFiles: 'image/*',
+            maxFiles: 10,
+            dictDefaultMessage: "Drag and drop photos here or click to upload",
+            dictInvalidFileType: "Only image files are accepted",
+            autoProcessQueue: false, // Tắt chế độ tự động tải lên
+            addRemoveLinks: true, // Hiển thị nút xóa
+            // dictRemoveFile: "Xóa",
+        });
+
+        $('#myForm').submit(function(event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+            // Add image files to the form data
+            $.each(myDropzone.files, function(index, file) {
+                formData.append('images[]', file);
+            });
+            // Send the form data using AJAX
+            $.ajax({
+                url: "{{ route('admin.setting_food.store') }}",
+                type: 'POST',
+                processData: false,
+                contentType: false,
+                data: formData,
+                success: function(response) {
+                    // Handle response
+                },
+                error: function(error) {
+                    // Handle error
+                }
+            });
+        });
+    </script>
+
 @endsection

@@ -26,11 +26,15 @@ class UserService extends BaseService implements IUserService
         $this->passwordResetToken = $passwordResetToken;
     }
 
-
+    /**
+     * get list user
+     * @return mixed
+     */
     public function listUser()
     {
         return $this->userRepository->listUsersAndRole();
     }
+
     /**
      * create account user
      * @param  mixed $data
@@ -56,17 +60,28 @@ class UserService extends BaseService implements IUserService
 
         if ($data && $data->hasFile('avatar')) {
             $imageName = uniqid() . '.' . $data->file('avatar')->extension();
-            $data->file('avatar')->storeAs('public', $imageName);
+            $data->file('avatar')->storeAs('avatar', $imageName);
             $attribute['avatar'] = $imageName;
         }
 
         return $this->userRepository->create($attribute);
     }
 
+    /**
+     * find user by id
+     * @param int $id
+     * @return mixed
+     */
     public function find($id)
     {
         return $this->userRepository->findUsersAndRole($id);
     }
+
+    /**
+     * findUpdateSocialLink user by id
+     * @param int $id
+     * @return mixed
+     */
     public function findUpdateSocialLink($request, $id)
     {
         $attribute = [
@@ -76,6 +91,12 @@ class UserService extends BaseService implements IUserService
         ];
         return $this->userRepository->update($id, $attribute);
     }
+
+    /**
+     * updateAccount user by id
+     * @param int $id
+     * @return mixed
+     */
     public function updateAccount($request, $id)
     {
         $attribute = [
@@ -89,6 +110,12 @@ class UserService extends BaseService implements IUserService
         ];
         return $this->userRepository->update($id, $attribute);
     }
+
+    /**
+     * toggleStatus user by id
+     * @param int $id
+     * @return mixed
+     */
     public function toggleStatus($account_status, $id)
     {
         if ($account_status == StatusUserEnum::Active) {
@@ -102,6 +129,12 @@ class UserService extends BaseService implements IUserService
         }
         return $this->userRepository->update($id, $attribute);
     }
+
+    /**
+     * updateAvatar user by id
+     * @param int $id
+     * @return mixed
+     */
     public function updateAvatar($request, $id)
     {
         // Kiểm tra xem request có chứa file ảnh không
@@ -113,17 +146,28 @@ class UserService extends BaseService implements IUserService
             }
             // Upload ảnh mới và lưu vào database
             $imageName = uniqid() . '.' . $request->file('avatar')->extension();
-            $request->file('avatar')->storeAs('public', $imageName);
+            $request->file('avatar')->storeAs('avatar', $imageName);
 
             $attribute['avatar'] = $imageName;
             return $this->userRepository->update($id, $attribute);
         }
     }
+
+    /**
+     * delete user by id
+     * @param int $id
+     * @return mixed
+     */
     public function delete($id)
     {
         return $this->userRepository->delete($id);
     }
 
+    /**
+     * postForgotByEmail user by id
+     * @param int $id
+     * @return mixed
+     */
     public function postForgotByEmail($email)
     {
         $user = User::where('email', $email)->first();
