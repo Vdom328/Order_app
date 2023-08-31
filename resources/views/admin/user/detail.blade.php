@@ -20,7 +20,7 @@
                             <div class="profile-avatar-setting mr-3">
                                 <div class="avatar-wrapper">
                                     <img class="profile-pic img-fluid rounded"
-                                        src="{{ asset('storage/' . $user->avatar) ?? '' }}">
+                                        src="{{ asset('storage/avatarUser/' . $user->avatar) ?? '' }}">
                                     <div class="upload-button">
                                         <i class="fa fa-camera" aria-hidden="true"></i>
                                     </div>
@@ -334,7 +334,7 @@
                         });
                     },
                     error: function(xhr, status, error) {
-                        
+
                     }
                 });
             });

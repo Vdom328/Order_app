@@ -58,9 +58,14 @@ class UserService extends BaseService implements IUserService
             'avatar' => null,
         ];
 
+        if (!Storage::exists('public/avatarUser')) {
+            // Tạo mới thư mục avatarUser
+            Storage::makeDirectory('public/avatarUser');
+        }
+
         if ($data && $data->hasFile('avatar')) {
             $imageName = uniqid() . '.' . $data->file('avatar')->extension();
-            $data->file('avatar')->storeAs('public/avatarUser', $imageName);
+            $data->file('avatar')->storeAs('public/avatarUser/', $imageName);
             $attribute['avatar'] = $imageName;
         }
 
@@ -137,16 +142,21 @@ class UserService extends BaseService implements IUserService
      */
     public function updateAvatar($request, $id)
     {
+        if (!Storage::exists('public/avatarUser')) {
+            // Tạo mới thư mục avatarUser
+            Storage::makeDirectory('public/avatarUser');
+        }
+
         // Kiểm tra xem request có chứa file ảnh không
         if ($request->hasFile('avatar')) {
             // Lấy thông tin user hiện tại và xóa ảnh cũ (nếu có)
             $user = $this->userRepository->find($id);
             if (!empty($user->avatar)) {
-                Storage::delete('public/avatarUser' . $user->avatar);
+                Storage::delete('public/avatarUser/' . $user->avatar);
             }
             // Upload ảnh mới và lưu vào database
             $imageName = uniqid() . '.' . $request->file('avatar')->extension();
-            $request->file('avatar')->storeAs('public/avatarUser', $imageName);
+            $request->file('avatar')->storeAs('public/avatarUser/', $imageName);
 
             $attribute['avatar'] = $imageName;
             return $this->userRepository->update($id, $attribute);
