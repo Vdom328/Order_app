@@ -5,13 +5,12 @@ namespace App\Classes\Services;
 use App\Classes\Repository\Interfaces\IFoodImagesRepository;
 use App\Classes\Repository\Interfaces\ISettingFoodRepository;
 use App\Classes\Services\Interfaces\ISettingFoodService;
+use Illuminate\Support\Facades\Storage;
 
 class SettingFoodService extends BaseService implements ISettingFoodService
 {
 
-    protected
-        $foodImagesRepository,
-        $settingFoodRepository;
+    protected $foodImagesRepository, $settingFoodRepository;
     public function __construct(
         ISettingFoodRepository $settingFoodRepository,
         IFoodImagesRepository $foodImagesRepository,
@@ -31,28 +30,33 @@ class SettingFoodService extends BaseService implements ISettingFoodService
             'quantity' => $data['quantity'],
             'price' => $data['price'],
         ];
-        $data = $this->settingFoodRepository->create($attr);
+        $food_setting = $this->settingFoodRepository->create($attr);
+        return $this->createImagesStorage($data['images'],$food_setting->id);
     }
 
     /**
      * update images storage
      * @param array $data
      * @param int $id
-     * @return array
+     *
      */
-    public function updateImagesStorage($data, $id)
+    public function createImagesStorage($data, $id)
     {
+        if (!Storage::exists('public/food_images')) {
+            // Tạo mới thư mục avatarUser
+            Storage::makeDirectory('public/food_images');
+        }
         $attribute = [];
         foreach ($data as $img) {
-            if ($img && $img->hasFile() && $img->isValid()) {
+            if ($img) {
                 $imageName = time() . '_' . uniqid() . '.' . $img->extension();
-                $img->storeAs('food_images', $imageName, 'disk_name');
+                $img->storeAs('public/food_images/', $imageName);
                 $attribute[] = [
                     'id' => $id,
                     'image' => $imageName
                 ];
             }
         }
-        return $attribute;
+        return $this->foodImagesRepository->insert($attribute);
     }
 }

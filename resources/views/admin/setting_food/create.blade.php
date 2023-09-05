@@ -122,16 +122,16 @@
             });
             // Send the form data using AJAX
             $.ajax({
-                url: "{{ route('admin.setting_food.store') }}",
+                url: "{{ route('admin.setting_food.postCreate') }}",
                 type: 'POST',
                 processData: false,
                 contentType: false,
                 data: formData,
                 success: function(response) {
-                    // Handle response
+                    // window.location.href = ;
                 },
                 error: function(error) {
-                    // Handle error
+                    console.log(error);
                 }
             });
         });

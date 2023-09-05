@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SettingFood extends Model
 {
+    public $table = "foods_setting";
     use HasFactory;
     protected $guarded = [];
 

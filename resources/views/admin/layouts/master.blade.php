@@ -19,6 +19,7 @@
     <link type="image/x-icon" rel="icon" href="{{ asset('assets/images/favicon.ico') }}">
     <link type="text/css" rel="stylesheet" href="{{ asset('assets/plugins/jquery.growl/jquery.growl.css') }}">
     {{-- <link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}"> --}}
+
     @vite([
         'resources/css/style.css',
         'resources/js/common.js'
@@ -69,13 +70,13 @@
     <a href="" data-click="scroll-top" class="btn-scroll-top fade waves-effect"><i data-feather="arrow-up"
             class="wd-16"></i></a>
     <!--/ Scroll To Top End -->
-    @include('admin.layouts.partials.setting')
-    @include('admin.layouts.partials.message')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="{{ asset('assets/js/plugin-bundle.js') }}"></script>
     <script src="{{ asset('assets/js/app.js') }}"></script>
     <script src="{{ asset('assets/js/adata-init.js') }}"></script>
     <script src="{{ asset('assets/plugins/jquery.growl/jquery.growl.js') }}"></script>
+    @include('admin.layouts.partials.setting')
+    @include('admin.layouts.partials.message')
     @yield('js')
 </body>
 

@@ -39,12 +39,12 @@ class FoodController extends Controller
     /**
      * create food
      */
-    public function store(Request $request)
+    public function postCreate(Request $request)
     {
         $data = $this->settingFoodService->storeFood($request->all());
         if (!$data) {
-            Session::flash('error', "An error occurred, please try again !");
-            return response()->json();
+            // Session::flash('error', "An error occurred, please try again !");
+            return response()->json(['error' => 'An error occurred, please try again !']);
         }
         // Return a success
         Session::flash('success', "Store food successfully !");

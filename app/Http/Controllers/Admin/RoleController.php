@@ -34,6 +34,10 @@ class RoleController extends Controller
      */
     public function postCreate(request $request)
     {
+        if($request->name == ''){
+            Session::flash('error', "An error occurred, please try again !");
+            return redirect()->route('admin.role.list');
+        }
         $createRole = $this->IRoleService->createRole($request);
         if (!$createRole) {
             Session::flash('error', "An error occurred, please try again !");
