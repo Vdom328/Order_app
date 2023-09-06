@@ -29,6 +29,7 @@ class SettingFoodService extends BaseService implements ISettingFoodService
             'name' => $data['name'],
             'quantity' => $data['quantity'],
             'price' => $data['price'],
+            'status' => $data['status'],
         ];
         $food_setting = $this->settingFoodRepository->create($attr);
         return $this->createImagesStorage($data['images'],$food_setting->id);
@@ -37,10 +38,10 @@ class SettingFoodService extends BaseService implements ISettingFoodService
     /**
      * update images storage
      * @param array $data
-     * @param int $id
+     * @param int $food_id
      *
      */
-    public function createImagesStorage($data, $id)
+    public function createImagesStorage($data, $food_id)
     {
         if (!Storage::exists('public/food_images')) {
             // Tạo mới thư mục avatarUser
@@ -52,11 +53,19 @@ class SettingFoodService extends BaseService implements ISettingFoodService
                 $imageName = time() . '_' . uniqid() . '.' . $img->extension();
                 $img->storeAs('public/food_images/', $imageName);
                 $attribute[] = [
-                    'id' => $id,
+                    'food_id' => $food_id,
                     'image' => $imageName
                 ];
             }
         }
         return $this->foodImagesRepository->insert($attribute);
+    }
+
+    /**
+     * get list food
+     */
+    public function getListFood()
+    {
+        return $this->settingFoodRepository->all();
     }
 }

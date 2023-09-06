@@ -25,7 +25,7 @@
             <div class="col-lg-12 page-content-area ">
                 <div class="inner-content">
                     <form  class="modal-body col-12" id="myForm" >
-                        {{-- @csrf --}}
+                        @csrf
                         <div class="col col-12  custom-fieldset">
                             <!-- Account status radio buttons -->
                             <div class="row">
@@ -47,12 +47,13 @@
                                 </div>
                             </div>
                             <!-- images input field -->
+                            <div class="col col-12 p-0 ">Images<span class="text-danger">*</span></div>
                             <div id="myDropzone" class="mb-4 dropzone"></div>
 
                             <!-- name input field -->
                             <div class="mb-4">
                                 <div class="row">
-                                    <div class="col col-12 ">Food name</div>
+                                    <div class="col col-12 ">Food name<span class="text-danger">*</span></div>
                                     <div class="col col-12 col-lg-12 mt-2">
                                         <input class="form-control w-100" name="name" id="name" type="text" value="{{ old('name') }}">
                                         <p class="w-100 error text-danger">{{ $errors->first('name') }}</p>
@@ -72,7 +73,7 @@
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6 p-0 m-0">
-                                        <div class="col col-12 ">Price </div>
+                                        <div class="col col-12 ">Price <span class="text-danger">*</span></div>
                                         <div class="col col-12 col-lg-12 mt-2">
                                             <input class="form-control w-100" name="price" id="price" type="number"
                                                 value="{{ old('price') }}">
@@ -81,7 +82,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-success waves-effect" id="submitForm">Save</button>
+                            <button type="button" class="btn btn-success waves-effect" id="submitForm">Save</button>
                         </div>
                     </form>
                 </div>
@@ -99,40 +100,41 @@
     <script src="{{ asset('assets/plugins/bootstrap-select/js/bootstrap-select.min.js') }}"></script>
     <script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
     <script>
-        // Khởi tạo Dropzone
-        Dropzone.autoDiscover = false;
-        // Cấu hình Dropzone
-        var myDropzone = new Dropzone("#myDropzone", {
-            url: "dummy-url", // Dummy URL or any valid URL
-            acceptedFiles: 'image/*',
-            maxFiles: 10,
-            dictDefaultMessage: "Drag and drop photos here or click to upload",
-            dictInvalidFileType: "Only image files are accepted",
-            autoProcessQueue: false, // Tắt chế độ tự động tải lên
-            addRemoveLinks: true, // Hiển thị nút xóa
-            // dictRemoveFile: "Xóa",
-        });
-
-        $('#myForm').submit(function(event) {
-            event.preventDefault();
-            var formData = new FormData(this);
-            // Add image files to the form data
-            $.each(myDropzone.files, function(index, file) {
-                formData.append('images[]', file);
+        $(document).ready(function() {
+            // Khởi tạo Dropzone
+            Dropzone.autoDiscover = false;
+            // Cấu hình Dropzone
+            var myDropzone = new Dropzone("#myDropzone", {
+                url: "dummy-url", // Dummy URL or any valid URL
+                acceptedFiles: 'image/*',
+                maxFiles: 10,
+                dictDefaultMessage: "Drag and drop photos here or click to upload",
+                dictInvalidFileType: "Only image files are accepted",
+                autoProcessQueue: false, // Tắt chế độ tự động tải lên
+                addRemoveLinks: true, // Hiển thị nút xóa
+                // dictRemoveFile: "Xóa",
             });
-            // Send the form data using AJAX
-            $.ajax({
-                url: "{{ route('admin.setting_food.postCreate') }}",
-                type: 'POST',
-                processData: false,
-                contentType: false,
-                data: formData,
-                success: function(response) {
-                    // window.location.href = ;
-                },
-                error: function(error) {
-                    console.log(error);
+            $(document).on("click", "#submitForm", function() {
+                var formData = new FormData($("#myForm")[0]);
+                var files = myDropzone.files;
+
+                // Thêm các tệp vào FormData
+                for (var i = 0; i < files.length; i++) {
+                    formData.append("images[]", files[i]);
                 }
+                $.ajax({
+                    url: "{{ route('admin.setting_food.postCreate') }}",
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        window.location.href = response.route;
+                    },
+                    error: function(error) {
+                        // console.log(error);
+                    }
+                });
             });
         });
     </script>

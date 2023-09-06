@@ -97,7 +97,7 @@ $(function () {
 	});
 
 
-	// 3D Cube Effect	
+	// 3D Cube Effect
 	var swiper3dCubeEffect = new Swiper('#swiper-3d-cube-effect', {
 		effect: 'cube',
 		grabCursor: true,

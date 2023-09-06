@@ -45,6 +45,6 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group(['prefix' => 'setting_food', 'middleware' => "auth"], function () {
         Route::get('/', [FoodController::class, 'index'])->name('admin.setting_food.index');
         Route::get('/create', [FoodController::class, 'getCreate'])->name('admin.setting_food.getCreate');
-        Route::post('/postCreate', [FoodController::class, 'postCreate'])->name('admin.setting_food.postCreate');
+        Route::POST('/postCreate', [FoodController::class, 'postCreate'])->name('admin.setting_food.postCreate');
     });
 });

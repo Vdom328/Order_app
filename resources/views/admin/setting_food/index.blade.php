@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 @section('title')
-    List Projects
+    List Setting Food
 @endsection
 @section('css')
     <link type="text/css" rel="stylesheet" href="{{ asset('assets/plugins/dataTable/datatables.min.css') }}">
@@ -10,6 +10,8 @@
     @vite([
         'resources/css/admin/setting_food.css',
     ])
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
 @endsection
 
 @section('content')
@@ -76,54 +78,39 @@
                                             <th>Name</th>
                                             <th>Quantity</th>
                                             <th>Price</th>
-                                            <th>Ingredient</th>
+                                            <th>Status</th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td class="images_project">
-                                                    <div class="swiper-container" id="fraction-pagination">
-                                                        <div class="swiper-wrapper">
-                                                            <div class="swiper-slide">Slide 1</div>
-                                                            <div class="swiper-slide">Slide 2</div>
-                                                            <div class="swiper-slide">Slide 3</div>
-                                                            <div class="swiper-slide">Slide 4</div>
-                                                            <div class="swiper-slide">Slide 5</div>
-                                                            <div class="swiper-slide">Slide 6</div>
-                                                            <div class="swiper-slide">Slide 7</div>
-                                                            <div class="swiper-slide">Slide 8</div>
-                                                            <div class="swiper-slide">Slide 9</div>
-                                                            <div class="swiper-slide">Slide 10</div>
-                                                        </div>
-                                                        <!-- Add Pagination -->
-                                                        <div class="swiper-pagination"></div>
-                                                        <!-- Add Arrows -->
-                                                        <div class="swiper-button-next"></div>
-                                                        <div class="swiper-button-prev"></div>
-                                                    </div>
-                                            </td>
-                                            <td class="pl-4">
+                                        @foreach ( $foods as $food )
+                                            <tr>
+                                                <td class="images_food">
+                                                    <div data-slick='{"slidesToShow": 4, "slidesToScroll": 4}'>
+                                                        <div><h3>1</h3></div>
+                                                        <div><h3>2</h3></div>
+                                                        <div><h3>3</h3></div>
+                                                        <div><h3>4</h3></div>
+                                                        <div><h3>5</h3></div>
+                                                        <div><h3>6</h3></div>
+                                                      </div>
 
-                                            </td>
-                                            <td class="pl-4">Quansity</td>
-                                            <td class="pl-4">Price</td>
-                                            <td class="pl-4">
-                                                <li></li>
-                                                <li></li>
-                                                <li></li>
-                                                <li></li>
-                                                <li></li>
-                                                <li></li>
-                                                <li></li>
-                                            </td>
-                                            <td class=" text-center ">
-                                                <a href="" class="table-action  mg-r-10" href="#"><i
-                                                        class="fa fa-pencil"></i></a>
-                                                <a data-id="" class="table-action " id="deleteUser" data-toggle="modal"
-                                                    data-target="#deleteModal"><i class="fa fa-trash"></i></a>
-                                            </td>
-                                        </tr>
+                                                    <button class="prev-btn">Prev</button>
+                                                    <button class="next-btn">Next</button>
+
+                                                </td>
+                                                <td class="pl-4">{{ $food->name }}</td>
+                                                <td class="pl-4">{{ $food->quantity }}</td>
+                                                <td class="pl-4">{{ number_format($food->price) }}</td>
+                                                <td class="pl-4">{{ $food->status }} </td>
+                                                <td class=" text-center ">
+                                                    <a href="" class="table-action  mg-r-10" href="#"><i
+                                                            class="fa fa-pencil"></i></a>
+                                                    <a data-id="" class="table-action " id="deleteUser" data-toggle="modal"
+                                                        data-target="#deleteModal"><i class="fa fa-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                     <tfoot>
                                         <tr>
@@ -131,7 +118,7 @@
                                             <th>Name</th>
                                             <th>Quantity</th>
                                             <th>Price</th>
-                                            <th>Ingredient</th>
+                                            <th>Status</th>
                                             <th></th>
                                         </tr>
                                     </tfoot>
@@ -168,21 +155,54 @@
     </div>
 @endsection
 @section('js')
+
     <script src="{{ asset('assets/plugins/dataTable/datatables.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/dataTable/responsive/dataTables.responsive.js') }}"></script>
     <script src="{{ asset('assets/plugins/dataTable/extensions/dataTables.jqueryui.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/swiper/js/swiper.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/swiper/js/swiper-active.js') }}"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <!-- END: Vendor JS-->
     <!-- BEGIN: Init JS-->
     <script>
-        // Basic DataTable
-        $('#basicDataTable').DataTable({
-            responsive: true,
-            language: {
-                searchPlaceholder: 'Search...',
-                sSearch: ''
-            }
+        $(document).ready(function() {
+            $(".slider").slick({
+
+// normal options...
+infinite: false,
+
+// the magic
+responsive: [{
+
+    breakpoint: 1024,
+    settings: {
+      slidesToShow: 3,
+      infinite: true
+    }
+
+  }, {
+
+    breakpoint: 600,
+    settings: {
+      slidesToShow: 2,
+      dots: true
+    }
+
+  }, {
+
+    breakpoint: 300,
+    settings: "unslick" // destroys slick
+
+  }]
+});
+            // Basic DataTable
+            $('#basicDataTable').DataTable({
+                responsive: true,
+                language: {
+                    searchPlaceholder: 'Search...',
+                    sSearch: ''
+                }
+            });
         });
     </script>
 @endsection

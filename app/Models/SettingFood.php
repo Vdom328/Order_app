@@ -13,6 +13,6 @@ class SettingFood extends Model
 
     public function foodImages()
     {
-        return $this->belongsTo(FoodImages::class);
+        return $this->hasMany(FoodImages::class, 'food_id');
     }
 }
