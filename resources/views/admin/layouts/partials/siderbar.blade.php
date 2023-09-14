@@ -75,9 +75,9 @@
                         <span class="mt-5">RESTAURANT DISCOUNT</span>
                     </a>
                 </li>
-                <li class="">
-                    <a href="">
-                        <i class="fa fa-spin fa-star mr-2"></i>
+                <li class="{{ Request::routeIs('admin.restaurant.restaurant_setting') ? 'active' : '' }}">
+                    <a href="{{ route('admin.restaurant.restaurant_setting') }}">
+                        <div class="mr-2 fa fa-spin fa-asterisk"></div>
                         <span class="mt-5">RESTAURANT</span>
                     </a>
                 </li>

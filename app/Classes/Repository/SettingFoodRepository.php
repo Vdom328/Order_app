@@ -14,4 +14,13 @@ class SettingFoodRepository extends BaseRepository implements ISettingFoodReposi
     }
 
 
+    /**
+     * get list food Setting quantity >=1
+     */
+    public function getListFoodAjax()
+    {
+        return SettingFood::where('quantity','>=',1)->get();
+    }
+
+
 }

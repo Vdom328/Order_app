@@ -43,10 +43,6 @@ class SettingFoodService extends BaseService implements ISettingFoodService
      */
     public function createImagesStorage($data, $food_id)
     {
-        if (!Storage::exists('public/food_images')) {
-            // Tạo mới thư mục avatarUser
-            Storage::makeDirectory('public/food_images');
-        }
         $attribute = [];
         foreach ($data as $img) {
             if ($img) {
@@ -67,5 +63,49 @@ class SettingFoodService extends BaseService implements ISettingFoodService
     public function getListFood()
     {
         return $this->settingFoodRepository->all();
+    }
+
+    /**
+     * get list food quantity > 0
+     */
+    public function getListFoodAjax(){
+        return $this->settingFoodRepository->getListFoodAjax();
+    }
+
+    /**
+     * delete by id
+     * @param int  $id
+     */
+    public function delete($id)
+    {
+        return $this->settingFoodRepository->delete($id);
+    }
+
+    /**
+     * get by id
+     */
+    public function get($id)
+    {
+        return $this->settingFoodRepository->find($id);
+    }
+
+
+    /**
+     * update food by id
+     * @param int $id
+     * @param array $data
+     */
+    public function updateFood($data,$id)
+    {
+        $attr = [
+            'name' => $data['name'],
+            'quantity' => $data['quantity'],
+            'price' => $data['price'],
+            'status' => $data['status'],
+        ];
+        $food_setting = $this->settingFoodRepository->update($id,$attr);
+        $deleteImages = $this->foodImagesRepository->deleteByFoodId($id);
+        $images =  $this->createImagesStorage($data['images'],$id);
+        return $images;
     }
 }

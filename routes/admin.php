@@ -6,10 +6,11 @@ use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\FoodController;
+use App\Http\Controllers\Admin\RestaurantController;
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', [HomeController::class, 'index'])->name('admin.home')->middleware('auth');
-
+    // route authorization
     Route::group(['prefix' => 'auth'], function () {
         Route::get('/login', [LoginController::class, 'getLogin'])->name('admin.auth.getLogin');
         Route::match(['get', 'post'], '/postLogin', [LoginController::class, 'postLogin'])->name('admin.auth.postLogin');
@@ -20,7 +21,7 @@ Route::group(['prefix' => 'admin'], function () {
 
 
     });
-
+    // route user profile
     Route::group(['prefix' => 'user', 'middleware' => "auth"], function () {
         Route::get('/list', [UserController::class, 'getlistUser'])->name('admin.user.list');
         Route::post('/postCreate', [UserController::class, 'postCreate'])->name('admin.user.postCreate');
@@ -34,7 +35,7 @@ Route::group(['prefix' => 'admin'], function () {
         // delete account
         Route::post('/delete/{id}', [UserController::class, 'delete'])->name('admin.user.delete');
     });
-
+    // route role change
     Route::group(['prefix' => 'role', 'middleware' => "auth"], function () {
         Route::get('/list', [RoleController::class, 'getlistRole'])->name('admin.role.list');
         Route::post('/postCreate', [RoleController::class, 'postCreate'])->name('admin.role.postCreate');
@@ -42,9 +43,23 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/postEditRole/{id}', [RoleController::class, 'postEditRole'])->name('admin.role.postEditRole');
         Route::get('/deleteRole/{id}', [RoleController::class, 'deleteRole'])->name('admin.role.deleteRole');
     });
+    // route settings food
     Route::group(['prefix' => 'setting_food', 'middleware' => "auth"], function () {
         Route::get('/', [FoodController::class, 'index'])->name('admin.setting_food.index');
         Route::get('/create', [FoodController::class, 'getCreate'])->name('admin.setting_food.getCreate');
         Route::POST('/postCreate', [FoodController::class, 'postCreate'])->name('admin.setting_food.postCreate');
+        Route::get('/ajaxCheckbox', [FoodController::class, 'ajaxCheckbox'])->name('admin.setting_food.ajaxCheckbox');
+        Route::get('/delete/{id}', [FoodController::class, 'delete'])->name('admin.setting_food.delete');
+        Route::get('/edit/{id}', [FoodController::class, 'edit'])->name('admin.setting_food.edit');
+        Route::post('/edit/{id}', [FoodController::class, 'postEdit'])->name('admin.setting_food.postEdit');
+    });
+    // route restaurant food
+    Route::group(['prefix' => 'restaurant_food', 'middleware' => "auth"], function () {
+        Route::get('/', [RestaurantController::class, 'index'])->name('admin.restaurant_food.index');
+    });
+    // route restaurant setting
+    Route::group(['prefix' => 'restaurant', 'middleware' => "auth"], function () {
+        Route::get('/create', [RestaurantController::class, 'restaurant_setting'])->name('admin.restaurant.restaurant_setting');
+        Route::post('/postUpdate', [RestaurantController::class, 'postUpdate'])->name('admin.restaurant.postUpdate');
     });
 });
