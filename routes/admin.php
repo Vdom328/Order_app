@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\FoodController;
 use App\Http\Controllers\Admin\RestaurantController;
+use App\Http\Controllers\Admin\RestaurantFoodController;
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', [HomeController::class, 'index'])->name('admin.home')->middleware('auth');
@@ -55,11 +56,14 @@ Route::group(['prefix' => 'admin'], function () {
     });
     // route restaurant food
     Route::group(['prefix' => 'restaurant_food', 'middleware' => "auth"], function () {
-        Route::get('/', [RestaurantController::class, 'index'])->name('admin.restaurant_food.index');
+        Route::get('/', [RestaurantFoodController::class, 'index'])->name('admin.restaurant_food.index');
     });
     // route restaurant setting
     Route::group(['prefix' => 'restaurant', 'middleware' => "auth"], function () {
         Route::get('/create', [RestaurantController::class, 'restaurant_setting'])->name('admin.restaurant.restaurant_setting');
         Route::post('/postUpdate', [RestaurantController::class, 'postUpdate'])->name('admin.restaurant.postUpdate');
+        Route::get('/', [RestaurantController::class, 'index'])->name('admin.restaurant.index');
+        Route::get('/update/{id}', [RestaurantController::class, 'update'])->name('admin.restaurant.update');
+        Route::post('/delete/{id}', [RestaurantController::class, 'delete'])->name('admin.restaurant.delete');
     });
 });

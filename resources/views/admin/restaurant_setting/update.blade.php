@@ -20,7 +20,7 @@
                 <div class="inner-content">
                     <form action="{{ route('admin.restaurant.postUpdate') }}" method="post" class="modal-body col-12" id="myForm" enctype="multipart/form-data">
                         @csrf
-                        <input type="hidden" name="id" value="">
+                        <input type="hidden" name="id" value="{{$restaurant->id  }}">
                         <div class="col col-12  custom-fieldset">
                             <!--  status radio buttons -->
                             <div class="row">
@@ -30,16 +30,16 @@
                                             <input type="radio"
                                                    class="form-check-input"
                                                    name="status"
-                                                   value="1"
-                                                   {{ old('status') == '1' ? 'checked' : '' }}>
+                                                   value="0"
+                                                   {{ old('status', $restaurant->status) == Config::get('const.food.status.Active') ? 'checked' : '' }}>
                                             Active
                                         </label>
                                         <label class="form-check-label m-0" style="font-size: 13px; padding: 6px 28px">
                                             <input type="radio"
                                                    class="form-check-input"
                                                    name="status"
-                                                   value="2"
-                                                   {{ old('status') == '2' ? 'checked' : '' }}>
+                                                   value="1"
+                                                   {{ old('status', $restaurant->status) == Config::get('const.food.status.Inactive') ? 'checked' : '' }}>
                                             Inactive
                                         </label>
                                     </div>
@@ -52,14 +52,18 @@
                                     <div class="col-12 col-md-6 p-0 m-0">
                                         <div class="col col-12 col-md-6">Logo </div>
                                         <div class="col col-12 col-lg-12 mt-2">
-                                            <input class="form-control w-100" name="logo" id="logo" type="file"  value="{{ old('logo') }}" style="padding: 0.575rem 0.75rem 2px;">
+                                            <img class="profile-pic img-fluid rounded"
+                                                src="{{ asset('storage/logo/' . $restaurant->logo) ?? '' }}">
+                                            <input id="avatar-file" class="file-upload" name="logo" type="file"
+                                                accept="image/*" />
+                                            {{-- <input class="form-control w-100" name="logo"  type="file"  value="{{ old('logo', asset('storage/logo/' . $restaurant->logo) ?? '' ) }}" style="padding: 0.575rem 0.75rem 2px;"> --}}
                                             <p class="w-100 error text-danger">{{ $errors->first('logo') }}</p>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6 p-0 m-0">
                                         <div class="col col-12 col-md-6">Name </div>
                                         <div class="col col-12 col-lg-12 mt-2">
-                                            <input type="text" class="form-control" name="name" value="{{ old('name') }}">
+                                            <input type="text" class="form-control" name="name" value="{{ old('name', $restaurant->name) }}">
                                             <p class="w-100 error text-danger">{{ $errors->first('name') }}</p>
                                         </div>
                                     </div>
@@ -71,14 +75,14 @@
                                     <div class="col-12 col-md-6 p-0 m-0">
                                         <div class="col col-12 col-md-6">Start time </div>
                                         <div class="col col-12 col-lg-12 mt-2">
-                                            <input class="flatpickr flatpickr-input form-control w-100" id="timeStartPicker"  name="start_time" type="text" value="{{ old('start_time') }}" placeholder="Select start time.." readonly="readonly">
+                                            <input class="flatpickr flatpickr-input form-control w-100" id="timeStartPicker"  name="start_time" type="text" value="{{ old('start_time', $restaurant->start_time) }}" placeholder="Select start time.." readonly="readonly">
                                             <p class="w-100 error text-danger">{{ $errors->first('start_time') }}</p>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6 p-0 m-0">
                                         <div class="col col-12 col-md-6">End time</div>
                                         <div class="col col-12 col-lg-12 mt-2">
-                                            <input class="flatpickr flatpickr-input form-control w-100" id="timeEndPicker"  name="end_time" type="text" value="{{ old('end_time') }}" placeholder="Select end time.." readonly="readonly">
+                                            <input class="flatpickr flatpickr-input form-control w-100" id="timeEndPicker"  name="end_time" type="text" value="{{ old('end_time', $restaurant->end_time) }}" placeholder="Select end time.." readonly="readonly">
                                             <p class="w-100 error text-danger">{{ $errors->first('end_time') }}</p>
                                         </div>
                                     </div>
@@ -90,14 +94,14 @@
                                     <div class="col-12 col-md-6 p-0 m-0">
                                         <div class="col col-12 ">Email <span class="text-danger">*</span></div>
                                         <div class="col col-12 col-lg-12 mt-2">
-                                            <input class="form-control w-100" name="email" id="email" type="email" value="{{ old('email') }}">
+                                            <input class="form-control w-100" name="email" id="email" type="email" value="{{ old('email', $restaurant->email) }}">
                                             <p class="w-100 error text-danger">{{ $errors->first('email') }}</p>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6 p-0 m-0">
                                         <div class="col col-12 ">Address </div>
                                         <div class="col col-12 col-lg-12 mt-2">
-                                            <input class="form-control w-100" name="address" id="address" type="text" value="{{ old('address') }}">
+                                            <input class="form-control w-100" name="address" id="address" type="text" value="{{ old('address', $restaurant->address) }}">
                                             <p class="w-100 error text-danger">{{ $errors->first('address') }}</p>
                                         </div>
                                     </div>
@@ -109,14 +113,14 @@
                                     <div class="col-12 col-md-6 p-0 m-0">
                                         <div class="col col-12 ">Phone Number</div>
                                         <div class="col col-12 col-lg-12 mt-2">
-                                            <input class="form-control w-100" name="phone" id="phone" type="tel" value="{{ old('phone') }}">
+                                            <input class="form-control w-100" name="phone" id="phone" type="tel" value="{{ old('phone', $restaurant->phone) }}">
                                             <p class="w-100 error text-danger">{{ $errors->first('phone') }}</p>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6 p-0 m-0">
                                         <div class="col col-12 ">Maps</div>
                                         <div class="col col-12 col-lg-12 mt-2">
-                                            <input class="form-control w-100" name="maps" id="maps" type="text" value="{{ old('maps') }}">
+                                            <input class="form-control w-100" name="maps" id="maps" type="text" value="{{ old('maps', $restaurant->maps) }}">
                                             <p class="w-100 error text-danger">{{ $errors->first('maps') }}</p>
                                         </div>
                                     </div>

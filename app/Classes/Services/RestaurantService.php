@@ -49,4 +49,29 @@ class RestaurantService extends BaseService implements IRestaurantService
         }
         return $this->IRestaurantSettingRepository->create($attr);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getRestaurants()
+    {
+        return $this->IRestaurantSettingRepository->all();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    function findRestaurantById($id)
+    {
+        return $this->IRestaurantSettingRepository->find($id);
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function delete($id)
+    {
+        return $this->IRestaurantSettingRepository->delete($id);
+    }
 }
