@@ -17,8 +17,7 @@
             <div class="col-lg-12 page-content-area">
                 <div class="inner-content">
                     <div class="col-12 d-flex justify-content-end p-0">
-                        <button type="button" class="btn btn-primary waves-effect mb-3" data-toggle="modal"
-                            data-target="#addRole">
+                        <button type="button" class="btn btn-primary waves-effect mb-3" id="buttonAddRole" >
                             Add Role
                         </button>
                     </div>
@@ -95,27 +94,7 @@
             </div>
         </div>
     </div>
-    {{-- modal delete role --}}
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModal">Role</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Are you sure you want to delete?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
-                    <button type="button" id="confirmDeleteBtn" data-id="#"
-                        class="btn btn-primary waves-effect">Delete</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    @include('modals.delete')
 @endsection
 @section('js')
     <script src="{{ asset('assets/plugins/dataTable/datatables.min.js') }}"></script>
@@ -134,23 +113,30 @@
                 }
             });
 
-            // active menu items
-            $('.list_role').addClass('active');
             // add User
             $("#submitForm").on("click", function() {
                 $("#myForm").attr("method", "post");
                 $("#myForm").attr("action", "{{ route('admin.role.postCreate') }}");
                 $("#myForm").submit();
             });
+            // add role
+            $(document).on('click', '#buttonAddRole   ', function() {
+                $("#name").val('');
+                $('#addRole').modal('show');
+            });
             // edit role
             $(document).on('click', '.edit_role', function() {
-                $('#addRole').modal('show');
                 var id = $(this).attr('data-id');
                 $('#submitForm').attr('data-id', id);
                 var url = "{{ route('admin.role.getEditRole', ['id' => ':id']) }}".replace(':id', id);
-                myAjaxCall(url, 'get', {},
-                        function(data) {
-                            $("#name").val(data.name);
+                $("#name").val('');
+                $.ajax({
+                    url: url,
+                    type: 'get',
+                    data: {},
+                    success: function(data) {
+                        $("#name").val(data.name);
+                        $('#addRole').modal('show');
                             // posst edit User
                             $("#submitForm").on("click", function() {
                                 $("#myForm").attr("method", "post");
@@ -159,17 +145,13 @@
                                     .replace(':id', id));
                                 $("#myForm").submit();
                             });
-                        },
-                        function(errorResponse) {
-                            // Xử lý errorResponse khi lỗi
-                        },
-                        'Delete user successfully !',
-                        'An error occurred, please try again !'
-                    )
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                    },
+                });
             });
             $(document).on('click', '#deleteRole', function() {
                 var id = $(this).attr('data-id');
-                console.log(id);
                 var deleteUrl = "{{ route('admin.role.deleteRole', ['id' => ':id']) }}".replace(':id', id);
                 $("#deleteModal").modal("show");
                 $("#confirmDeleteBtn").on("click", function() {

@@ -20,10 +20,10 @@ class updateAccountRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
 
-    public function rules(): array
+    public function rules()
     {
         $id = $this->route()->parameter('id');
-        return [
+        $rule = [
             'first_name' => 'nullable|string',
             'last_name' => 'nullable|string',
             'email' => [
@@ -34,6 +34,7 @@ class updateAccountRequest extends FormRequest
             'address' => 'nullable|string',
             'telephone' => 'nullable|numeric',
         ];
+        return $rule;
     }
     /**
      * Get the error messages for the defined validation rules.

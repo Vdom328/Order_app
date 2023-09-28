@@ -19,17 +19,14 @@
     <link type="image/x-icon" rel="icon" href="{{ asset('assets/images/favicon.ico') }}">
     <link type="text/css" rel="stylesheet" href="{{ asset('assets/plugins/jquery.growl/jquery.growl.css') }}">
     {{-- <link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}"> --}}
+
     @vite([
         'resources/css/style.css',
         'resources/js/common.js'
     ])
 
     @yield('css')
-    <script src="{{ asset('assets/js/plugin-bundle.js') }}"></script>
-    <script src="{{ asset('assets/js/app.js') }}"></script>
-    <script src="{{ asset('assets/js/adata-init.js') }}"></script>
-    <script src="{{ asset('assets/plugins/jquery.growl/jquery.growl.js') }}"></script>
-    {{-- <script src="{{ asset('js/common.js') }}"></script> --}}
+
 
     <!-- END: Global JS-->
 
@@ -73,16 +70,14 @@
     <a href="" data-click="scroll-top" class="btn-scroll-top fade waves-effect"><i data-feather="arrow-up"
             class="wd-16"></i></a>
     <!--/ Scroll To Top End -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{{ asset('assets/js/plugin-bundle.js') }}"></script>
+    <script src="{{ asset('assets/js/app.js') }}"></script>
+    <script src="{{ asset('assets/js/adata-init.js') }}"></script>
+    <script src="{{ asset('assets/plugins/jquery.growl/jquery.growl.js') }}"></script>
     @include('admin.layouts.partials.setting')
     @include('admin.layouts.partials.message')
     @yield('js')
-    <script>
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-    </script>
 </body>
 
 </html>

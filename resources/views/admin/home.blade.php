@@ -369,9 +369,5 @@ Home
 <!-- BEGIN: Init JS -->
 <script src="{{ asset('assets/lib/dashboard/analytic/dashboard-home-init.js')}}"></script>
 <!-- END: Init JS-->
-<script>
-    $(document).ready(function() {
-        $('.home').addClass('active');
-    });
-</script>
+
 @endsection

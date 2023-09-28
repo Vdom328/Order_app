@@ -6,9 +6,7 @@ use App\Classes\Services\Interfaces\IUserService;
 use App\Classes\Services\Interfaces\IRoleService;
 
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Classes\Enums\StatusUserEnum;
@@ -54,10 +52,22 @@ class LoginController extends Controller
         Session::flash('error', "The provided credentials do not match our records.");
         return redirect()->back();
     }
+
     public function getLogout(): RedirectResponse
     {
         Auth::logout();
         Session::flash('success', "You have been logged out successfully.");
         return redirect()->route('admin.auth.getLogin');
+    }
+
+    public function getForgot()
+    {
+        return view('admin.auth.aut-password');
+    }
+
+    public function postForgot(Request $request)
+    {
+        $this->IUserService->postForgotByEmail($request->email);
+        dd($request->all());
     }
 }

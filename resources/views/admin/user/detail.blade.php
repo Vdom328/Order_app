@@ -20,7 +20,7 @@
                             <div class="profile-avatar-setting mr-3">
                                 <div class="avatar-wrapper">
                                     <img class="profile-pic img-fluid rounded"
-                                        src="{{ asset('storage/' . $user->avatar) ?? '' }}">
+                                        src="{{ asset('storage/avatarUser/' . $user->avatar) ?? '' }}">
                                     <div class="upload-button">
                                         <i class="fa fa-camera" aria-hidden="true"></i>
                                     </div>
@@ -299,10 +299,6 @@
     <!-- BEGIN: Init JS-->
     <script>
         $(document).ready(function() {
-            // active menu items
-            $('.user').addClass('open active');
-            $('.li-user').css('display', 'block');
-            $('.list_user').addClass('active');
             // File Uploader
             var readURL = function(input) {
                 if (input.files && input.files[0]) {
@@ -325,7 +321,6 @@
             $("#avatar-file").on("change", function() {
                 var formData = new FormData();
                 formData.append("avatar", this.files[0]);
-                console.log(formData);
                 $.ajax({
                     url: "{{ route('admin.user.updateAvatar', $user->id) }}",
                     method: "POST",
@@ -339,9 +334,7 @@
                         });
                     },
                     error: function(xhr, status, error) {
-                        $.growl.error({
-                            message: 'An error occurred, please try again !'
-                        });
+
                     }
                 });
             });
@@ -350,34 +343,46 @@
                 event.preventDefault();
                 var form = $('#social-links-form');
                 var url = form.attr('action');
-                myAjaxCall(url, 'POST', form.serialize(),
-                    function(data) {},
-                    function(errorResponse) {
-                        // Xử lý errorResponse khi lỗi
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: form.serialize(),
+                    success: function(data) {
+                        $.growl.success({
+                            message: 'Update social links successfully !'
+                        });
                     },
-                    'Update social links successfully !',
-                    'An error occurred, please try again !'
-                )
+                    error: function(jqXHR, textStatus, errorThrown) {
+
+                    },
+                });
             });
             // update acccout
             $('#save-account-form').click(function(event) {
                 event.preventDefault();
                 var form = $('#account-form');
                 var url = form.attr('action');
-                myAjaxCall(url, 'POST', form.serialize(),
-                    function(data) {},
-                    function(error) {
-
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: form.serialize(),
+                    success: function(data) {
+                        $.growl.success({
+                            message: 'Update account successfully !'
+                        });
                     },
-                    'Update account successfully !',
-                    'An error occurred, please try again !'
-                )
+                    error: function(jqXHR, textStatus, errorThrown) {
+                    },
+                });
             });
             // update acccout
             $('#account-toggle-button').click(function() {
                 var url = "{{ route('admin.user.toggleStatus', $user->id) }}";
-                myAjaxCall(url, 'POST', {},
-                    function(data) {
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {},
+                    success: function(data) {
                         if (data.status === 'success') {
                             if ($('#account-toggle-button').hasClass('btn-danger')) {
                                 $('#account-toggle-button')
@@ -398,12 +403,10 @@
                             });
                         }
                     },
-                    function(errorResponse) {
-                        alert('An error occurred, please try again !');
+                    error: function(jqXHR, textStatus, errorThrown) {
+                                                alert('An error occurred, please try again !');
                     },
-                    'Update account successfully !',
-                    'An error occurred, please try again !'
-                )
+                });
             });
         });
     </script>

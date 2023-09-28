@@ -11,7 +11,7 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
-
+    public $table = "users";
     /**
      * The attributes that are mass assignable.
      *
@@ -52,5 +52,9 @@ class User extends Authenticatable
     public function getRememberTokenName()
     {
         return 'remember_token';
+    }
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
     }
 }

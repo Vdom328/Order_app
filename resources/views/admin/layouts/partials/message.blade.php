@@ -1,4 +1,5 @@
 <script>
+
     // check for error message in session
     @if (session()->has('error'))
         var errorMessage = '{{ session('error') }}';

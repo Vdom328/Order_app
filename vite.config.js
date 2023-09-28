@@ -6,8 +6,11 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/css/style.css',
-                'resources/css/admin/project.css',
-                'resources/js/common.js'
+                'resources/css/client/layouts.css',
+                'resources/css/admin/setting_food.css',
+                'resources/css/client/style.css',
+                'resources/js/common.js',
+                'resources/js/client/app.js',
             ],
             refresh: true,
         }),

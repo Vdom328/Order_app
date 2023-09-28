@@ -80,5 +80,6 @@ interface IBaseRepository
      */
     public function findById(int $id);
 
-    
+
+    public function whereParam($column, $parameter);
 }

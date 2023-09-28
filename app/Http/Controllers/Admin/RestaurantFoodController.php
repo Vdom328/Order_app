@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class ProjectController extends Controller
+class RestaurantFoodController extends Controller
 {
     public function index()
     {
-        return view('admin.project.index');
+        return view('admin.restaurant_food.index');
     }
 }

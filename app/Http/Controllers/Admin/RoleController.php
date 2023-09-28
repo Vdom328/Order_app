@@ -17,13 +17,27 @@ class RoleController extends Controller
     ) {
         $this->IRoleService = $IRoleService;
     }
+
+    /**
+     * get list role list data
+     */
     public function getlistRole()
     {
         $roles = $this->IRoleService->listRole();
         return view('admin.role.list', compact('roles'));
     }
+
+    /**
+     * update data by $request
+     * @param mixed $request
+     * @return void
+     */
     public function postCreate(request $request)
     {
+        if($request->name == ''){
+            Session::flash('error', "An error occurred, please try again !");
+            return redirect()->route('admin.role.list');
+        }
         $createRole = $this->IRoleService->createRole($request);
         if (!$createRole) {
             Session::flash('error', "An error occurred, please try again !");
@@ -33,11 +47,21 @@ class RoleController extends Controller
         Session::flash('success', "Add role successfully !");
         return redirect()->route('admin.role.list');
     }
+
+    /**
+     * get blade edit role by id
+     * @param int  $id
+     * @return
+     */
     public function getEditRole($id)
     {
         $role = $this->IRoleService->find($id);
-        return response()->json($role);
+        return response()->json( $role);
     }
+
+    /**
+     * update data by id
+     */
     public function postEditRole(Request $request ,$id)
     {
         $role = $this->IRoleService->postEditRole($request, $id);
@@ -49,6 +73,11 @@ class RoleController extends Controller
         Session::flash('success', "Update role successfully !");
         return redirect()->route('admin.role.list');
     }
+
+    /**
+     * delete tole by id
+     * @param int $id
+     */
     public function deleteRole($id)
     {
         $role = $this->IRoleService->delete($id);
