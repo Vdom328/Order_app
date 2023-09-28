@@ -1,4 +1,4 @@
-<div class="nav-trigger col-12 shadow-sm d-flex p-0 bg-white">
+<div class="nav-trigger col-12 shadow d-flex p-0 bg-white">
     <div class="col-2 icon_sidebar d-flex p-1 align-items-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
