@@ -1,37 +1,14 @@
 @extends('admin.layouts.master')
-
 @section('title')
-    Restaurant food
+    Restaurant Food Setting
 @endsection
-
 @section('css')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/main.css">
+    <link type="text/css" rel="stylesheet" href="{{ asset('assets/plugins/dataTable/datatables.min.css') }}">
+    <link type="text/css" href="{{ asset('assets/plugins/dataTable/extensions/dataTables.jqueryui.min.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ asset('assets/plugins/bootstrap-select/css/bootstrap-select.min.css') }}">
     <style>
-        #external-events {
-            position: fixed;
-            z-index: 2;
-            top: 20px;
-            left: 20px;
-            width: 150px;
-            padding: 0 10px;
-            border: 1px solid #ccc;
-            background: #eee;
-        }
-
-        #external-events .fc-event {
-            margin: 1em 0;
-            cursor: move;
-        }
-
-        #calendar-container {
-            position: relative;
-            z-index: 1;
-            margin-left: 200px;
-        }
-
-        #calendar {
-            max-width: 1100px;
-            margin: 20px auto;
+        label {
+            margin-bottom: 0;
         }
     </style>
 @endsection
@@ -43,94 +20,67 @@
             <!-- Page Content Area Start -->
             <!--================================-->
             <div class="col-lg-12 page-content-area">
-                <div id='external-events'>
-                    <p>
-                        <strong>Draggable Events</strong>
-                    </p>
-                    <div class='fc-event fc-h-event fc-timeline-event' data-title="Plan 1" data-duration="01:00:00">Plan 1 ~ 60
+                <div class="inner-content">
+                    <div class="col-12 d-flex justify-content-end p-0">
+                        <div class="col-3">
+                            <select class="selectpicker form-control" name="gender">
+                                @foreach ($restaurant as $item)
+                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
-                    <div class='fc-event fc-h-event fc-timeline-event' data-title="Plan 2" data-duration="01:20:00">Plan 2 ~
-                        80</div>
-                    <div class='fc-event fc-h-event fc-timeline-event' data-title="Plan 3" data-duration="01:40:00">Plan 3 ~
-                        100</div>
-                    <div class='fc-event fc-h-event fc-timeline-event' data-title="Plan 4" data-duration="02:00:00">Plan 4 ~
-                        120</div>
+                    <div class="custom-fieldset-style mg-b-30 mt-3">
+                        <div class="clearfix">
+                            <div class="clearfix">
+                                <div class="col-12 d-flex flex-wrap">
+                                    @for ($i = 1; $i < 19; $i++)
+                                        <div class="col-3 p-2 d-flex align-items-center">
+                                            <input type="checkbox" class="form-checkbox"><label
+                                                for="" class="pl-2">ádasdasdas</label>
+                                        </div>
+                                    @endfor
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                <div id='calendar-container'>
-                    <div id='calendar'></div>
+            </div>
+            <!--/ Page Content Area End -->
+            <!--================================-->
+        </div>
+    </div>
+    {{-- modal add role --}}
+    <div class="modal fade" id="addRole" tabindex="-1" role="dialog" aria-labelledby="ModalRole" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModalRole">Role</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="myForm" class="col-12 col-md-12 p-0 m-0">
+                        @csrf
+                        <div class="col col-12 col-md-12">Name Role</div>
+                        <div class="col col-12 col-lg-12 mt-2">
+                            <input class="form-control w-100" name="name" id="name" type="text"
+                                value="{{ old('name') }}">
+                            <p class="w-100 error text-danger">{{ $errors->first('name') }}</p>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
+                    <button type="button" id="submitForm" data-id="#" class="btn btn-primary waves-effect">Save
+                        changes</button>
                 </div>
             </div>
         </div>
     </div>
+    @include('modals.delete')
 @endsection
-
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.8/index.global.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            var Calendar = FullCalendar.Calendar;
-            var Draggable = FullCalendar.Draggable;
-
-            var containerEl = $('#external-events')[0];
-            var calendarEl = $('#calendar')[0];
-            var checkbox = $('#drop-remove')[0];
-
-            // initialize the external events
-            // -----------------------------------------------------------------
-
-            new Draggable(containerEl, {
-                itemSelector: '.fc-event',
-                eventData: function(eventEl) {
-                    return {
-                        title: eventEl.getAttribute('data-title'),
-                        duration: eventEl.getAttribute('data-duration')
-                    };
-                }
-            });
-
-            // initialize the calendar
-            // -----------------------------------------------------------------
-
-            var tempStartEvent = null;
-            var tempEndEvent = null;
-            var calendar = new Calendar(calendarEl, {
-                timeZone: 'UTC',
-                initialView: 'resourceTimelineDay',
-                aspectRatio: 1.5,
-                slotDuration: '03:00:00',
-                headerToolbar: {
-                    left: 'prev,next',
-                    center: 'title',
-                    right: '' //resourceTimelineDay,resourceTimelineWeek,resourceTimelineMonth
-                },
-                resourceAreaHeaderContent: 'Rooms',
-                resources: [{
-                        "id": "a",
-                        "title": "ROOM 1"
-                    },
-                    {
-                        "id": "b",
-                        "title": "ROOM 2",
-                        "eventColor": "green"
-                    },
-                    {
-                        "id": "c",
-                        "title": "ROOM 3",
-                        "eventColor": "orange"
-                    }
-                ],
-                editable: true,
-                droppable: true, // this allows things to be dropped onto the calendar
-                eventResizableFromStart: true,
-                eventDurationEditable: false,
-                eventReceive: function(info) {},
-                eventDragStop: function(info) {},
-                eventDrop: function(info) {}
-            });
-
-            calendar.render();
-        });
-    </script>
+    <script src="{{ asset('assets/plugins/bootstrap-select/js/bootstrap-select.min.js') }}"></script>
 @endsection
