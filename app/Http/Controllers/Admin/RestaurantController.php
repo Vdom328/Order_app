@@ -62,8 +62,9 @@ class RestaurantController extends Controller
       */
     public function update($id)
     {
+        $typeMeals = $this->getStatus();
         $restaurant = $this->restaurantService->findRestaurantById($id);
-        return view('admin.restaurant_setting.update', compact('restaurant'));
+        return view('admin.restaurant_setting.update', compact('restaurant','typeMeals'));
     }
 
     /**

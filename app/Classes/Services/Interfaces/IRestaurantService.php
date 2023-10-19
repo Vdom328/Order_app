@@ -23,4 +23,10 @@ interface IRestaurantService
      * @param int $id
      */
     public function delete($id);
+
+    /**
+     * get meals by restaurant id
+     * @param array $data
+     */
+    public function getMealsByRestaurantId($data);
 }

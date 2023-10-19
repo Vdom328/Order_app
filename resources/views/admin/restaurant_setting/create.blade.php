@@ -128,9 +128,10 @@
                                         <div class="col col-12 ">Meal</div>
                                         <div class="col col-12 col-lg-12 mt-2 d-flex flex-wrap">
                                             @foreach ( $typeMeals as $typeMeal)
-                                                <div class="col-3 d-flex">
-                                                    <input type="checkbox" name="" id="{{ $typeMeal['value'] }}" value="{{ $typeMeal['value'] }}"><div for="{{ $typeMeal['value'] }}">{{ $typeMeal['name'] }}</div>
-                                                </div>
+                                                <div class="custom-control custom-checkbox col-2 pl-4 mt-5">
+                                                    <input type="checkbox" name="meal[]" class="custom-control-input" id="{{ $typeMeal['value'] }}" value="{{ $typeMeal['value'] }}">
+                                                    <label class="custom-control-label" for="{{ $typeMeal['value'] }}">{{ $typeMeal['name'] }}</label>
+                                                 </div>
                                             @endforeach
                                         </div>
                                     </div>

@@ -13,5 +13,8 @@ class RestaurantMealRepository extends BaseRepository implements IRestaurantMeal
         return RestaurantMeal::class;
     }
 
-
+    public function deleteByRestaurantId($restaurant_id)
+    {
+        return $this->model->where("restaurant_id", $restaurant_id)->delete();
+    }
 }
