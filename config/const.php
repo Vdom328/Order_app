@@ -1,6 +1,6 @@
 <?php
 
-use App\Classes\Enums\StatusUserEnum;
+use App\Classes\Enum\StatusUserEnum;
 
 return [
     'user' => [
@@ -9,8 +9,8 @@ return [
             'Female' => 2,
         ],
         'account_status' => [
-            'Active' => StatusUserEnum::Active,
-            'Inactive' => StatusUserEnum::Inactive,
+            'Active' => StatusUserEnum::Active->value,
+            'Inactive' => StatusUserEnum::Inactive->value,
         ]
     ],
     'food' => [

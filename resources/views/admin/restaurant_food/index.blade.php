@@ -23,10 +23,15 @@
                 <div class="inner-content">
                     <div class="col-12 d-flex justify-content-end p-0">
                         <div class="col-3">
-                            <select class="selectpicker form-control" name="gender">
+                            <select class="selectpicker form-control" name="restaurant_id">
                                 @foreach ($restaurant as $item)
                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                                 @endforeach
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            <select class="selectpicker form-control" name="">
+                                <option value="">Buwax Truwa</option>
                             </select>
                         </div>
                     </div>
@@ -34,12 +39,11 @@
                         <div class="clearfix">
                             <div class="clearfix">
                                 <div class="col-12 d-flex flex-wrap">
-                                    @for ($i = 1; $i < 19; $i++)
+                                    @foreach ( $foods as $food )
                                         <div class="col-3 p-2 d-flex align-items-center">
-                                            <input type="checkbox" class="form-checkbox"><label
-                                                for="" class="pl-2">ádasdasdas</label>
+                                            <input type="checkbox" name="food_id[]" class="form-check-input mb-1" id="food_{{ $food->id }}" value="{{ $food->id }}"><label for="food_{{ $food->id }}" class="pl-2">{{ $food->name }}</label>
                                         </div>
-                                    @endfor
+                                    @endforeach
                                 </div>
                             </div>
                         </div>

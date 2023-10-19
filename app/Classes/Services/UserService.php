@@ -6,7 +6,7 @@ use App\Classes\Repository\Interfaces\IPasswordResetToken;
 use App\Classes\Repository\Interfaces\IUserRepository;
 use App\Classes\Services\Interfaces\IUserService;
 use Illuminate\Support\Facades\Hash;
-use App\Classes\Enums\StatusUserEnum;
+use App\Classes\Enum\StatusUserEnum;
 use App\Mail\ResetPassword;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;

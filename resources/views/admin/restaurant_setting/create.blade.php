@@ -122,6 +122,19 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="mb-4">
+                                <div class="row d-flex flex-wrap">
+                                    <div class="col-12 col-md-12 p-0 m-0">
+                                        <div class="col col-12 ">Meal</div>
+                                        <div class="col col-12 col-lg-12 mt-2 d-flex flex-wrap">
+                                            @foreach ( $typeMeals as $typeMeal)
+                                                <div class="col-3 d-flex">
+                                                    <input type="checkbox" name="" id="{{ $typeMeal['value'] }}" value="{{ $typeMeal['value'] }}"><div for="{{ $typeMeal['value'] }}">{{ $typeMeal['name'] }}</div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                            </div>
                             <button type="submit" class="btn btn-success waves-effect" id="submitForm">Save</button>
                         </div>
                     </form>

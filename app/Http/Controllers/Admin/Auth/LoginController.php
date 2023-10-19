@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Classes\Enums\StatusUserEnum;
+use App\Classes\Enum\StatusUserEnum;
 use Illuminate\Http\RedirectResponse;
 
 class LoginController extends Controller

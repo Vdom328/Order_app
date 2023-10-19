@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class RestaurantSetting extends Model
+class RestaurantMeal extends Model
 {
     use HasFactory;
-    public $table = "restaurant_setting";
+    public $table = "restaurant_meal";
     protected $guarded = [];
 
-    public function restaurantMeal()
+    public function restaurantSetting()
     {
-        return $this->hasMany(RestaurantMeal::class, 'restaurant_id');
+        return $this->belongsTo(RestaurantSetting::class, 'restaurant_id');
     }
 }
