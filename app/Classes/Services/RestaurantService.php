@@ -2,6 +2,7 @@
 
 namespace App\Classes\Services;
 
+use App\Classes\Repository\Interfaces\IRestaurantFoodRepository;
 use App\Classes\Repository\Interfaces\IRestaurantMealRepository;
 use App\Classes\Repository\Interfaces\IRestaurantSettingRepository;
 use App\Classes\Services\Interfaces\IRestaurantService;
@@ -11,15 +12,17 @@ use Illuminate\Support\Facades\Storage;
 
 class RestaurantService extends BaseService implements IRestaurantService
 {
-    protected  $IRestaurantSettingRepository, $restaurantMealRepository;
+    protected  $IRestaurantSettingRepository, $restaurantMealRepository, $restaurantFoodRepository;
 
     public function __construct(
         IRestaurantSettingRepository $IRestaurantSettingRepository,
-        IRestaurantMealRepository $restaurantMealRepository
+        IRestaurantMealRepository $restaurantMealRepository,
+        IRestaurantFoodRepository $restaurantFoodRepository
     )
     {
         $this->IRestaurantSettingRepository = $IRestaurantSettingRepository;
         $this->restaurantMealRepository = $restaurantMealRepository;
+        $this->restaurantFoodRepository = $restaurantFoodRepository;
     }
 
     /**
@@ -52,9 +55,12 @@ class RestaurantService extends BaseService implements IRestaurantService
                 "logo" => $logo,
             ];
             if ($data['id'] != '' || $data['id'] != null) {
-                return $this->IRestaurantSettingRepository->update($data['id'],$attr);
+                $this->IRestaurantSettingRepository->update($data['id'],$attr);
+                $restaurantSetting_id = $data['id'];
+            }else{
+                $restaurantSetting = $this->IRestaurantSettingRepository->create($attr);
+                $restaurantSetting_id = $restaurantSetting->id;
             }
-            $restaurantSetting = $this->IRestaurantSettingRepository->create($attr);
             // add meal
             if ($data['id'] != '' || $data['id'] != null) {
                 $mealDelete = $this->restaurantMealRepository->deleteByRestaurantId($data['id']);
@@ -62,7 +68,7 @@ class RestaurantService extends BaseService implements IRestaurantService
             $attrMeal = [];
             foreach ($data['meal'] as $meal ) {
                 $attrMeal[] = [
-                    'restaurant_id' => $restaurantSetting->id,
+                    'restaurant_id' => $restaurantSetting_id,
                     'meal' => $meal,
                 ];
             }
@@ -72,7 +78,7 @@ class RestaurantService extends BaseService implements IRestaurantService
             return true;
         } catch (\Exception $e) {
             DB::rollback();
-            Log::error('Error while create customer: ' . $e->getMessage());
+            Log::error('Error while create : ' . $e->getMessage());
             return false;
         }
     }
@@ -108,5 +114,33 @@ class RestaurantService extends BaseService implements IRestaurantService
     public function getMealsByRestaurantId($data)
     {
         return $this->restaurantMealRepository->whereParam('restaurant_id', $data['restaurant_id']);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function createRestaurantFood($data){
+        DB::beginTransaction();
+        try {
+            $restaurant_meal = $this->restaurantMealRepository->findOne(['restaurant_id' => $data['restaurant_id'], 'meal' => $data['type_meal']]);
+            if (!$restaurant_meal) {
+                return false;
+            };
+            $deleteFood = $this->restaurantFoodRepository->deleteByRestaurantMealId($restaurant_meal->id);
+            $attr = [];
+            foreach ($data['food_id'] as $food_id) {
+                $attr[] = [
+                    'restaurant_meal_id' => $restaurant_meal->id,
+                    'food_id' => $food_id,
+                ];
+            }
+            $this->restaurantFoodRepository->insert($attr);
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            Log::error('Error while create restaurant food : ' . $e->getMessage());
+            return false;
+        }
     }
 }

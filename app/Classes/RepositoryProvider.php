@@ -34,5 +34,6 @@ class RepositoryProvider extends ServiceProvider
         App::bind(IRepository\IFoodImagesRepository::class, Repository\FoodImagesRepository::class);
         App::bind(IRepository\IRestaurantSettingRepository::class, Repository\RestaurantSettingRepository::class);
         App::bind(IRepository\IRestaurantMealRepository::class, Repository\RestaurantMealRepository::class);
+        App::bind(IRepository\IRestaurantFoodRepository::class, Repository\RestaurantFoodRepository::class);
     }
 }

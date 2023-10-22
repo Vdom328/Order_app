@@ -58,6 +58,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group(['prefix' => 'restaurant_food', 'middleware' => "auth"], function () {
         Route::get('/', [RestaurantFoodController::class, 'index'])->name('admin.restaurant_food.index');
         Route::get('/getMeals', [RestaurantFoodController::class, 'getMeals'])->name('admin.restaurant_food.getMeals');
+        Route::get('/getCheckbox', [RestaurantFoodController::class, 'getCheckbox'])->name('admin.restaurant_food.getCheckbox');
+        Route::post('/post-food-restaurant', [RestaurantFoodController::class, 'postFoodRestaurant'])->name('admin.restaurant_food.postFoodRestaurant');
     });
     // route restaurant setting
     Route::group(['prefix' => 'restaurant', 'middleware' => "auth"], function () {

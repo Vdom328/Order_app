@@ -15,4 +15,8 @@ class RestaurantMeal extends Model
     {
         return $this->belongsTo(RestaurantSetting::class, 'restaurant_id');
     }
+    public function restaurantFood()
+    {
+        return $this->hasMany(RestaurantFood::class, 'restaurant_meal_id');
+    }
 }

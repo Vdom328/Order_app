@@ -6,7 +6,9 @@ use App\Classes\Enum\TypeMealEnum;
 use App\Classes\Services\Interfaces\IRestaurantService;
 use App\Classes\Services\Interfaces\ISettingFoodService;
 use App\Http\Controllers\Controller;
+use App\Models\RestaurantMeal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class RestaurantFoodController extends Controller
 {
@@ -53,6 +55,48 @@ class RestaurantFoodController extends Controller
     public function getMeals(Request $request)
     {
         $meals = $this->restaurantService->getMealsByRestaurantId($request->all());
-        return response()->json( ['data'=> $meals]);
+        if (!$meals instanceof \Illuminate\Support\Collection) {
+            throw new \Exception('Invalid meals data');
+        }
+
+        $meals = $meals->map(function ($meal) {
+                $meal->name = TypeMealEnum::getLabel($meal->meal);
+            return $meal;
+        });
+
+        $data = view('admin.restaurant_food.partials._option_meals',['meals' => $meals])->render();
+
+        return response()->json( ['data'=> $data]);
+    }
+
+    /**
+     * get check book food restaurant data
+     *
+     */
+    public function getCheckbox(Request $request)
+    {
+        $foods = $this->settingFoodService->getListFood();
+
+        if (!$foods instanceof \Illuminate\Support\Collection) {
+            throw new \Exception('Invalid foods data');
+        }
+
+        $data = view('admin.restaurant_food.partials._list_meals',['foods' => $foods])->render();
+
+        return response()->json( ['data'=> $data]);
+    }
+
+    /**
+     * post save food restaurant data to database
+     */
+    public function postFoodRestaurant(Request $request){
+        $create = $this->restaurantService->createRestaurantFood($request->all());
+        if (!$create) {
+            Session::flash('error', "An error occurred, please try again !");
+            return redirect()->back();
+        }
+        // Return a success
+        Session::flash('success', "Create restaurant food successfully !");
+        return redirect()->route('admin.restaurant_food.index');
     }
 }

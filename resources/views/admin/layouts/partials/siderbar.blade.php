@@ -69,12 +69,6 @@
                         <span class="mt-5">RESTAURANT FOODS</span>
                     </a>
                 </li>
-                <li class="">
-                    <a href="">
-                        <i class="fa fa-spin fa-star-o mr-2"></i>
-                        <span class="mt-5">RESTAURANT DISCOUNT</span>
-                    </a>
-                </li>
                 <li class="project @if (Request::routeIs('admin.restaurant.restaurant_setting') || Request::routeIs('admin.restaurant.index') || Request::routeIs('admin.restaurant.update')) open active @endif">
                     <a href="#">
                         <i class="fa fa-spin fa-asterisk mr-2"></i>
@@ -84,6 +78,12 @@
                         <li class="@if (Request::routeIs('admin.restaurant.index') ) active @endif"><a href="{{ route('admin.restaurant.index') }}">List</a></li>
                         <li class="@if (Request::routeIs('admin.restaurant.restaurant_setting') ) active @endif"><a href="{{ route('admin.restaurant.restaurant_setting') }}">Create</a></li>
                     </ul>
+                </li>
+                <li class="">
+                    <a href="">
+                        <i class="fa fa-spin fa-star-o mr-2"></i>
+                        <span class="mt-5">RESTAURANT DISCOUNT</span>
+                    </a>
                 </li>
                 <li class="">
                     <a href="">
