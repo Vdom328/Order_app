@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Client\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,9 +21,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', function () {
-    return view('client.home');
-});
-// Route::get('/home', function () {
-//     return view('client.test.master');
-// });
+Route::get('/home', [HomeController::class, 'index'])->name('client.home');
+
+Route::get('/table', [HomeController::class, 'getTable'])->name('client.getTable');

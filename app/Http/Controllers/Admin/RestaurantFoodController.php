@@ -18,8 +18,6 @@ class RestaurantFoodController extends Controller
     public function __construct(
         IRestaurantService $restaurantService,
         ISettingFoodService $settingFoodService,
-
-
     ) {
         $this->restaurantService = $restaurantService;
         $this->settingFoodService = $settingFoodService;
@@ -30,7 +28,7 @@ class RestaurantFoodController extends Controller
         $typeMeals = $this->getStatus();
         $restaurant = $this->restaurantService->getRestaurants();
         $foods = $this->settingFoodService->getListFood();
-        return view('admin.restaurant_food.index',compact('restaurant','foods','typeMeals'));
+        return view('admin.restaurant_food.index', compact('restaurant', 'foods', 'typeMeals'));
     }
 
     /**
@@ -60,13 +58,13 @@ class RestaurantFoodController extends Controller
         }
 
         $meals = $meals->map(function ($meal) {
-                $meal->name = TypeMealEnum::getLabel($meal->meal);
+            $meal->name = TypeMealEnum::getLabel($meal->meal);
             return $meal;
         });
 
-        $data = view('admin.restaurant_food.partials._option_meals',['meals' => $meals])->render();
+        $data = view('admin.restaurant_food.partials._option_meals', ['meals' => $meals])->render();
 
-        return response()->json( ['data'=> $data]);
+        return response()->json(['data' => $data]);
     }
 
     /**
@@ -81,22 +79,18 @@ class RestaurantFoodController extends Controller
             throw new \Exception('Invalid foods data');
         }
 
-        $data = view('admin.restaurant_food.partials._list_meals',['foods' => $foods])->render();
+        $restaurantMeals = $this->restaurantService->getRestaurantMeals($request->all());
+        $data = view('admin.restaurant_food.partials._list_meals', ['foods' => $foods, 'restaurantMeals' => $restaurantMeals])->render();
 
-        return response()->json( ['data'=> $data]);
+        return response()->json(['data' => $data]);
     }
 
     /**
      * post save food restaurant data to database
      */
-    public function postFoodRestaurant(Request $request){
+    public function postFoodRestaurant(Request $request)
+    {
         $create = $this->restaurantService->createRestaurantFood($request->all());
-        if (!$create) {
-            Session::flash('error', "An error occurred, please try again !");
-            return redirect()->back();
-        }
-        // Return a success
-        Session::flash('success', "Create restaurant food successfully !");
-        return redirect()->route('admin.restaurant_food.index');
+        return response()->json();
     }
 }

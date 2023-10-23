@@ -31,11 +31,23 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-   <!-- choose one -->
-<script src="https://unpkg.com/feather-icons"></script>
-<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <!-- choose one -->
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
 
     @yield('js')
+    <script>
+        $(document).ready(function() {
+            var restaurant = JSON.parse(localStorage.getItem('restaurant'));
+            $('.name_restaurant').html(restaurant.name)
+            var imagePath = "{{ asset('storage/logo') }}" + '/' + restaurant.logo;
+            $(".logo_restaurant").attr("src", imagePath);
+            $('.phone_restaurant').html(restaurant.phone);
+            $('.email_restaurant').html(restaurant.email)
+            let time_restaurant = '(' + restaurant.start_time + ' - ' + restaurant.end_time + ')';
+            $('.time_restaurant').html(time_restaurant)
+        });
+    </script>
 </body>
 
 </html>

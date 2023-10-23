@@ -35,4 +35,16 @@ interface IRestaurantService
      * @param array $data
      */
     public function createRestaurantFood($data);
+
+    /**
+     * get restaurant meals by restaurant_id\
+     * @param array $data
+     */
+    public function getRestaurantMeals($data);
+
+    /**
+     * get restaurant client
+     * @param array $data
+     */
+    public function getHomeClient($data);
 }

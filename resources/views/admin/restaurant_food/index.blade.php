@@ -80,16 +80,20 @@
             $(document).on('change', '#type_meal', function() {
                 option_meals();
             });
-            function option_meals(){
+
+            function option_meals() {
                 $('#list_foods').html('');
+                if ($('#type_meal').val() == null) {
+                    return;
+                }
                 $.ajax({
                     url: "{{ route('admin.restaurant_food.getCheckbox') }}",
                     type: 'get',
                     data: {
+                        restaurant_id: $('#restaurant_id').val(),
                         type_meal: $('#type_meal').val(),
                     },
                     success: function(data) {
-                        console.log(data);
                         $('#list_foods').html(data.data);
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
@@ -99,6 +103,22 @@
                     },
                 });
             }
+            $('form.inner-content').submit(function(event) {
+                event.preventDefault();
+                var formData = $(this).serialize();
+                // Gửi yêu cầu AJAX
+                $.post($(this).attr('action'), formData)
+                    .done(function(response) {
+                        $.growl.success({
+                            message: 'Create restaurant food successfully !'
+                        });
+                    })
+                    .fail(function() {
+                        $.growl.error({
+                            message: 'An error occurred, please try again !'
+                        });
+                    });
+            });
         });
     </script>
 @endsection

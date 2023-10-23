@@ -9,7 +9,7 @@
         </svg>
     </div>
     <div class="col-5 ">
-        <span class="fw-bold">Restaurant</span><br />
+        <span class="fw-bold name_restaurant">Restaurant</span><br />
         <span>Table 5</span>
     </div>
     <div class="col-5 d-flex justify-content-end align-items-center">

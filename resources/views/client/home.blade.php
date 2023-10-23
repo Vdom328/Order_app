@@ -1,59 +1,16 @@
 @extends('client.layouts.master')
 
 @section('css')
-    <style>
-        /* CSS để tạo văn bản lớp */
-        .slide-caption {
-            position: absolute;
-            top: 23%;
-            left: 20%;
-            transform: translate(-50%, -50%);
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        .images {
-            width: 100%;
-            height: 170px;
-            border-radius: 30px;
-        }
-
-        .item_w {
-            width: 100%;
-            height: 170px;
-            border-radius: 30px;
-        }
-
-        .bg_img {
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-color: lightgray;
-            background-position: right;
-        }
-
-        .opa {
-            opacity: 0.7;
-        }
-
-        .minute_icon {
-            background: white;
-            border-radius: 30px;
-            min-width: 50px;
-            text-align: center;
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        .text_note {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            width: 75%;
-        }
-    </style>
+@vite([
+    'resources/css/client/home.css'
+])
 @endsection
 
 @section('content')
+    <div class="ps-1 pt-4 col-12 d-flex">
+        <h4 class="fw-bold col-6">Best sale
+        </h4>
+    </div>
     <div class="col-12 fw-bold pt-3">
         <div class="mt-1 mb-3 p-3 item_w d-flex  bg_img" style="background-image: url('{{ asset('images/hinh-1.jpg') }}')">
             <div class="col-7 d-flex flex-column justify-content-between">
@@ -65,7 +22,8 @@
         </div>
         <div class="ps-1 pt-4 col-12 d-flex">
             <div class="col-6 pe-2">
-                <div class="mt-1 mb-3 p-3 item_w d-flex  bg_img" style="background-image: url('{{ asset('images/hinh-1.jpg') }}')">
+                <div class="mt-1 mb-3 p-3 item_w d-flex  bg_img"
+                    style="background-image: url('{{ asset('images/hinh-1.jpg') }}')">
                     <div class="col-7 d-flex flex-column justify-content-between">
                         <div>
                             <h5>Pizza</h5>
@@ -74,7 +32,8 @@
                 </div>
             </div>
             <div class="col-6 ps-2">
-                <div class="mt-1 mb-3 p-3 item_w d-flex  bg_img" style="background-image: url('{{ asset('images/hinh-1.jpg') }}')">
+                <div class="mt-1 mb-3 p-3 item_w d-flex  bg_img"
+                    style="background-image: url('{{ asset('images/hinh-1.jpg') }}')">
                     <div class="col-7 d-flex flex-column justify-content-between">
                         <div>
                             <h5>Pizza</h5>
@@ -121,7 +80,8 @@
             </h4>
         </div>
         @for ($j = 0; $j < 5; $j++)
-            <div class="mt-1 mb-3 p-3 item_w d-flex  bg_img" style="background-image: url('{{ asset('images/hinh-1.jpg') }}')">
+            <div class="mt-1 mb-3 p-3 item_w d-flex  bg_img"
+                style="background-image: url('{{ asset('images/hinh-1.jpg') }}')">
                 <div class="col-7 d-flex flex-column justify-content-between text_note">
                     <div>
                         <h5>Pizza</h5>
@@ -138,4 +98,10 @@
 @endsection
 
 @section('js')
+<script>
+    $(document).ready(function() {
+        var restaurant = @json($restaurant);
+        localStorage.setItem('restaurant', JSON.stringify(restaurant));
+    })
+</script>
 @endsection

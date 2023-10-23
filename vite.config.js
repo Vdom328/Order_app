@@ -9,6 +9,7 @@ export default defineConfig({
                 'resources/css/client/layouts.css',
                 'resources/css/admin/setting_food.css',
                 'resources/css/client/style.css',
+                'resources/css/client/home.css',
                 'resources/js/common.js',
                 'resources/js/client/app.js',
             ],

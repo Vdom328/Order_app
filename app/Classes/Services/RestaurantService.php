@@ -12,15 +12,15 @@ use Illuminate\Support\Facades\Storage;
 
 class RestaurantService extends BaseService implements IRestaurantService
 {
-    protected  $IRestaurantSettingRepository, $restaurantMealRepository, $restaurantFoodRepository;
+    protected  $restaurantSettingRepository, $restaurantMealRepository, $restaurantFoodRepository;
 
     public function __construct(
-        IRestaurantSettingRepository $IRestaurantSettingRepository,
+        IRestaurantSettingRepository $restaurantSettingRepository,
         IRestaurantMealRepository $restaurantMealRepository,
         IRestaurantFoodRepository $restaurantFoodRepository
     )
     {
-        $this->IRestaurantSettingRepository = $IRestaurantSettingRepository;
+        $this->restaurantSettingRepository = $restaurantSettingRepository;
         $this->restaurantMealRepository = $restaurantMealRepository;
         $this->restaurantFoodRepository = $restaurantFoodRepository;
     }
@@ -36,7 +36,7 @@ class RestaurantService extends BaseService implements IRestaurantService
             $logo = null;
             if ($data['logo']) {
                 if ($data['id'] != '' || $data['id'] != null) {
-                    $item = $this->IRestaurantSettingRepository->find($data['id']);
+                    $item = $this->restaurantSettingRepository->find($data['id']);
                     Storage::delete('public/logo/' . $item->logo);
                 }
                 $imageName = uniqid() . '.' . $data['logo']->extension();
@@ -53,12 +53,13 @@ class RestaurantService extends BaseService implements IRestaurantService
                 "maps" => $data['maps'],
                 "status" => $data['status'],
                 "logo" => $logo,
+                'quantity_table' => $data['quantity_table'],
             ];
             if ($data['id'] != '' || $data['id'] != null) {
-                $this->IRestaurantSettingRepository->update($data['id'],$attr);
+                $this->restaurantSettingRepository->update($data['id'],$attr);
                 $restaurantSetting_id = $data['id'];
             }else{
-                $restaurantSetting = $this->IRestaurantSettingRepository->create($attr);
+                $restaurantSetting = $this->restaurantSettingRepository->create($attr);
                 $restaurantSetting_id = $restaurantSetting->id;
             }
             // add meal
@@ -88,7 +89,7 @@ class RestaurantService extends BaseService implements IRestaurantService
      */
     public function getRestaurants()
     {
-        return $this->IRestaurantSettingRepository->all();
+        return $this->restaurantSettingRepository->all();
     }
 
     /**
@@ -96,7 +97,7 @@ class RestaurantService extends BaseService implements IRestaurantService
      */
     function findRestaurantById($id)
     {
-        return $this->IRestaurantSettingRepository->find($id);
+        return $this->restaurantSettingRepository->find($id);
     }
 
 
@@ -105,7 +106,7 @@ class RestaurantService extends BaseService implements IRestaurantService
      */
     public function delete($id)
     {
-        return $this->IRestaurantSettingRepository->delete($id);
+        return $this->restaurantSettingRepository->delete($id);
     }
 
     /**
@@ -143,4 +144,22 @@ class RestaurantService extends BaseService implements IRestaurantService
             return false;
         }
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getRestaurantMeals($data)
+    {
+        $restaurant_meal = $this->restaurantMealRepository->findOne(['restaurant_id' => $data['restaurant_id'], 'meal' => $data['type_meal']]);
+        return $restaurant_meal;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getHomeClient($data)
+    {
+        return $this->restaurantSettingRepository->find($data['restaurant_id']);
+    }
+
 }
