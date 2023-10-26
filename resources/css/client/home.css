@@ -46,3 +46,40 @@
             text-overflow: ellipsis;
             width: 75%;
         }
+        .food-name {
+            color: black;
+            text-shadow: 4px 4px 4px white;
+            /* Increase the pixel values to make the shadow more intense */
+            z-index: 99;
+            position: sticky;
+        }
+
+        .item_w {
+            position: relative;
+            text-decoration: none;
+            color: black;
+        }
+        .item_w:hover {
+            text-decoration: none;
+            color: black !important;
+        }
+
+        .item_w::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            border-radius: 30px;
+            background: linear-gradient(to right, rgb(222 222 222), rgba(255, 255, 255, 0));
+        }
+
+        .text-price {
+            background: white;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            max-width: 75px;
+            justify-content: center;
+        }

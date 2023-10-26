@@ -1,14 +1,12 @@
 @extends('client.layouts.master')
 
 @section('css')
-@vite([
-    'resources/css/client/home.css'
-])
+    @vite(['resources/css/client/home.css'])
 @endsection
 
 @section('content')
     <div class="ps-1 pt-4 col-12 d-flex">
-        <h4 class="fw-bold col-6">Best sale
+        <h4 class="fw-bold col-6">Best selling
         </h4>
     </div>
     <div class="col-12 fw-bold pt-3">
@@ -75,33 +73,40 @@
             </div>
         </div>
         {{--  --}}
-        <div class="ps-1 pt-4 col-12 d-flex">
-            <h4 class="fw-bold col-6">Explore More
-            </h4>
-        </div>
-        @for ($j = 0; $j < 5; $j++)
-            <div class="mt-1 mb-3 p-3 item_w d-flex  bg_img"
-                style="background-image: url('{{ asset('images/hinh-1.jpg') }}')">
-                <div class="col-7 d-flex flex-column justify-content-between text_note">
-                    <div>
-                        <h5>Pizza</h5>
-                        <span class="mb-0 opa">Ejnoy Pizaa from Food Ejnoy Pizaa from Food</span>
-                    </div>
-                    <div>
-                        <span class="mb-0 ">Money</span>
-                        <p class="mb-0 text-warning">$ 30</p>
-                    </div>
-                </div>
+        @foreach ($restaurant->restaurantMeal as $restaurantMeal)
+            <div class="ps-1 pt-4 col-12 d-flex">
+                <h4 class="fw-bold col-6">{{ \App\Classes\Enum\TypeMealEnum::getLabel($restaurantMeal->meal) }}
+                </h4>
             </div>
-        @endfor
+            @foreach ($restaurantMeal->restaurantFood as $restaurantFood)
+                <a href="{{ route('client.getDetailFood', $restaurantFood->food_setting->id) }}" class="mt-1 mb-3 p-3 item_w d-flex  bg_img"
+                    @foreach ($restaurantFood->food_setting->foodImages as $foodImage)
+                        style="background-image: url('{{ asset('storage/food_images/' . $foodImage->image) }}')">
+                        @break @endforeach
+                    <div class="col-7 d-flex flex-column justify-content-between text_note">
+                        <div>
+                            <h5 class="food-name">{{ $restaurantFood->food_setting->name }}</h5>
+                            <span class="mb-0 opa">{{ $restaurantFood->food_setting->memo }}</span>
+                        </div>
+                        <div class="position-sticky">
+                            <span class="mb-0 ">Money</span>
+                            <div class="mb-0 text-warning">
+                                <div class="text-price">$ {{ number_format($restaurantFood->food_setting->price) }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            @endforeach
+        @endforeach
     </div>
+
 @endsection
 
 @section('js')
-<script>
-    $(document).ready(function() {
-        var restaurant = @json($restaurant);
-        localStorage.setItem('restaurant', JSON.stringify(restaurant));
-    })
-</script>
+    <script>
+        $(document).ready(function() {
+            var restaurant = @json($restaurant);
+            localStorage.setItem('restaurant', JSON.stringify(restaurant));
+        })
+    </script>
 @endsection

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Client\AuthController;
 use App\Http\Controllers\Client\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/login', [AuthController::class, 'getLogin'])->name('client.getLogin');
+
+
 Route::get('/home', [HomeController::class, 'index'])->name('client.home');
 
 Route::get('/table', [HomeController::class, 'getTable'])->name('client.getTable');
+
+Route::get('/detail-food/{id}', [HomeController::class, 'getDetailFood'])->name('client.getDetailFood');

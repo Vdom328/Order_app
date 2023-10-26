@@ -15,4 +15,9 @@ class RestaurantFood extends Model
     {
         return $this->belongsTo(RestaurantMeal::class, 'restaurant_meal_id');
     }
+
+    public function food_setting()
+    {
+        return $this->belongsTo(SettingFood::class, 'food_id');
+    }
 }
