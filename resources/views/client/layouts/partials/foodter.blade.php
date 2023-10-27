@@ -6,7 +6,7 @@
                 <i class="fas fa-table icon_footer"></i>
                 <div class="footer-text">Table</div>
             </div>
-            <div class="col">
+            <div class="col"  data-href="{{ route('client.getListCart') }}">
                 <i class="fas fa-utensils icon_footer"></i>
                 <div class="footer-text">Cart</div>
             </div>

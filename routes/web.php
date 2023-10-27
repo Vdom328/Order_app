@@ -30,3 +30,5 @@ Route::get('/home', [HomeController::class, 'index'])->name('client.home');
 Route::get('/table', [HomeController::class, 'getTable'])->name('client.getTable');
 
 Route::get('/detail-food/{id}', [HomeController::class, 'getDetailFood'])->name('client.getDetailFood');
+
+Route::get('/list-cart', [HomeController::class, 'getListCart'])->name('client.getListCart');

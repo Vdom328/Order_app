@@ -46,6 +46,13 @@
             $('.email_restaurant').html(restaurant.email)
             let time_restaurant = '(' + restaurant.start_time + ' - ' + restaurant.end_time + ')';
             $('.time_restaurant').html(time_restaurant)
+
+            // click foodter
+            $(document).on("click", "[data-href]", function() {
+                const href = $(this).data('href');
+                window.location.href = href;
+            });
+
         });
     </script>
 </body>

@@ -89,7 +89,7 @@
                         <button class="btn increase-qty">+</button>
                     </div>
                 </div>
-                <a href="#" class="btn btn-primary mt-3">Add to Cart</a>
+                <button class="btn btn-primary mt-3" id="add_to_cart">Add to Cart</button>
             </div>
         </div>
     </div>
@@ -100,7 +100,6 @@
         $(document).ready(function() {
             var dataFood = @json($food);
             var price = dataFood['price'];
-            $('#total_price').text(price + '$');
             // Add your JavaScript code for the food item detail page here
             $('.increase-qty').click(function() {
                 var qtyInput = $('#qty');
@@ -125,6 +124,8 @@
                 }
             });
 
+            updatePrice();
+
             $(document).on("input", "#qty", function() {
                 updatePrice();
             })
@@ -139,8 +140,30 @@
 
                 // Calculate and update the total price
                 var totalPrice = price * currentQty;
-                $('#total_price').text(totalPrice+ '$');
+                // $('#total_price').text(totalPrice+ '$');
+                $('#total_price').text(totalPrice.toLocaleString('en') + '$');
+
             }
+
+            // update or push storage cart
+            $(document).on("click", "#add_to_cart", function() {
+                const attrCart = JSON.parse(localStorage.getItem('cart')) || [];
+
+                const cartIndex = attrCart.findIndex(cart => cart.food_id == dataFood.id);
+
+                if (cartIndex > -1) {
+                    attrCart[cartIndex].quantity += parseInt($('#qty').val());
+                } else {
+                    attrCart.push({
+                        'food_id': dataFood.id,
+                        'quantity': parseInt($('#qty').val())
+                    });
+                }
+
+                localStorage.setItem('cart', JSON.stringify(attrCart));
+            });
+
+
         });
     </script>
 @endsection

@@ -41,4 +41,13 @@ class HomeController extends Controller
         $food = $this->settingFoodService->get($id);
         return view('client.detail.detail-food',compact('food'));
     }
+
+    /**
+     * get list cart blade
+     *
+     */
+    public function getListCart()
+    {
+        return view('client.cart.list-cart');
+    }
 }
