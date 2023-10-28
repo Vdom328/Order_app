@@ -127,6 +127,12 @@ class RestaurantService extends BaseService implements IRestaurantService
             if (!$restaurant_meal) {
                 return false;
             };
+            // update restaurant_meal
+            $attrMeals = [
+                'start_time' =>  $data['start_time'],
+                'end_time' =>  $data['end_time'],
+            ];
+            $restaurant_meal_update = $this->restaurantMealRepository->update($restaurant_meal->id, $attrMeals);
             $deleteFood = $this->restaurantFoodRepository->deleteByRestaurantMealId($restaurant_meal->id);
             $attr = [];
             foreach ($data['food_id'] as $food_id) {
@@ -160,6 +166,14 @@ class RestaurantService extends BaseService implements IRestaurantService
     public function getHomeClient($data)
     {
         return $this->restaurantSettingRepository->find($data['restaurant_id']);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getRestaurantMealById($id)
+    {
+        return $this->restaurantMealRepository->find($id);
     }
 
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Client;
 use App\Classes\Services\Interfaces\IRestaurantService;
 use App\Classes\Services\Interfaces\ISettingFoodService;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -36,10 +37,27 @@ class HomeController extends Controller
      * get detail food service
      * @param int $id
      */
-    public function getDetailFood($id)
+    public function getDetailFood(Request $request,  $id)
     {
+        $restaurant_meal = $this->restaurantService->getRestaurantMealById($request->restaurant_meal_id);
         $food = $this->settingFoodService->get($id);
-        return view('client.detail.detail-food',compact('food'));
+        $img = $food->foodImages;
+        return view('client.detail.detail-food',compact('food','restaurant_meal','img'));
+    }
+
+    /**
+     * check time add to cart
+     */
+    public function checkTimeAddCart(Request $request)
+    {
+        // check add to cart
+        $time = Carbon::now()->format('H:i:s');
+        $bool =false;
+        $restaurant_meal = $this->restaurantService->getRestaurantMealById($request->restaurant_meal_id);
+        if ($restaurant_meal->start_time < $time && $restaurant_meal->end_time > $time) {
+            $bool =true;
+        }
+        return response()->json(['data' => $bool]);
     }
 
     /**

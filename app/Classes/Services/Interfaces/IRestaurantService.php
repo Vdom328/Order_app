@@ -47,4 +47,10 @@ interface IRestaurantService
      * @param array $data
      */
     public function getHomeClient($data);
+
+    /**
+     * find restaurant_meals by id
+     * @param int  $id
+     */
+    public function getRestaurantMealById($id);
 }

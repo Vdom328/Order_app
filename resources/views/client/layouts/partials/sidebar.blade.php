@@ -1,6 +1,6 @@
 <div class="nav-background">
     <div class="mobile-logo">
-        <img src="./icons/logo.svg" alt="">
+        <img src="" alt="">
     </div>
     <div class="mobile-nav">
         <div class="cart">

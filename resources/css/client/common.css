@@ -1,0 +1,60 @@
+.btn-food {
+    font-size: 18px;
+    width: 30px;
+    padding: 3px;
+    background-color: #f44336;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-food:hover {
+    background-color: #d32f2f;
+}
+
+.input-food {
+    width: 60px;
+    text-align: center;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+#spinner {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+}
+
+#spinner i.fa-spinner {
+    font-size: 3rem;
+    color: #ffffff;
+}
+
+#spinner p {
+    font-size: 1.2rem;
+    color: #393e46;
+    margin-top: 1rem;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Màu đen với độ trong suốt 50% */
+    z-index: 9998;
+    /* Đặt z-index để lớp này hiển thị trên tất cả các phần tử khác */
+}
+
+/* Vô hiệu hóa sự kiện click chuột */
+.overlay:active,
+.overlay:hover {
+    pointer-events: none;
+}

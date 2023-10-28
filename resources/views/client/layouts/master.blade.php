@@ -9,11 +9,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    @vite(['resources/css/client/style.css', 'resources/js/client/app.js'])
+    @vite(['resources/css/client/style.css', 'resources/js/client/app.js','resources/css/client/common.css','resources/js/common.js'])
     @yield('css')
 </head>
 
 <body>
+    <div id="spinner" >
+        <i class="fa fa-spinner fa-spin"></i>
+    </div>
     <div class="main-wrapper">
         @include('client.layouts.partials.sidebar')
         <div class="site-content-wrapper">
@@ -24,16 +27,17 @@
                 @yield('content')
             </div>
         </div>
+        {{-- modal add role --}}
         @include('client.layouts.partials.foodter')
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" ></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <!-- choose one -->
     <script src="https://unpkg.com/feather-icons"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+
 
     @yield('js')
     <script>

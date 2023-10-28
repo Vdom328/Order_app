@@ -76,11 +76,13 @@
         @if (isset($restaurant->restaurantMeal))
             @foreach ($restaurant->restaurantMeal as $restaurantMeal)
                 <div class="ps-1 pt-4 col-12 d-flex">
-                    <h4 class="fw-bold col-6">{{ \App\Classes\Enum\TypeMealEnum::getLabel($restaurantMeal->meal) }}
+                    <h4 class="fw-bold col-12">{{ \App\Classes\Enum\TypeMealEnum::getLabel($restaurantMeal->meal) }}
+                        ( {{ \Carbon\Carbon::parse($restaurantMeal->start_time)->format('H:i') }} - {{ \Carbon\Carbon::parse($restaurantMeal->end_time)->format('H:i') }} )
                     </h4>
+
                 </div>
                 @foreach ($restaurantMeal->restaurantFood as $restaurantFood)
-                    <a href="{{ route('client.getDetailFood', $restaurantFood->food_setting->id) }}" class="mt-1 mb-3 p-3 item_w d-flex  bg_img"
+                <a href="{{ route('client.getDetailFood', ['id' => $restaurantFood->food_setting->id, 'restaurant_meal_id' => $restaurantMeal->id]) }}" class="mt-1 mb-3 p-3 item_w d-flex bg_img"
                         @foreach ($restaurantFood->food_setting->foodImages as $foodImage)
                             style="background-image: url('{{ asset('storage/food_images/' . $foodImage->image) }}')">
                             @break @endforeach

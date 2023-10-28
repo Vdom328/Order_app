@@ -32,31 +32,6 @@
         }
 
         .food-item-details .quantity {}
-
-        .food-item-details .quantity input {
-            width: 60px;
-            text-align: center;
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin: 0 10px;
-        }
-
-        .food-item-details .quantity .btn {
-            font-size: 18px;
-            /* padding: 5px; */
-            background-color: #f44336;
-            border: none;
-            border-radius: 5px;
-            color: #fff;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-            cursor: pointer;
-        }
-
-        .food-item-details .quantity .btn:hover {
-            background-color: #d32f2f;
-        }
     </style>
 @endsection
 
@@ -66,6 +41,10 @@
             <div class="food-item-details p-3">
                 <img src="{{ asset('images/a.jpg') }}" alt="Food Item Image">
                 <h2>{{ $food->name }}</h2>
+                <p class="fw-bold">{{ \App\Classes\Enum\TypeMealEnum::getLabel($restaurant_meal->meal) }}</p>
+                <p>Only available during business hours:
+                    {{ \Carbon\Carbon::parse($restaurant_meal->start_time)->format('H:i') }} -
+                    {{ \Carbon\Carbon::parse($restaurant_meal->end_time)->format('H:i') }}</p>
                 <p>{{ $food->memo }}</p>
                 <p class="fw-bold">Price: ${{ number_format($food->price) }}</p>
             </div>
@@ -84,22 +63,27 @@
                         </div>
                     </div>
                     <div class="col-6 quantity d-flex align-items-center justify-content-end">
-                        <button class="btn decrease-qty">-</button>
-                        <input type="number" id="qty" name="qty" value="1" min="1">
-                        <button class="btn increase-qty">+</button>
+                        <button class="btn-food decrease-qty">-</button>
+                        <input class="input-food" type="number" id="qty" name="qty" value="1"
+                            min="1">
+                        <button class="btn-food increase-qty">+</button>
                     </div>
                 </div>
                 <button class="btn btn-primary mt-3" id="add_to_cart">Add to Cart</button>
             </div>
         </div>
     </div>
+
 @endsection
 
 @section('js')
+@include('client.detail.partials._modal')
     <script>
         $(document).ready(function() {
             var dataFood = @json($food);
+            var restaurant_meal = @json($restaurant_meal);
             var price = dataFood['price'];
+
             // Add your JavaScript code for the food item detail page here
             $('.increase-qty').click(function() {
                 var qtyInput = $('#qty');
@@ -147,23 +131,44 @@
 
             // update or push storage cart
             $(document).on("click", "#add_to_cart", function() {
+                $.ajax({
+                    url: "{{ route('client.checkTimeAddCart') }}",
+                    method: 'get',
+                    data: {
+                        restaurant_meal_id: restaurant_meal.id,
+                        food_id: dataFood.id
+                    },
+                    success: function(response) {
+                        if (response.data == true) {
+                            updateLocalStorage();
+                        } else {
+                            $('#staticBackdrop').modal('show');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        // Xử lý khi Ajax thất bại
+                        console.error(error);
+                    }
+                });
+
+            });
+
+            function updateLocalStorage() {
                 const attrCart = JSON.parse(localStorage.getItem('cart')) || [];
-
                 const cartIndex = attrCart.findIndex(cart => cart.food_id == dataFood.id);
-
                 if (cartIndex > -1) {
                     attrCart[cartIndex].quantity += parseInt($('#qty').val());
                 } else {
                     attrCart.push({
                         'food_id': dataFood.id,
+                        'name': dataFood.name,
+                        'image': @json($img)[0].image,
                         'quantity': parseInt($('#qty').val())
                     });
                 }
 
                 localStorage.setItem('cart', JSON.stringify(attrCart));
-            });
-
-
+            }
         });
     </script>
 @endsection

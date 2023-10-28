@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <a href="/home?restaurant_id=6&table_id=1">Home</a>
+    <a href="/home?restaurant_id=1&table_id=1">Home</a>
     <a href="/table">Table</a>
     <a href="/login">login</a>
 </body>

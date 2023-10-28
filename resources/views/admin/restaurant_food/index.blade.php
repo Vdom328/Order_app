@@ -5,6 +5,7 @@
 @section('css')
     <link type="text/css" rel="stylesheet" href="{{ asset('assets/plugins/dataTable/datatables.min.css') }}">
     <link type="text/css" href="{{ asset('assets/plugins/dataTable/extensions/dataTables.jqueryui.min.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ asset('assets/plugins/flatpickr/flatpickr.min.css')}}">
     <style>
         label {
             margin-bottom: 0;
@@ -33,6 +34,22 @@
                         </div>
                     </div>
                     <div class="custom-fieldset-style mg-b-30 mt-3">
+                        <div class="d-flex flex-wrap mb-4">
+                            <div class="col-12 col-md-3 p-0 m-0">
+                                <div class="col col-12 col-md-6">Start time </div>
+                                <div class="col col-12 col-lg-12 mt-2">
+                                    <input class="flatpickr flatpickr-input form-control w-100" id="timeStartPicker"  name="start_time" type="text" value="{{ old('start_time') }}" placeholder="Select start time.." readonly="readonly">
+                                    <p class="w-100 error text-danger">{{ $errors->first('start_time') }}</p>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3 p-0 m-0">
+                                <div class="col col-12 col-md-6">End time</div>
+                                <div class="col col-12 col-lg-12 mt-2">
+                                    <input class="flatpickr flatpickr-input form-control w-100" id="timeEndPicker"  name="end_time" type="text" value="{{ old('end_time') }}" placeholder="Select end time.." readonly="readonly">
+                                    <p class="w-100 error text-danger">{{ $errors->first('end_time') }}</p>
+                                </div>
+                            </div>
+                        </div>
                         <div class="clearfix">
                             <div class="clearfix">
                                 <div class="col-12 d-flex flex-wrap" id="list_foods">
@@ -48,8 +65,23 @@
     </div>
 @endsection
 @section('js')
+<script src="{{ asset('assets/plugins/flatpickr/flatpickr.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/flatpickr/flatpickr-active.js') }}"></script>
     <script>
         $(document).ready(function() {
+
+            $('#timeStartPicker').flatpickr({
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i:S",
+            });
+            $('#timeEndPicker').flatpickr({
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i:S",
+            });
+
+
             getResstaurantMeals();
             $(document).on('change', '#restaurant_id', function() {
                 getResstaurantMeals();
