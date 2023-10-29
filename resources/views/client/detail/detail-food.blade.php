@@ -163,11 +163,13 @@
                         'food_id': dataFood.id,
                         'name': dataFood.name,
                         'image': @json($img)[0].image,
-                        'quantity': parseInt($('#qty').val())
+                        'quantity': parseInt($('#qty').val()),
+                        'price': dataFood.price
                     });
                 }
 
                 localStorage.setItem('cart', JSON.stringify(attrCart));
+                window.location.href = "{{route('client.getListCart') }}"
             }
         });
     </script>
