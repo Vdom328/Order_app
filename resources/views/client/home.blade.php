@@ -109,8 +109,13 @@
 @section('js')
     <script>
         $(document).ready(function() {
+            updateFoodTer()
             var restaurant = @json($restaurant);
+            var inforOrder = @json($data);
+            var routeHome = window.location.href;
             localStorage.setItem('restaurant', JSON.stringify(restaurant));
+            localStorage.setItem('infor_order', JSON.stringify(inforOrder));
+            localStorage.setItem('route_home', JSON.stringify(routeHome));
         })
     </script>
 @endsection

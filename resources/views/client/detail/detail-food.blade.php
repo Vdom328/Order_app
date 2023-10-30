@@ -161,14 +161,15 @@
                 } else {
                     attrCart.push({
                         'food_id': dataFood.id,
+                        'quantity': parseInt($('#qty').val()),
+                        'price': dataFood.price,
                         'name': dataFood.name,
                         'image': @json($img)[0].image,
-                        'quantity': parseInt($('#qty').val()),
-                        'price': dataFood.price
                     });
                 }
 
                 localStorage.setItem('cart', JSON.stringify(attrCart));
+                updateFoodTer();
                 window.location.href = "{{route('client.getListCart') }}"
             }
         });

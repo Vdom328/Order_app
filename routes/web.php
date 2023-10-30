@@ -33,3 +33,4 @@ Route::get('/detail-food/{id}', [HomeController::class, 'getDetailFood'])->name(
 Route::get('/check-time-add-cart', [HomeController::class, 'checkTimeAddCart'])->name('client.checkTimeAddCart');
 
 Route::get('/list-cart', [HomeController::class, 'getListCart'])->name('client.getListCart');
+Route::get('/order-now', [HomeController::class, 'getOrderNow'])->name('client.getOrderNow');

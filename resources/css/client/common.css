@@ -21,6 +21,7 @@
     border: 1px solid #ccc;
     border-radius: 5px;
 }
+
 #spinner {
     display: none;
     position: fixed;
@@ -57,4 +58,63 @@
 .overlay:active,
 .overlay:hover {
     pointer-events: none;
+}
+
+/* Button common */
+.sk-button {
+    min-width: 50px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+a button:focus {
+    outline: none;
+}
+
+.sk-fill-button {
+    background-color: #8C7542;
+    color: white;
+    border: solid 1px #8C7542;
+}
+
+.sk-outline-button {
+    background-color: white;
+    color: #8C7542;
+    border: solid 1px #8C7542;
+}
+
+.button_minus {
+    background-color: #FBF6F4;
+    color: #D7D2C4;
+}
+
+.button_plus {
+    background-color: #F0E9DE;
+    color: #958D4B;
+}
+
+.button-odder {
+    padding: 4px 24px 6px;
+    border-radius: 5px;
+}
+
+button:focus {
+    outline: none;
+}
+
+.footer-2 .sk-button {
+    width: 40%;
+    padding: 7px;
+    margin: 5px;
+}
+
+.backhome {
+    margin-top: 40px !important;
+}
+
+.login-buttom {
+    border-radius: 50px;
+    margin-top: 40px !important;
 }

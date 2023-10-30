@@ -1,0 +1,333 @@
+
+.content-payment{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+.content-payment-success{
+    text-align: center;
+    /* color: #9C8850; */
+
+}
+.detail-header-tittle {
+    margin: 10px;
+    font-weight: 600;
+}
+
+.detail-numberhd1{
+    margin-top: 20px;
+
+}
+.tittle-color{
+    color: #a6a2a7;
+}
+.content-header-dt{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    color: black;
+    font-weight: 900;
+    justify-content: space-between;
+
+}
+.detail-numberhd{
+    margin-top: 10px;
+}
+
+.number-1{
+    padding: 15px;
+
+}
+.icon-detail-hd{
+    padding: 15px;
+    border-radius: 50px;
+}
+
+
+/*  */
+.mg-15{
+    margin: 15px;
+}
+.cl-black{
+    color: black !important;
+    opacity: 0.8;
+}
+.bg-red{
+    background: red;
+}
+.bg-gray{
+    background: rgb(80, 79, 79);
+}
+.detail-box{
+    width: 100%;
+    min-height: 60px;
+    justify-content: space-between;
+    padding-left: 15px;
+    padding-right: 10px;
+    font-weight: 600;
+    color: #0A675C;
+    align-items: center;
+    display: flex;
+}
+.detail-box img{
+    height: 50px;
+    width: 50px;
+    border-radius: 5px;
+}
+.detail-icon-down{
+    display: none;
+}
+.option_price{
+    font-size: 12px;
+    opacity: 0.7;
+    margin: 0px 8px;
+}
+.detail-box-color{
+    background: #F6F2F6;
+    width: 100%;
+    height: 60px;
+    font-weight: 600;
+    color: black;
+    display: flex;
+    padding: 5px;
+    justify-content: space-between;
+}
+.detail-box-attend{
+    font-size: 10px;
+    margin-top: 9px;
+}
+.detail-box-attend span{
+    color: white;
+    border-radius: 5px;
+    padding: 2px;
+}
+.detail-box-color .fa-chevron-down{
+    margin-right: 5px;
+    margin-top: 5px;
+}
+.detail-box-color .fa-chevron-up {
+    margin-right: 5px;
+    margin-top: 5px;
+}
+.footer-1{
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+.footer-1-1{
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.footer-2 a:hover{
+
+}
+
+/* pay */
+.pay-warning{
+    background-color: #FFF9FA;
+    font-weight: 600;
+    padding: 10px;
+    margin-top: 10px;
+    justify-content: flex-start; /* Align child elements along the start of the container */
+    align-items: center;
+
+}
+.warning-icon {
+    margin-right: 10px; /* Add some spacing to the right of the icon */
+  }
+.warning-icon span{
+    color: red;
+    padding-right: 5px;
+}
+.warning-pay-tittle{
+    opacity: 0.7;
+    font-size: 12px;
+}
+.pay-Notification{
+    box-shadow: 0 0 8px #bababa;
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 5px;
+    font-weight: 600;
+    display: flex;
+}
+.pay-Notification1{
+    width: 100%;
+}
+.pay-Notification1-monney{
+    font-size: 24px;
+    color: #c59e47;
+}
+.pay-Notification1-tittle{
+    color: #c59e47;
+    opacity: 0.6;
+    font-size: 12px;
+}
+.pay-Notification1-item {
+    text-decoration: none !important;
+  }
+.pay-tittle{
+    padding: 15px;
+    font-weight: 600;
+    height: 60px;
+}
+.pay-tittle1{
+    padding: 15px;
+    font-weight: 600;
+    height: 60px;
+    font-size: 12px;
+}
+.pay-tittle-1{
+    opacity: 0.6;
+}
+.pay-tittle-card{
+    text-align: center;
+    color: white;
+    background: #c59e47;
+    border-radius: 5px;
+    padding: 15px;
+    font-weight: 600;
+    height: 50px;
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+.main-payment {
+  /* margin: auto; This centers the element horizontally */
+}
+.pay-card{
+    border: 2px solid black;
+    font-weight: 600;
+    border-radius: 5px;
+    width: 100%;
+    height: 35px;
+    text-align: center;
+    margin-top: 15px;
+}
+.p-t3{
+    padding-top: 3px;
+}
+.p-t7{
+    padding-top: 7px;
+}
+.pay-card .fa-paypal{
+    border-right: 1px solid;
+}
+.pay-footer{
+    background: #c59e47;
+    font-weight: 600;
+    padding: 5px 15px 5px 15px;
+    border-radius: 5px;
+    margin-top: 20px;
+    font-size: 13px;
+}
+.pay-footer-1{
+    opacity: 0.7;
+    font-size: 12px;
+
+}
+.paycard{
+    text-align: center;
+    margin-top: 15px;
+    font-size: 12px;
+    width: 100%;
+    text-decoration: none;
+
+}
+.pay-card-span{
+    padding-left: 5px;
+    border-left: 1px solid;
+}
+.icon-payment{
+    margin-bottom: 7px;
+}
+.icon-payment-paypay{
+    margin-right: 5px;
+    margin-bottom: 3px;
+}
+.footer-box{
+    background: #F6F2F6;
+    width: auto;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    font-weight: 600;
+    border-bottom: 1px solid;
+    opacity: 0.6;
+    color: black;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.paymentCart{
+    color: black;
+    text-decoration: none;
+}
+.paymentCart:link,
+.paymentCart:visited,
+.paymentCart:hover,
+.paymentCart:active {
+    text-decoration: none;
+    color: inherit; /* giữ màu của kế thừa */
+}
+/* payment success */
+.payment-success-header img{
+    margin: 40px;
+    border-radius: 50%;
+}
+.payment-success-header span{
+    margin: 40px;
+    font-size: 165px;
+    color: #00BA00;
+    border-radius: 50%;
+    border: none;
+    outline: none;
+    box-shadow: 0 0 10px rgba(0, 186, 0, 0.7), 0 0 20px rgba(0, 186, 0, 0.5), 0 0 30px rgba(0, 186, 0, 0.3);
+}
+
+.success-header-item{
+    font-weight: 700;
+}
+.success-header-item h4{
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #9C8850;
+
+}
+.success-header-item h5{
+    font-weight: 700;
+    color: #9C8850;
+    margin-top: 45px;
+    margin-bottom: 45px;
+}
+.success-header-item span{
+    opacity: 0.7 ;
+    font-size: 14px;
+}
+.payment-success-main{
+    margin: 20px;
+    background: #fbf9f4;
+    border-radius: 25px;
+    padding: 25px;
+    font-size: 20px;
+    box-shadow: 0 0 8px #bababa;
+    font-weight: 600;
+    margin-top: 50px;
+    color: #9C8850;
+}
+.payment-success-main ul{
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    padding: 0;
+}
+.payment-success-main-footer{
+    border-top: 2px solid;
+}
+.payment-success-main-footer ul{
+    margin-bottom: 0;
+    margin-top: 15px;
+}
+

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Client;
 
+use App\Classes\Enum\TypeMealEnum;
 use App\Classes\Services\Interfaces\IRestaurantService;
 use App\Classes\Services\Interfaces\ISettingFoodService;
 use App\Http\Controllers\Controller;
@@ -24,9 +25,35 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
+        $current_time = now()->format('H:i:s');
         $restaurant = $this->restaurantService->getHomeClient($request->all());
-        return view('client.home', compact('restaurant'));
+        $time_error = [];
+
+        // Check if the restaurant has specific opening hours defined
+        if ($restaurant->start_time && $restaurant->end_time) {
+            if ($current_time < $restaurant->start_time || $current_time > $restaurant->end_time) {
+                // The current time is outside the restaurant's opening hours
+                // $time_error[] = [
+                //     'meal' => 'Opening Restaurant',
+                //     'start_time' => $restaurant->start_time,
+                //     'end_time' => $restaurant->end_time,
+                // ];
+
+                foreach ($restaurant->restaurantMeal as $value) {
+                    $time_error[] = [
+                    'meal' => TypeMealEnum::getLabel($value->meal),
+                    'start_time' => $value->start_time,
+                    'end_time' => $value->end_time,
+                    ];
+                }
+                return view('client.error.time',compact('time_error'));
+            }
+        }
+
+        $data = $request->all();
+        return view('client.home', compact('restaurant','data'));
     }
+
 
     public function getTable()
     {
@@ -67,5 +94,13 @@ class HomeController extends Controller
     public function getListCart()
     {
         return view('client.cart.list-cart');
+    }
+
+    /**
+     * get order now
+     */
+    public function getOrderNow()
+    {
+        return view('client.order.payment');
     }
 }
