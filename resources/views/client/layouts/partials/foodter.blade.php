@@ -4,7 +4,7 @@
             <span class="fa fa-home "></span>
             <span class="model-cs">Home</span>
         </a>
-        <a href="{{ route('client.getTable') }}" class=" model-buy1 text-decoration-none d-flex flex-column lign-items-center justify-content-center">
+        <a href="" class="route_table model-buy1 text-decoration-none d-flex flex-column lign-items-center justify-content-center">
             <span class="fa fa-table"></span>
             <span class="model-cs">Table</span>
         </a>

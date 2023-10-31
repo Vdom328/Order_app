@@ -14,6 +14,7 @@ export default defineConfig({
                 'resources/css/client/common.css',
                 'resources/css/client/order_now.css',
                 'resources/css/client/foodter.css',
+                'resources/css/client/detail.css',
                 'resources/js/common.js',
                 'resources/js/client/app.js',
 

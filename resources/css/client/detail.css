@@ -1,0 +1,30 @@
+        /* Add your custom CSS styles for the food item detail page here */
+        .food-item-details {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .food-item-details img {
+            width: 100%;
+            height: 215px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .food-item-details h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #333;
+            word-wrap: break-word;
+        }
+
+        .food-item-details p {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #666;
+            word-wrap: break-word;
+        }
+
+        .food-item-details .quantity {}

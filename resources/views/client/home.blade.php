@@ -5,12 +5,12 @@
 @endsection
 
 @section('content')
-    <div class="ps-1 pt-4 col-12 d-flex">
+    {{-- <div class="ps-1 pt-4 col-12 d-flex">
         <h4 class="fw-bold col-6">Best selling
         </h4>
-    </div>
+    </div> --}}
     <div class="col-12 fw-bold pt-3">
-        <div class="mt-1 mb-3 p-3 item_w d-flex  bg_img" style="background-image: url('{{ asset('images/hinh-1.jpg') }}')">
+        {{-- <div class="mt-1 mb-3 p-3 item_w d-flex  bg_img" style="background-image: url('{{ asset('images/hinh-1.jpg') }}')">
             <div class="col-7 d-flex flex-column justify-content-between">
                 <div>
                     <h5>Pizza</h5>
@@ -40,9 +40,9 @@
                 </div>
             </div>
 
-        </div>
+        </div> --}}
         {{-- deals --}}
-        <div class="ps-1 pt-4 col-12 d-flex">
+        {{-- <div class="ps-1 pt-4 col-12 d-flex">
             <h4 class="fw-bold col-6">Deals
             </h4>
             <div class="col-6 text-end pe-2">
@@ -71,7 +71,7 @@
                     @endfor
                 </div>
             </div>
-        </div>
+        </div> --}}
         {{--  --}}
         @if (isset($restaurant->restaurantMeal))
             @foreach ($restaurant->restaurantMeal as $restaurantMeal)
@@ -109,13 +109,13 @@
 @section('js')
     <script>
         $(document).ready(function() {
-            updateFoodTer()
             var restaurant = @json($restaurant);
             var inforOrder = @json($data);
             var routeHome = window.location.href;
             localStorage.setItem('restaurant', JSON.stringify(restaurant));
             localStorage.setItem('infor_order', JSON.stringify(inforOrder));
             localStorage.setItem('route_home', JSON.stringify(routeHome));
+            updateFoodTer()
         })
     </script>
 @endsection

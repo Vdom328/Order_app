@@ -41,6 +41,7 @@
     <script>
         updateFoodTer()
         function updateFoodTer() {
+            var restaurant = JSON.parse(localStorage.getItem('restaurant'));
             const attrCart = JSON.parse(localStorage.getItem('cart')) || [];
             const routeHome = JSON.parse(localStorage.getItem('route_home')) || [];
 
@@ -52,12 +53,11 @@
             $('.price-product').html(totalPrice.toLocaleString('en') + '$');
             $('.number-cart').html(attrCart.length.toLocaleString('en'));
             $('.route_home').attr('href', routeHome);
-        }
-    </script>
-    @yield('js')
-    <script>
-        $(document).ready(function() {
-            var restaurant = JSON.parse(localStorage.getItem('restaurant'));
+
+            let routeTable = '{{ route("client.getTable")}}?restaurant_id=' + restaurant.id;
+            $('.route_table').attr('href', routeTable);
+
+            // update siderbar
             $('.name_restaurant').html(restaurant.name)
             var imagePath = "{{ asset('storage/logo') }}" + '/' + restaurant.logo;
             $(".logo_restaurant").attr("src", imagePath);
@@ -65,15 +65,9 @@
             $('.email_restaurant').html(restaurant.email)
             let time_restaurant = '(' + restaurant.start_time + ' - ' + restaurant.end_time + ')';
             $('.time_restaurant').html(time_restaurant)
-
-            // click foodter
-            $(document).on("click", "[data-href]", function() {
-                const href = $(this).data('href');
-                window.location.href = href;
-            });
-
-        });
+        }
     </script>
+    @yield('js')
 </body>
 
 </html>

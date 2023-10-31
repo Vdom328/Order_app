@@ -1,45 +1,36 @@
 @extends('client.layouts.master')
 
 @section('css')
-    <style>
-        /* Add your custom CSS styles for the food item detail page here */
-        .food-item-details {
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .food-item-details img {
-            width: 100%;
-            height: auto;
-            margin-bottom: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .food-item-details h2 {
-            font-size: 28px;
-            margin-bottom: 10px;
-            color: #333;
-            word-wrap: break-word;
-        }
-
-        .food-item-details p {
-            font-size: 18px;
-            margin-bottom: 10px;
-            color: #666;
-            word-wrap: break-word;
-        }
-
-        .food-item-details .quantity {}
-    </style>
+@vite(['resources/css/client/detail.css'])
 @endsection
 
 @section('content')
     <div class="row mt-1">
         <div class="col-md-12">
             <div class="food-item-details p-3">
-                <img src="{{ asset('images/a.jpg') }}" alt="Food Item Image">
+                @if ($food->foodImages->count() <= 1)
+                    <img src="{{ asset('images/a.jpg') }}">
+                @else
+                    <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            @for ($i = 0; $i < $food->foodImages->count(); $i++)
+                                <div class="carousel-item @if ($i == 0) active @endif ">
+                                    <img src="{{ asset('storage/food_images/' . $food->foodImages->toArray()[$i]['image']) }}" class="d-block w-100" alt="...">
+                                </div>
+                            @endfor
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                @endif
                 <h2>{{ $food->name }}</h2>
                 <p class="fw-bold">{{ \App\Classes\Enum\TypeMealEnum::getLabel($restaurant_meal->meal) }}</p>
                 <p>Only available during business hours:
@@ -73,11 +64,10 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 @section('js')
-@include('client.detail.partials._modal')
+    @include('client.detail.partials._modal')
     <script>
         $(document).ready(function() {
             var dataFood = @json($food);
@@ -146,7 +136,6 @@
                         }
                     },
                     error: function(xhr, status, error) {
-                        // Xử lý khi Ajax thất bại
                         console.error(error);
                     }
                 });
@@ -170,7 +159,7 @@
 
                 localStorage.setItem('cart', JSON.stringify(attrCart));
                 updateFoodTer();
-                window.location.href = "{{route('client.getListCart') }}"
+                window.location.href = "{{ route('client.getListCart') }}"
             }
         });
     </script>

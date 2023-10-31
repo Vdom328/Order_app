@@ -22,9 +22,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//auth routes
 Route::get('/login', [AuthController::class, 'getLogin'])->name('client.getLogin');
+Route::post('/login', [AuthController::class, 'postLogin'])->name('client.postLogin');
 
-
+//
 Route::get('/home', [HomeController::class, 'index'])->name('client.home');
 
 Route::get('/table', [HomeController::class, 'getTable'])->name('client.getTable');

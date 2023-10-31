@@ -117,8 +117,9 @@
         for (i = 0; i < attrCart.length; i++) {
             const food = attrCart[i];
             let price = (food.quantity * food.price).toLocaleString('en')
+            let imageUrl = "{{ asset('storage/food_images') }}" + '/' + food.image;
             let html = '<div class="item" id="food_' + food.food_id +'">\
-                                <img src="{{ asset('images/a.jpg') }}" alt="Appetizer 1">\
+                                <img src="' + imageUrl + '" alt="Appetizer 1">\
                                 <div class="item-content">\
                                     <h3>' + food.name + '</h3>\
                                     <div class="quantity-container d-flex align-items-center justify-content-between">\

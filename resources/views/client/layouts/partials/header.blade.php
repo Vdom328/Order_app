@@ -13,12 +13,21 @@
         <span class="table-number">Table 5</span>
     </div>
     <div class="col-5 d-flex justify-content-end align-items-center">
-        <div class="col-3">
-            <i class="fas fa-bell bell-icon"></i>
-        </div>
-        <div class="col-3">
-            <i class="fas fa-search search-icon"></i>
-        </div>
+        @if (Auth()->check())
+            <div class="col-3">
+                <i class="fas fa-history bell-icon"></i>
+            </div>
+            <div class="col-3">
+                <i class="fas fa-user bell-icon"></i>
+            </div>
+            <div class="col-3">
+                <i class="fas fa-sign-out-alt bell-icon"></i>
+            </div>
+        @else
+            <a href="{{ route('client.getLogin') }}" class="col-3">
+                <i class="fas fa-sign-in-alt bell-icon"></i>
+            </a>
+        @endif
     </div>
 </div>
 

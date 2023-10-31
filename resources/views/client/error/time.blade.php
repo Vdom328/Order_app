@@ -27,7 +27,7 @@
             <div class="list_time_error">
                 @foreach ($time_error as $item)
                     <ul class="list_error_day">
-                        {{ $item['meal'] }} : {{ $item['start_time'] }} - {{ $item['end_time'] }} 
+                        {{ $item['meal'] }} : {{ $item['start_time'] }} - {{ $item['end_time'] }}
                     </ul>
                 @endforeach
             </div>

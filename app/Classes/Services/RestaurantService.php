@@ -163,9 +163,9 @@ class RestaurantService extends BaseService implements IRestaurantService
     /**
      * @inheritDoc
      */
-    public function getHomeClient($data)
+    public function getHomeClient($restaurant_id)
     {
-        return $this->restaurantSettingRepository->find($data['restaurant_id']);
+        return $this->restaurantSettingRepository->find($restaurant_id);
     }
 
     /**
