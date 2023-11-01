@@ -20,9 +20,9 @@
             <div class="col-3">
                 <i class="fas fa-user bell-icon"></i>
             </div>
-            <div class="col-3">
+            <a href="{{ route('client.getLogout') }}" class="col-3">
                 <i class="fas fa-sign-out-alt bell-icon"></i>
-            </div>
+            </a>
         @else
             <a href="{{ route('client.getLogin') }}" class="col-3">
                 <i class="fas fa-sign-in-alt bell-icon"></i>
@@ -30,46 +30,3 @@
         @endif
     </div>
 </div>
-
-<style>
-
-
-    .nav-trigger {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        background-color: #fff;
-    }
-
-    .icon_sidebar svg {
-        width: 20px;
-        height: 20px;
-        fill: #888;
-    }
-
-    .name-restaurant {
-        font-weight: bold;
-        font-size: 16px;
-        color: #333;
-    }
-
-    .table-number {
-        font-size: 14px;
-        color: #777;
-    }
-
-    .bell-icon,
-    .search-icon {
-        font-size: 18px;
-        color: #888;
-        cursor: pointer;
-        transition: color 0.3s ease;
-    }
-
-    .bell-icon:hover,
-    .search-icon:hover {
-        color: #333;
-    }
-</style>

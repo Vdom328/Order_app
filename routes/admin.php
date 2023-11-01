@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\FoodController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\RestaurantController;
 use App\Http\Controllers\Admin\RestaurantFoodController;
 
@@ -68,5 +69,10 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/', [RestaurantController::class, 'index'])->name('admin.restaurant.index');
         Route::get('/update/{id}', [RestaurantController::class, 'update'])->name('admin.restaurant.update');
         Route::post('/delete/{id}', [RestaurantController::class, 'delete'])->name('admin.restaurant.delete');
+    });
+
+    // route orders
+    Route::group(['prefix' => 'order', 'middleware' => "auth"], function () {
+        Route::get('/', [OrderController::class, 'index'])->name('admin.order.index');
     });
 });

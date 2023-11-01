@@ -1,4 +1,3 @@
-
 /* colors  */
 
 :root {
@@ -94,7 +93,7 @@ body {
 
 .site-content-wrapper {
     width: 100%;
-    height: 100vh ;
+    height: 100vh;
     position: absolute;
     background: var(--heaven);
     z-index: 2;
@@ -838,4 +837,43 @@ section.latest-news .article-wrapper {
     }
 
 
+}
+
+.nav-trigger {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+.icon_sidebar svg {
+    width: 20px;
+    height: 20px;
+    fill: #888;
+}
+
+.name-restaurant {
+    font-weight: bold;
+    font-size: 16px;
+    color: #333;
+}
+
+.table-number {
+    font-size: 14px;
+    color: #777;
+}
+
+.bell-icon,
+.search-icon {
+    font-size: 18px;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.bell-icon:hover,
+.search-icon:hover {
+    color: #333;
 }

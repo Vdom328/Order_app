@@ -201,6 +201,11 @@
             $('#food_' + foodId).remove();
             updateFoodTer();
         }
+
+        // get blade order now
+        $(document).on("click", "#click-ordernow-detail", function() {
+            window.location.href = "{{ route('client.getOrderNow') }}"
+        });
     });
 </script>
 @endsection

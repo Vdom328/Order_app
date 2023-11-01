@@ -91,7 +91,13 @@
                         <span class="mt-5">RESTAURANT QR</span>
                     </a>
                 </li>
-
+                <li class="menu-label mt-2">ORDERS</li>
+                <li class="{{ Request::routeIs('admin.order.index') ? 'active' : '' }}">
+                    <a href="{{ route('admin.order.index') }}">
+                        <i class="fa fa-spin fa-life-ring mr-2"></i>
+                        <span class="mt-5">ORDERS</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

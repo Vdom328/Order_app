@@ -25,6 +25,8 @@ Route::get('/', function () {
 //auth routes
 Route::get('/login', [AuthController::class, 'getLogin'])->name('client.getLogin');
 Route::post('/login', [AuthController::class, 'postLogin'])->name('client.postLogin');
+Route::post('/register', [AuthController::class, 'postRegister'])->name('client.postRegister');
+Route::get('/logout', [AuthController::class, 'getLogout'])->name('client.getLogout');
 
 //
 Route::get('/home', [HomeController::class, 'index'])->name('client.home');
@@ -36,3 +38,4 @@ Route::get('/check-time-add-cart', [HomeController::class, 'checkTimeAddCart'])-
 
 Route::get('/list-cart', [HomeController::class, 'getListCart'])->name('client.getListCart');
 Route::get('/order-now', [HomeController::class, 'getOrderNow'])->name('client.getOrderNow');
+Route::post('/order-success', [HomeController::class, 'getOrderSuccess'])->name('client.getOrderSuccess');

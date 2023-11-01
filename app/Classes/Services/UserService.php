@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Hash;
 use App\Classes\Enum\StatusUserEnum;
 use App\Mail\ResetPassword;
 use App\Models\User;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -193,5 +196,29 @@ class UserService extends BaseService implements IUserService
             return true;
         }
         return false;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function registerUserClient($data){
+        DB::beginTransaction();
+        try {
+            $attribute = [
+                'account_status' => Config::get('const.user.account_status.Active'),
+                'first_name' => $data['first_name'],
+                'last_name' => $data['last_name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                'role_id' => 1,
+            ];
+            $this->userRepository->create($attribute);
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            Log::error('Error while create user : ' . $e->getMessage());
+            return false;
+        }
     }
 }
