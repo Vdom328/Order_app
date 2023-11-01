@@ -9,6 +9,7 @@ use App\Classes\Services\Interfaces\ISettingFoodService;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -87,7 +88,10 @@ class HomeController extends Controller
      */
     public function getOrderNow()
     {
-        return view('client.order.payment');
+        if (Auth::check()) {
+            return view('client.order.payment');
+        }
+        return view('client.auth.signIn-signUp');
     }
 
     /**
@@ -122,20 +126,20 @@ class HomeController extends Controller
         if ($restaurant->start_time && $restaurant->end_time) {
             if ($current_time < $restaurant->start_time || $current_time > $restaurant->end_time) {
                 // The current time is outside the restaurant's opening hours
-                // $time_error[] = [
-                //     'meal' => 'Opening Restaurant',
-                //     'start_time' => $restaurant->start_time,
-                //     'end_time' => $restaurant->end_time,
-                // ];
+                $time_error[] = [
+                    'meal' => 'Opening Restaurant',
+                    'start_time' => $restaurant->start_time,
+                    'end_time' => $restaurant->end_time,
+                ];
 
-                // foreach ($restaurant->restaurantMeal as $value) {
-                //     $time_error[] = [
-                //     'meal' => TypeMealEnum::getLabel($value->meal),
-                //     'start_time' => $value->start_time,
-                //     'end_time' => $value->end_time,
-                //     ];
-                // }
-                // return ['type' => false , 'time_error' => $time_error];
+                foreach ($restaurant->restaurantMeal as $value) {
+                    $time_error[] = [
+                    'meal' => TypeMealEnum::getLabel($value->meal),
+                    'start_time' => $value->start_time,
+                    'end_time' => $value->end_time,
+                    ];
+                }
+                return ['type' => false , 'time_error' => $time_error];
             }
         }
         return ['type' => true , 'time_error' => []];
