@@ -15,4 +15,9 @@ class RestaurantSetting extends Model
     {
         return $this->hasMany(RestaurantMeal::class, 'restaurant_id');
     }
+
+    public function restaurant_table()
+    {
+        return $this->hasMany(RestaurantTable::class, 'restaurant_id');
+    }
 }

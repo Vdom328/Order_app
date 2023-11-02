@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\FoodController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\TableSettingController;
 use App\Http\Controllers\Admin\RestaurantController;
 use App\Http\Controllers\Admin\RestaurantFoodController;
 
@@ -74,5 +75,10 @@ Route::group(['prefix' => 'admin'], function () {
     // route orders
     Route::group(['prefix' => 'order', 'middleware' => "auth"], function () {
         Route::get('/', [OrderController::class, 'index'])->name('admin.order.index');
+    });
+
+    // route QR restaurant group
+    Route::group(['prefix' => 'table', 'middleware' => "auth"], function () {
+        Route::get('/', [TableSettingController::class, 'index'])->name('admin.listTable');
     });
 });
