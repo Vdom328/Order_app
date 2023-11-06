@@ -31,6 +31,9 @@ class HomeController extends Controller
     {
         $restaurant = $this->restaurantService->getHomeClient($request->restaurant_id);
         // check time
+        if (! $restaurant) {
+            return view('client.error.error');
+        }
         $checkTime = $this->checkTimeRestaurant($restaurant->id);
         if ($checkTime['type'] == false) {
             $time_error = $checkTime['time_error'];

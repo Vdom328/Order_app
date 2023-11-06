@@ -8,7 +8,11 @@
     <title>Document</title>
     <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
     @vite(['resources/css/client/auth/style.css'])
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="{{ asset('assets/plugins/jquery.growl/jquery.growl.js') }}"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    @vite(['resources/css/client/common.css', 'resources/js/common.js'])
 </head>
 {{-- <p class="social-text">Or Sign in with social platforms</p>
                 <div class="social-media">
@@ -26,6 +30,9 @@
                     </a>
                 </div> --}}
 <body>
+    <div id="spinner">
+        <i class="fa fa-spinner fa-spin"></i>
+    </div>
     <div class="container">
         <div class="forms-container">
             <div class="signin-signup">
@@ -93,8 +100,6 @@
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-        <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
-        <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
         <script>
             $(document).ready(function() {
                 const routeHome = JSON.parse(localStorage.getItem('route_home')) || [];

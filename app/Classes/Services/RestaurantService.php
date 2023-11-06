@@ -5,6 +5,7 @@ namespace App\Classes\Services;
 use App\Classes\Repository\Interfaces\IRestaurantFoodRepository;
 use App\Classes\Repository\Interfaces\IRestaurantMealRepository;
 use App\Classes\Repository\Interfaces\IRestaurantSettingRepository;
+use App\Classes\Repository\Interfaces\IRestaurantTableRepository;
 use App\Classes\Services\Interfaces\IRestaurantService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -12,17 +13,19 @@ use Illuminate\Support\Facades\Storage;
 
 class RestaurantService extends BaseService implements IRestaurantService
 {
-    protected  $restaurantSettingRepository, $restaurantMealRepository, $restaurantFoodRepository;
+    protected  $restaurantSettingRepository, $restaurantMealRepository, $restaurantFoodRepository, $restaurantTableRepository;
 
     public function __construct(
         IRestaurantSettingRepository $restaurantSettingRepository,
         IRestaurantMealRepository $restaurantMealRepository,
-        IRestaurantFoodRepository $restaurantFoodRepository
+        IRestaurantFoodRepository $restaurantFoodRepository,
+        IRestaurantTableRepository $restaurantTableRepository
     )
     {
         $this->restaurantSettingRepository = $restaurantSettingRepository;
         $this->restaurantMealRepository = $restaurantMealRepository;
         $this->restaurantFoodRepository = $restaurantFoodRepository;
+        $this->restaurantTableRepository = $restaurantTableRepository;
     }
 
     /**

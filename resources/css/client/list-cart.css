@@ -1,0 +1,87 @@
+        /* Your custom CSS styles for the food menu go here */
+        .menu-container {
+            max-width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .category {}
+
+        .item {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .item img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            margin-right: 10px;
+            border-radius: 30px;
+        }
+
+        .item .item-content {
+            flex: 1;
+        }
+
+        h3 {
+            margin-top: 0;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        span {
+            font-weight: bold;
+        }
+
+        .delete-icon {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 20px;
+            color: #ff0000;
+            /* Màu đỏ cho icon xóa */
+            cursor: pointer;
+        }
+
+        .quantity-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .quantity-button {
+            cursor: pointer;
+            padding: 5px 10px;
+            background-color: #007BFF;
+            /* Màu nền cho nút */
+            color: #fff;
+            /* Màu chữ cho nút */
+            border-radius: 5px;
+            margin: 0 5px;
+        }
+
+        .button-odder {
+            display: none;
+        }
+
+        .footer-cart {
+            font-size: 14px;
+        }
+
+        .footer-cart button {
+            font-size: 18px;
+            display: flex;
+            /* padding-top: 10px; */
+            padding: 6px 20px;
+            align-items: center;
+            justify-content: center;
+        }
