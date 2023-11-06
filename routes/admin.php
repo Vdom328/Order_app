@@ -75,6 +75,7 @@ Route::group(['prefix' => 'admin'], function () {
     // route orders
     Route::group(['prefix' => 'order', 'middleware' => "auth"], function () {
         Route::get('/', [OrderController::class, 'index'])->name('admin.order.index');
+        Route::get('/getOrder', [OrderController::class, 'getOrder'])->name('admin.order.getOrder');
     });
 
     // route QR restaurant group

@@ -27,12 +27,12 @@
                                     @for ($i = 0; $i < $restaurant->quantity_table ; $i++)
                                         <div class="col-xl-2 col-md-3 col-6 mt-3 mt-md-5 d-flex p-0">
                                             <div class="col-6 p-0">
-                                                @foreach ( $restaurant->restaurant_table as $restaurant_table )
-                                                    @if ($restaurant_table == ($i + 1))
+                                                {{-- @foreach ( $restaurant->restaurant_table as $restaurant_table )
+                                                    @if ($restaurant_table == ($i + 1)) --}}
                                                         <img src="{{ asset('images/meeting-active.png') }}" alt="" width="100%">
-                                                        @continue;
+                                                        {{-- @continue;
                                                     @endif
-                                                @endforeach
+                                                @endforeach --}}
                                             </div>
                                             <div class="col-6 d-flex flex-wrap align-items-center">
                                                 <div class="fw-bold">Table: {{ $i + 1 }}</div>

@@ -82,4 +82,12 @@ class OrderService extends BaseService implements IOrderService
     {
         return $this->orderRepository->all();
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getOrderById($id)
+    {
+        return $this->orderRepository->find($id);
+    }
 }

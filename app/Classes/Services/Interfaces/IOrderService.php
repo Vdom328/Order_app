@@ -16,4 +16,10 @@ interface IOrderService
      * @param array $data
      */
     public function getOrders($data);
+
+    /**
+     * get order by id
+     * @param int $id
+     */
+    public function getOrderById($id);
 }
