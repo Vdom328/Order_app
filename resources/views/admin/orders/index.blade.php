@@ -1,26 +1,25 @@
-@php
-    use App\Classes\Enum\StatusOrderEnum;
-    use App\Classes\Enum\PaymentOrderEnum;
-@endphp
 @extends('admin.layouts.master')
 @section('title')
     List Orders
 @endsection
 @section('css')
     <link type="text/css" rel="stylesheet" href="{{ asset('assets/plugins/dataTable/datatables.min.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ asset('assets/plugins/datetimepicker/css/bootstrap-material-datetimepicker.css') }}">
     <style>
-        .pain-food{
+        .pain-food {
             background: antiquewhite !important;
         }
-        .pending-food{
+
+        .pending-food {
             background: rgb(177 249 189) !important;
         }
-        .btn{
+
+        .btn {
             font-size: 13px !important;
         }
     </style>
-    <link type="text/css" rel="stylesheet"
-        href="{{ asset('assets/plugins/dataTable/extensions/dataTables.jqueryui.min.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ asset('assets/plugins/dataTable/extensions/dataTables.jqueryui.min.css') }}">
+    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 @endsection
 
 @section('content')
@@ -31,6 +30,45 @@
             <!--================================-->
             <div class="col-lg-12 page-content-area">
                 <div class="inner-content">
+                    <div class="col-12 d-flex justify-content-end p-0">
+                        <button type="button" class="btn btn-primary waves-effect mb-3" id="new_order">
+                            New Order
+                        </button>
+                    </div>
+                    <div class="col-12 d-flex  p-0 mb-2">
+                        <div class="col-2 pl-0">
+                            <div class="font-weight-bold">Retaurant:</div>
+                            <select name="restaurant_id" id="filter_restaurant"class="form-control">
+                                <option value=""></option>
+                                @foreach ($restaurants as $restaurant)
+                                    <option value="{{ $restaurant->id }}">{{ $restaurant->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-2" id="option_meals">
+                            <div class="font-weight-bold">Status:</div>
+                            <select name="status" id="filter_status" class="form-control">
+                                <option value=""></option>
+                                @foreach ($status as $item)
+                                    <option value="{{ $item['value'] }}" >
+                                        {{ $item['name'] }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-2 pl-0">
+                            <div class="font-weight-bold">Date:</div>
+                            <div class="form-control-wrapper">
+                                <input type="text" id="date" class="form-control floating-label" placeholder="Date">
+                            </div>
+                        </div>
+                        <div class="col-2 pl-0">
+                            <div class="font-weight-bold"></div>
+                            <button type="button" class="btn btn-info btn-icon mt-4" id="search_order">
+                                <div><i class="fa fa-search"></i></div>
+                            </button>
+                        </div>
+                    </div>
                     <div class="custom-fieldset-style mg-b-30">
                         <div class="clearfix">
                             <div class="clearfix">
@@ -50,38 +88,8 @@
                                             <th></th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        @foreach ($orders as $order)
-                                            <tr class="@if ($order->status == StatusOrderEnum::PAID->value) pain-food @else pending-food @endif">
-                                                <td class="font-weight-bold">#{{ $order->code }}</td>
-                                                <td>{{ $order->user->first_name}} {{ $order->user->last_name}}</td>
-                                                <td>Table: {{ $order->table_id}}</td>
-                                                <td>{{$order->restaurant->name  }}</td>
-                                                <td>{{$order->time_order  }}</td>
-                                                <td>{{PaymentOrderEnum::getLabel($order->payment)  }}</td>
-                                                <td>{{StatusOrderEnum::getLabel($order->status)  }}</td>
-                                                <td>
-                                                    @foreach ($order->order_food as $order_food)
-                                                        <li>x{{ $order_food->quantity }} {{ $order_food->food_setting->name }}</li>
-                                                    @endforeach
-                                                </td>
-                                                <td>
-                                                    @php
-                                                        $total_price = $order->order_food->reduce(function($carry, $item) {
-                                                            return $carry + ($item->price * $item->quantity);
-                                                        }, 0);
-                                                    @endphp
-                                                    {{ $total_price }}
-                                                </td>
-                                                <td>
-                                                    <a class="table-action edit_order  mg-r-10"
-                                                        data-id={{ $order->id }}><i class="fa fa-pencil"></i></a>
-                                                    <a data-id="{{ $order->id }}"
-                                                        class="table-action" id="deleteRole" data-toggle="modal"
-                                                        data-target="#deleteModal"><i class="fa fa-trash"></i></a>
-                                                </td>
-                                            </tr>
-                                        @endforeach
+                                    <tbody id="list_order">
+                                        @include('admin.orders.partials._list-order')
                                     </tbody>
                                     <tfoot>
                                         <tr>
@@ -110,15 +118,23 @@
     <div id="modal-edit">
 
     </div>
+    @include('admin.orders.partials._modal-create')
+    @include('modals.delete')
 @endsection
 @section('js')
     <script src="{{ asset('assets/plugins/dataTable/datatables.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/dataTable/responsive/dataTables.responsive.js') }}"></script>
     <script src="{{ asset('assets/plugins/dataTable/extensions/dataTables.jqueryui.min.js') }}"></script>
+
+    <script src="{{ asset('assets/plugins/datetimepicker/js/bootstrap-material-datetimepicker.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datetimepicker/js/datetimepicker-active.js') }}"></script>
+
     <!-- END: Vendor JS-->
     <!-- BEGIN: Init JS-->
     <script>
         $(document).ready(function() {
+            $('#date').bootstrapMaterialDatePicker({ weekStart : 0, time: false });
+
             // Basic DataTable
             $('#basicDataTable').DataTable({
                 responsive: true,
@@ -138,14 +154,100 @@
                         id: id
                     },
                     success: function(data) {
-                        console.log(data);
                         $('#modal-edit').html(data.html);
                         $('#edit-order').modal('show');
                     },
-                    error: function(jqXHR, textStatus, errorThrown) {
+                    error: function(jqXHR, textStatus, errorThrown) {},
+                });
+            })
+
+            // add new food ordes
+            $(document).on('click', '#add-order-food', function() {
+                let restaurant_id = $('.restaurant').val();
+                addFoodToModal(function(food) {
+                    $('#list-food-edit').append(food);
+                }, restaurant_id);
+            })
+
+            // submit edit order
+            $(document).on('click', '#submit-form-edit-order', function() {
+                console.log('ok');
+                $('#form-edit-order').submit();
+            });
+
+
+            /******** New orders ********************************/
+            // add new order food
+            $(document).on('click', '#new_order', function() {
+                $('#new-order').modal('show');
+            })
+
+            // change restaurant name
+            $(document).on('change', '.restaurant', function() {
+                $.ajax({
+                    url: "{{ route('admin.order.changeRestaurant') }}",
+                    type: 'get',
+                    data: {
+                        restaurant_id: $('.restaurant').val(),
+                    },
+                    success: function(data) {
+                        $('#table-create-order').html(data.html);
                     },
                 });
             })
+
+            // click add food to creat new order
+            $(document).on('click', '#add-food-new-order', function() {
+                let restaurant_id = $('.restaurant').val();
+                addFoodToModal(function(food) {
+                    $('#list-fodd-add-new').append(food);
+                }, restaurant_id);
+            })
+
+            function addFoodToModal(callback, restaurant_id) {
+                let foodCount = $('.food_order').length;
+                $.ajax({
+                    url: "{{ route('admin.order.addOrderFood') }}",
+                    type: 'get',
+                    data: {
+                        restaurant_id: restaurant_id,
+                        foodCount: foodCount,
+                    },
+                    success: function(data) {
+                        callback(data.html);
+                    },
+                });
+            }
+
+            $(document).on('click', '#submit-form-new-order', function() {
+                $('#form-new-order').submit();
+            });
+
+            // delete order from
+            $(document).on('click', '#delete-order', function() {
+                var id = $(this).attr('data-id');
+                var deleteUrl = "{{ route('admin.order.deleteOrder', ['id' => ':id']) }}".replace(':id',
+                    id);
+                $("#confirmDeleteBtn").on("click", function() {
+                    window.location.href = deleteUrl;
+                });
+            });
+
+            //search order
+            $(document).on('click', '#search_order', function() {
+                $.ajax({
+                    url: window.location.href,
+                    type: 'get',
+                    data: {
+                        restaurant_id: $('#filter_restaurant').val(),
+                        status: $('#filter_status').val(),
+                        date: $('#date').val(),
+                    },
+                    success: function(data) {
+                        $('#list_order').html(data.html)
+                    },
+                });
+            });
         });
     </script>
 @endsection

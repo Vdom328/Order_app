@@ -13,6 +13,9 @@ class OrderFoodRepository  extends BaseRepository implements IOrderFoodRepositor
         return OrderFood::class;
     }
 
-
+    public function deleteByOrderId($orderId)
+    {
+        return OrderFood::where('order_id', $orderId)->delete();
+    }
 
 }

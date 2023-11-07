@@ -25,19 +25,19 @@
                             <div class="clearfix">
                                 <div class="col-12 d-flex flex-wrap" id="list_table">
                                     @for ($i = 0; $i < $restaurant->quantity_table ; $i++)
+                                        @php
+                                            $tableExists = collect($restaurant->restaurant_table)->contains('table', $i + 1);
+                                        @endphp
                                         <div class="col-xl-2 col-md-3 col-6 mt-3 mt-md-5 d-flex p-0">
                                             <div class="col-6 p-0">
-                                                {{-- @foreach ( $restaurant->restaurant_table as $restaurant_table )
-                                                    @if ($restaurant_table == ($i + 1)) --}}
-                                                        <img src="{{ asset('images/meeting-active.png') }}" alt="" width="100%">
-                                                        {{-- @continue;
-                                                    @endif
-                                                @endforeach --}}
+                                                <img src="{{ asset('images/meeting' . ($tableExists ? '-active' : '') . '.png') }}" alt="" width="100%">
                                             </div>
                                             <div class="col-6 d-flex flex-wrap align-items-center">
                                                 <div class="fw-bold">Table: {{ $i + 1 }}</div>
                                                 <div>Status: </div>
-                                                <button>Qr Code</button>
+                                                <button type="button" class="btn btn-{{ $tableExists ? 'info' : 'success' }} btn-icon {{ $tableExists ? 'show-qr' : 'create-qr' }}" data-table-id="{{ $i + 1 }}">
+                                                    <div><i class="fa fa-qrcode"></i></div>
+                                                </button>
                                             </div>
                                         </div>
                                     @endfor
@@ -53,6 +53,11 @@
 @section('js')
     <script>
         $(document).ready(function() {
+            $(document).on('click', '.create-qr', function() {
+                let table_id = $(this).attr('data-table-id');
+                let restaurant_id = $('#restaurant_id').val();
+                console.log(table_id,restaurant_id);
+            });
         });
     </script>
 @endsection

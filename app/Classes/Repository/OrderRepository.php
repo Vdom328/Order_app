@@ -19,4 +19,25 @@ class OrderRepository  extends BaseRepository implements IOrderRepository
         return $bool;
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function getOrders($data)
+    {
+        $query = $this->model;
+
+        if (isset($data['restaurant_id'])) {
+            $query = $query->where('restaurant_id', $data['restaurant_id']);
+        }
+
+        if (isset($data['status'])) {
+            $query = $query->where('status', $data['status']);
+        }
+
+        if (isset($data['date'])) {
+            $query = $query->whereDate('time_order', $data['date']);
+        }
+
+        return $query->get();
+    }
 }

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('code');
             $table->unsignedBigInteger('restaurant_id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->integer('table_id');
             $table->dateTime('time_order');
             $table->tinyInteger('status')->default(0)->nullable();

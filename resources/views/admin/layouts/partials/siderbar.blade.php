@@ -38,7 +38,7 @@
                         <span class="mt-5">SETTING ROLE</span>
                     </a>
                 </li>
-                <li class="">
+                {{-- <li class="">
                     <a href="">
                         <i class="fa  fa-ticket mr-2"></i>
                         <span class="mt-5">SETTING DISCOUNT</span>
@@ -49,7 +49,7 @@
                         <i class="fa  fa-envelope-open-o mr-2"></i>
                         <span class="mt-5">SETTING EMAIL</span>
                     </a>
-                </li>
+                </li> --}}
                 {{-- end admin --}}
                 {{-- restaurant --}}
                 <li class="menu-label mt-2">RESTAURANT</li>

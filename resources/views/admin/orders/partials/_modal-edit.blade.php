@@ -8,8 +8,11 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="myForm" class="col-12 col-md-12 p-0 m-0">
+                <form id="form-edit-order" method="post" action="{{ route('admin.order.createNewOrder') }}" class="col-12 col-md-12 p-0 m-0">
                     @csrf
+                    @if (isset($order))
+                        <input type="hidden" name="id" value="{{ $order->id }}">
+                    @endif
                     <div class="col-12 d-flex justify-content-end font-weight-bold">
                         @if (isset($order))
                             #{{ $order->code }}
@@ -21,7 +24,7 @@
                             <div class="col-9">
                                 @if (isset($order))
                                     <input class="form-control" value="{{ $order->restaurant->name }}" disabled>
-                                    <input name="restaurant_id" value="{{ $order->restaurant->name }}" type="hidden">
+                                    <input name="restaurant_id" value="{{ $order->restaurant->id }}" type="hidden">
                                 @else
                                     <select name="restaurant_id" class="form-control">
                                         @foreach ($restaurants as $restaurant)
@@ -74,11 +77,16 @@
                         <div class="col-6">
                             <div class="col-12 font-weight-bold">Item:</div>
                             <div class="col-12 d-flex">
-                                <div class="col-9 p-0">
-                                    @foreach ($order->order_food as $order_food)
-                                        <div class="col-12 d-flex p-0 align-items-center mt-2">
+                                <div class="col-9 p-0" id="list-food-edit">
+                                    @for ($i = 0; $i < count($order->order_food); $i++)
+                                    @php
+                                        $order_food = $order->order_food[$i];
+                                    @endphp
+                                    <input type="hidden" name="order_food[{{ $i }}][id]" value="{{ $order_food->id }}">
+                                    {{-- @foreach ($order->order_food as $order_food) --}}
+                                        <div class="col-12 d-flex p-0 align-items-center mt-2 food_order" >
                                             <div class="col-10 p-0">
-                                                <select name="" class="form-control">
+                                                <select name="order_food[{{ $i }}][food_id]" class="form-control">
                                                     @php
                                                         $checked_values = [];
                                                     @endphp
@@ -97,15 +105,15 @@
                                                 </select>
                                             </div>
                                             <div class="col-2 p-0">
-                                                <input type="text" class="form-control"
+                                                <input type="text" class="form-control" name="order_food[{{$i }}][quantity]"
                                                     value="{{ $order_food->quantity }}">
                                             </div>
                                         </div>
-                                    @endforeach
+                                    @endfor
 
                                 </div>
                                 <div class="col-2 mt-2">
-                                    <button type="button" class="btn btn-primary btn-icon">
+                                    <button type="button" class="btn btn-primary btn-icon" id="add-order-food">
                                         <div><i class="fa fa-plus"></i></div>
                                     </button>
                                 </div>
@@ -122,7 +130,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
-                <button type="button" id="submitForm" data-id="#" class="btn btn-primary waves-effect">Save
+                <button type="button" class="btn btn-primary waves-effect"  id="submit-form-edit-order">Save
                     changes</button>
             </div>
         </div>

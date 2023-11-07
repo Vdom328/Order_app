@@ -22,4 +22,16 @@ interface IOrderService
      * @param int $id
      */
     public function getOrderById($id);
+
+    /**
+     * create new order by admin
+     * @param array $data
+     */
+    public function createOrderByAdmin($data);
+
+    /**
+     * delete order by id
+     * @param int $id
+     */
+    public function deleteOrderById($id) ;
 }

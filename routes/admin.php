@@ -76,10 +76,16 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group(['prefix' => 'order', 'middleware' => "auth"], function () {
         Route::get('/', [OrderController::class, 'index'])->name('admin.order.index');
         Route::get('/getOrder', [OrderController::class, 'getOrder'])->name('admin.order.getOrder');
+        Route::get('/addOrderFood', [OrderController::class, 'addOrderFood'])->name('admin.order.addOrderFood');
+        Route::get('/change-restaurant', [OrderController::class, 'changeRestaurant'])->name('admin.order.changeRestaurant');
+        Route::post('/create-new-order', [OrderController::class, 'createNewOrder'])->name('admin.order.createNewOrder');
+        Route::post('/edit-order', [OrderController::class, 'editOrder'])->name('admin.order.editOrder');
+        Route::get('/delete-order/{id}', [OrderController::class, 'deleteOrder'])->name('admin.order.deleteOrder');
     });
 
     // route QR restaurant group
     Route::group(['prefix' => 'table', 'middleware' => "auth"], function () {
         Route::get('/', [TableSettingController::class, 'index'])->name('admin.listTable');
+        Route::get('/create-qrCode', [TableSettingController::class, 'createQrCode'])->name('admin.table.createQrCode');
     });
 });

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Classes\Services\Interfaces\IRestaurantService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\Storage;
 
 class TableSettingController extends Controller
 {
@@ -25,5 +27,20 @@ class TableSettingController extends Controller
         $list_restaurant = $this->restaurantService->getRestaurants();
         $restaurant = $list_restaurant->first();
         return view('admin.table_setting.index', compact('list_restaurant','restaurant'));
+    }
+
+    /**
+     * create qr code
+     * composer require simplesoftwareio/simple-qrcode
+     */
+    public function createQrCode(Request $request)
+    {
+        $url = 'https://example.com';
+        $qrCode = QrCode::size(300)->generate($url);
+
+        $filename = 'qr_code.svg';
+        $path = 'qr_codes/' . $filename;
+
+        Storage::disk('local')->put($path, $qrCode);
     }
 }
