@@ -191,7 +191,6 @@ class UserService extends BaseService implements IUserService
                 'token' => $token,
             ];
             $password_token = $this->passwordResetToken->create($attr);
-            dd($password_token);
             Mail::to($user->email)->send(new ResetPassword($user));
             return true;
         }

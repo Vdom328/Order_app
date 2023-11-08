@@ -53,6 +53,16 @@
                 {{-- end admin --}}
                 {{-- restaurant --}}
                 <li class="menu-label mt-2">RESTAURANT</li>
+                <li class="project @if (Request::routeIs('admin.restaurant.restaurant_setting') || Request::routeIs('admin.restaurant.index') || Request::routeIs('admin.restaurant.update')) open active @endif">
+                    <a href="#">
+                        <i class="fa fa-spin fa-asterisk mr-2"></i>
+                        <span>RESTAURANT</span><i class="accordion-icon fa fa-angle-left"></i>
+                    </a>
+                    <ul class="sub-menu ">
+                        <li class="@if (Request::routeIs('admin.restaurant.index') ) active @endif"><a href="{{ route('admin.restaurant.index') }}">List</a></li>
+                        <li class="@if (Request::routeIs('admin.restaurant.restaurant_setting') ) active @endif"><a href="{{ route('admin.restaurant.restaurant_setting') }}">Create</a></li>
+                    </ul>
+                </li>
                 <li class="project @if (Request::routeIs('admin.setting_food.index') || Request::routeIs('admin.setting_food.getCreate')) open active @endif">
                     <a href="#">
                         <i class="fa fa-spin fa-gear mr-2"></i>
@@ -69,26 +79,16 @@
                         <span class="mt-5">RESTAURANT FOODS</span>
                     </a>
                 </li>
-                <li class="project @if (Request::routeIs('admin.restaurant.restaurant_setting') || Request::routeIs('admin.restaurant.index') || Request::routeIs('admin.restaurant.update')) open active @endif">
-                    <a href="#">
-                        <i class="fa fa-spin fa-asterisk mr-2"></i>
-                        <span>RESTAURANT</span><i class="accordion-icon fa fa-angle-left"></i>
-                    </a>
-                    <ul class="sub-menu ">
-                        <li class="@if (Request::routeIs('admin.restaurant.index') ) active @endif"><a href="{{ route('admin.restaurant.index') }}">List</a></li>
-                        <li class="@if (Request::routeIs('admin.restaurant.restaurant_setting') ) active @endif"><a href="{{ route('admin.restaurant.restaurant_setting') }}">Create</a></li>
-                    </ul>
-                </li>
-                <li class="">
-                    <a href="">
+                <li class="{{ Request::routeIs('admin.coupons') ? 'active' : '' }}">
+                    <a href="{{ route('admin.coupons') }}">
                         <i class="fa fa-spin fa-star-o mr-2"></i>
-                        <span class="mt-5">RESTAURANT DISCOUNT</span>
+                        <span class="mt-5">RESTAURANT COUPON</span>
                     </a>
                 </li>
                 <li class="{{ Request::routeIs('admin.listTable') ? 'active' : '' }}">
                     <a href="{{ route('admin.listTable') }}">
                         <i class="fa fa-spin fa-table mr-2"></i>
-                        <span class="mt-5">SETTING TABLES</span>
+                        <span class="mt-5">RESTAURANT TABLES</span>
                     </a>
                 </li>
                 {{-- order --}}

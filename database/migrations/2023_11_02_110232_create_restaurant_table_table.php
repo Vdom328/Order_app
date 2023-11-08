@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('restaurant_table', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('restaurant_id');
-            $table->integer('table');
+            $table->integer('table_id');
             $table->tinyInteger('status')->default(0);
             $table->string('qr')->nullable();
             $table->string('memo')->nullable();

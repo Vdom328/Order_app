@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\Auth\LoginController;
+use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\FoodController;
@@ -87,5 +88,11 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group(['prefix' => 'table', 'middleware' => "auth"], function () {
         Route::get('/', [TableSettingController::class, 'index'])->name('admin.listTable');
         Route::get('/create-qrCode', [TableSettingController::class, 'createQrCode'])->name('admin.table.createQrCode');
+        Route::get('/show-qrCode', [TableSettingController::class, 'showQrCode'])->name('admin.table.showQrCode');
+    });
+
+    // route coupon
+    Route::group(['prefix' => 'coupon', 'middleware' => "auth"], function () {
+        Route::get('/', [CouponController::class, 'index'])->name('admin.coupons');
     });
 });

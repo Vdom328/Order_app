@@ -7,6 +7,7 @@ use App\Classes\Repository\Interfaces\IRestaurantMealRepository;
 use App\Classes\Repository\Interfaces\IRestaurantSettingRepository;
 use App\Classes\Repository\Interfaces\IRestaurantTableRepository;
 use App\Classes\Services\Interfaces\IRestaurantService;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -179,4 +180,30 @@ class RestaurantService extends BaseService implements IRestaurantService
         return $this->restaurantMealRepository->find($id);
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function createTable($array, $filename)
+    {
+        $attr = [
+            'restaurant_id' => $array['restaurant_id'],
+            'status' => Config::get('const.food.status.Active'),
+            'table_id' => $array['table_id'],
+            'qr' => $filename,
+            'memo' => '',
+        ];
+        return $this->restaurantTableRepository->create($attr);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function findTable($data)
+    {
+        $attr = [
+            'restaurant_id' => $data['restaurant_id'],
+            'table_id' => $data['table_id'],
+        ];
+        return $this->restaurantTableRepository->findOne($attr);
+    }
 }

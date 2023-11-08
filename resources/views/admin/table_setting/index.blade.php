@@ -15,7 +15,7 @@
                         <div class="col-3">
                             <select class="selectpicker form-control" name="restaurant_id" id="restaurant_id">
                                 @foreach ($list_restaurant as $item)
-                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    <option value="{{ $item->id }}" @if ($restaurant->id == $item->id) selected @endif>{{ $item->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -26,7 +26,7 @@
                                 <div class="col-12 d-flex flex-wrap" id="list_table">
                                     @for ($i = 0; $i < $restaurant->quantity_table ; $i++)
                                         @php
-                                            $tableExists = collect($restaurant->restaurant_table)->contains('table', $i + 1);
+                                            $tableExists = collect($restaurant->restaurant_table)->contains('table_id', $i + 1);
                                         @endphp
                                         <div class="col-xl-2 col-md-3 col-6 mt-3 mt-md-5 d-flex p-0">
                                             <div class="col-6 p-0">
@@ -49,15 +49,47 @@
             </div>
         </div>
     </div>
+    <div id="modal-show">
+
+    </div>
 @endsection
 @section('js')
     <script>
         $(document).ready(function() {
             $(document).on('click', '.create-qr', function() {
-                let table_id = $(this).attr('data-table-id');
-                let restaurant_id = $('#restaurant_id').val();
-                console.log(table_id,restaurant_id);
+                $.ajax({
+                        url: "{{ route('admin.table.createQrCode') }}",
+                        type: 'get',
+                        data: {
+                            table_id: $(this).attr('data-table-id'),
+                            restaurant_id: $('#restaurant_id').val()
+                        },
+                        success: function(data) {
+                            window.location.href = "{{ route('admin.listTable') }}?restaurant_id=" + $('#restaurant_id').val() ;
+                        },
+                    });
             });
+
+            // click show qr
+            $(document).on('click', '.show-qr', function() {
+                $.ajax({
+                        url: "{{ route('admin.table.showQrCode') }}",
+                        type: 'get',
+                        data: {
+                            table_id: $(this).attr('data-table-id'),
+                            restaurant_id: $('#restaurant_id').val()
+                        },
+                        success: function(data) {
+                            $('#modal-show').html(data);
+                            $('#show-qr').modal('show');
+                        },
+                    });
+            });
+
+            $(document).on('change', '#restaurant_id', function() {
+                let restaurant_id = $('#restaurant_id').val();
+                window.location.href = "{{ route('admin.listTable') }}?restaurant_id=" + restaurant_id ;
+            })
         });
     </script>
 @endsection

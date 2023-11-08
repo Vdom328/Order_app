@@ -22,10 +22,14 @@ class TableSettingController extends Controller
     /**
      * get list table restaurant
      */
-    public function index()
+    public function index(Request $request)
     {
         $list_restaurant = $this->restaurantService->getRestaurants();
-        $restaurant = $list_restaurant->first();
+        if ($request->input('restaurant_id')) {
+            $restaurant = $list_restaurant->where('id', $request->input('restaurant_id'))->first();
+        }else{
+            $restaurant = $list_restaurant->first();
+        }
         return view('admin.table_setting.index', compact('list_restaurant','restaurant'));
     }
 
@@ -35,12 +39,28 @@ class TableSettingController extends Controller
      */
     public function createQrCode(Request $request)
     {
-        $url = 'https://example.com';
+        $restaurant_id = $request->restaurant_id;
+        $table_id = $request->table_id;
+        $url = route('client.home') . '?restaurant_id=' . $restaurant_id . '&table_id=' . $table_id;
         $qrCode = QrCode::size(300)->generate($url);
 
-        $filename = 'qr_code.svg';
-        $path = 'qr_codes/' . $filename;
+        $filename = 'restaurant_id_'.$restaurant_id.'_table_id_'.$table_id.'.svg';
+        $path = 'public/qr_codes/' . $filename;
 
         Storage::disk('local')->put($path, $qrCode);
+
+        $table = $this->restaurantService->createTable($request->all(), $filename);
+        $modal = view('admin.table_setting.partials._modal-show', compact('table'))->render();
+        return response()->json($modal);
+    }
+
+    /**
+     * show qr code blade
+     */
+    public function showQrCode(Request $request)
+    {
+        $table = $this->restaurantService->findTable($request->all());
+        $modal = view('admin.table_setting.partials._modal-show', compact('table'))->render();
+        return response()->json($modal);
     }
 }

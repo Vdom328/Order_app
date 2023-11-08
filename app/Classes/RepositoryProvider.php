@@ -38,5 +38,7 @@ class RepositoryProvider extends ServiceProvider
         App::bind(IRepository\IOrderRepository::class, Repository\OrderRepository::class);
         App::bind(IRepository\IOrderFoodRepository::class, Repository\OrderFoodRepository::class);
         App::bind(IRepository\IRestaurantTableRepository::class, Repository\RestaurantTableRepository::class);
+        App::bind(IRepository\ICouponSettingRepository::class, Repository\CouponSettingRepository::class);
+        App::bind(IRepository\ICouponUserRepository::class, Repository\CouponUserRepository::class);
     }
 }

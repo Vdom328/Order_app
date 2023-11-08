@@ -53,4 +53,16 @@ interface IRestaurantService
      * @param int  $id
      */
     public function getRestaurantMealById($id);
+
+    /**
+     * create table restaurant
+     * @param array $array
+     * @param mixed $filename
+     */
+    public function createTable($array, $filename);
+
+    /**
+     * find table
+     */
+    public function findTable($data);
 }

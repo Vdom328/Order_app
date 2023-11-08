@@ -32,5 +32,6 @@ class ServiceProvider extends LServiceProvider
         App::bind(IService\ISettingFoodService::class, Service\SettingFoodService::class);
         App::bind(IService\IRestaurantService::class, Service\RestaurantService::class);
         App::bind(IService\IOrderService::class, Service\OrderService::class);
+        App::bind(IService\ICouponService::class, Service\CouponService::class);
     }
 }
