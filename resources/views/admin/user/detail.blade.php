@@ -19,8 +19,13 @@
                         <div class="d-flex align-items-center mg-b-20">
                             <div class="profile-avatar-setting mr-3">
                                 <div class="avatar-wrapper">
-                                    <img class="profile-pic img-fluid rounded"
-                                        src="{{ asset('storage/avatarUser/' . $user->avatar) ?? '' }}">
+                                    @if (isset($user->avatar))
+                                        <img class="profile-pic img-fluid rounded"
+                                            src="{{ asset('storage/avatarUser/' . $user->avatar) ?? '' }}">
+                                    @else
+                                        <img class="profile-pic img-fluid rounded"
+                                            src="{{ asset('images/th (3).jpg') }}">
+                                    @endif
                                     <div class="upload-button">
                                         <i class="fa fa-camera" aria-hidden="true"></i>
                                     </div>

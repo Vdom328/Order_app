@@ -35,10 +35,10 @@ class HomeController extends Controller
             return view('client.error.error');
         }
         $checkTime = $this->checkTimeRestaurant($restaurant->id);
-        if ($checkTime['type'] == false) {
-            $time_error = $checkTime['time_error'];
-            return view('client.error.time',compact('time_error'));
-        }
+        // if ($checkTime['type'] == false) {
+        //     $time_error = $checkTime['time_error'];
+        //     return view('client.error.time',compact('time_error'));
+        // }
         $data = $request->all();
         return view('client.home', compact('restaurant','data'));
     }
@@ -146,5 +146,14 @@ class HomeController extends Controller
             }
         }
         return ['type' => true , 'time_error' => []];
+    }
+
+
+    /**
+     * get history
+     */
+    public function getHistory()
+    {
+        return view('client.history.index');
     }
 }

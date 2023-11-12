@@ -12,32 +12,20 @@
         <div class="nav-top">
             <ul>
                 <li>
-                    <a href="#">Home</a>
+                    <a href="" class="route_home">Home</a>
                 </li>
                 <li>
                     <a href="#">About us</a>
                 </li>
+                @if (Auth()->check())
                 <li>
-                    <a href="#">Products</a>
+                    <a href="{{ route('client.getLogout') }}">Log out</a>
                 </li>
+                @else
                 <li>
-                    <a href="#">Blog</a>
+                    <a href="{{ route('client.getLogin') }}">Log in</a>
                 </li>
-                <li>
-                    <a href="#">Shop</a>
-                </li>
-                <li>
-                    <a href="#">Services</a>
-                </li>
-                <li>
-                    <a href="#">Contact us</a>
-                </li>
-                <li>
-                    <a href="#">Log in</a>
-                </li>
-                <li>
-                    <a href="#">Register</a>
-                </li>
+                 @endif
             </ul>
         </div>
         <div class="contact flex items-center">

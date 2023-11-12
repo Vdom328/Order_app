@@ -14,9 +14,9 @@
     </div>
     <div class="col-5 d-flex justify-content-end align-items-center">
         @if (Auth()->check())
-            <div class="col-3">
+            <a href="{{ route('client.history') }}" class="col-3">
                 <i class="fas fa-history bell-icon"></i>
-            </div>
+            </a>
             <div class="col-3">
                 <i class="fas fa-user bell-icon"></i>
             </div>

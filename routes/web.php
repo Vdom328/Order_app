@@ -39,7 +39,10 @@ Route::get('/table', [HomeController::class, 'getTable'])->name('client.getTable
 Route::get('/detail-food/{id}', [HomeController::class, 'getDetailFood'])->name('client.getDetailFood');
 Route::get('/check-time-add-cart', [HomeController::class, 'checkTimeAddCart'])->name('client.checkTimeAddCart');
 
-// route list cart and order 
+// route list cart and order
 Route::get('/list-cart', [HomeController::class, 'getListCart'])->name('client.getListCart');
 Route::get('/order-now', [HomeController::class, 'getOrderNow'])->name('client.getOrderNow');
 Route::post('/order-success', [HomeController::class, 'getOrderSuccess'])->name('client.getOrderSuccess');
+
+// route history
+Route::get('/history', [HomeController::class, 'getHistory'])->name('client.history');

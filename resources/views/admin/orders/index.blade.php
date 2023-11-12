@@ -171,7 +171,6 @@
 
             // submit edit order
             $(document).on('click', '#submit-form-edit-order', function() {
-                console.log('ok');
                 $('#form-edit-order').submit();
             });
 
