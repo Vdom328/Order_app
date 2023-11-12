@@ -3,9 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\Auth\LoginController;
+use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\FoodController;
+use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\TableSettingController;
 use App\Http\Controllers\Admin\RestaurantController;
 use App\Http\Controllers\Admin\RestaurantFoodController;
 
@@ -57,6 +60,9 @@ Route::group(['prefix' => 'admin'], function () {
     // route restaurant food
     Route::group(['prefix' => 'restaurant_food', 'middleware' => "auth"], function () {
         Route::get('/', [RestaurantFoodController::class, 'index'])->name('admin.restaurant_food.index');
+        Route::get('/getMeals', [RestaurantFoodController::class, 'getMeals'])->name('admin.restaurant_food.getMeals');
+        Route::get('/getCheckbox', [RestaurantFoodController::class, 'getCheckbox'])->name('admin.restaurant_food.getCheckbox');
+        Route::post('/post-food-restaurant', [RestaurantFoodController::class, 'postFoodRestaurant'])->name('admin.restaurant_food.postFoodRestaurant');
     });
     // route restaurant setting
     Route::group(['prefix' => 'restaurant', 'middleware' => "auth"], function () {
@@ -65,5 +71,28 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/', [RestaurantController::class, 'index'])->name('admin.restaurant.index');
         Route::get('/update/{id}', [RestaurantController::class, 'update'])->name('admin.restaurant.update');
         Route::post('/delete/{id}', [RestaurantController::class, 'delete'])->name('admin.restaurant.delete');
+    });
+
+    // route orders
+    Route::group(['prefix' => 'order', 'middleware' => "auth"], function () {
+        Route::get('/', [OrderController::class, 'index'])->name('admin.order.index');
+        Route::get('/getOrder', [OrderController::class, 'getOrder'])->name('admin.order.getOrder');
+        Route::get('/addOrderFood', [OrderController::class, 'addOrderFood'])->name('admin.order.addOrderFood');
+        Route::get('/change-restaurant', [OrderController::class, 'changeRestaurant'])->name('admin.order.changeRestaurant');
+        Route::post('/create-new-order', [OrderController::class, 'createNewOrder'])->name('admin.order.createNewOrder');
+        Route::post('/edit-order', [OrderController::class, 'editOrder'])->name('admin.order.editOrder');
+        Route::get('/delete-order/{id}', [OrderController::class, 'deleteOrder'])->name('admin.order.deleteOrder');
+    });
+
+    // route QR restaurant group
+    Route::group(['prefix' => 'table', 'middleware' => "auth"], function () {
+        Route::get('/', [TableSettingController::class, 'index'])->name('admin.listTable');
+        Route::get('/create-qrCode', [TableSettingController::class, 'createQrCode'])->name('admin.table.createQrCode');
+        Route::get('/show-qrCode', [TableSettingController::class, 'showQrCode'])->name('admin.table.showQrCode');
+    });
+
+    // route coupon
+    Route::group(['prefix' => 'coupon', 'middleware' => "auth"], function () {
+        Route::get('/', [CouponController::class, 'index'])->name('admin.coupons');
     });
 });

@@ -30,6 +30,7 @@ class SettingFoodService extends BaseService implements ISettingFoodService
             'quantity' => $data['quantity'],
             'price' => $data['price'],
             'status' => $data['status'],
+            'memo' => $data['memo'],
         ];
         $food_setting = $this->settingFoodRepository->create($attr);
         return $this->createImagesStorage($data['images'],$food_setting->id);
@@ -102,6 +103,7 @@ class SettingFoodService extends BaseService implements ISettingFoodService
             'quantity' => $data['quantity'],
             'price' => $data['price'],
             'status' => $data['status'],
+            'memo' => $data['memo'],
         ];
         $food_setting = $this->settingFoodRepository->update($id,$attr);
         $deleteImages = $this->foodImagesRepository->deleteByFoodId($id);

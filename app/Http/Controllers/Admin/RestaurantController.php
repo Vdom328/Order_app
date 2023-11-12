@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Classes\Enum\StatusUserEnum;
+use App\Classes\Enum\TypeMealEnum;
 use App\Classes\Services\Interfaces\IRestaurantService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateRestaurantSettingRequest;
@@ -25,7 +27,8 @@ class RestaurantController extends Controller
      */
     public function restaurant_setting()
     {
-        return view('admin.restaurant_setting.create');
+        $typeMeals = $this->getStatus();
+        return view('admin.restaurant_setting.create', compact('typeMeals'));
     }
 
     /**
@@ -59,8 +62,9 @@ class RestaurantController extends Controller
       */
     public function update($id)
     {
+        $typeMeals = $this->getStatus();
         $restaurant = $this->restaurantService->findRestaurantById($id);
-        return view('admin.restaurant_setting.update', compact('restaurant'));
+        return view('admin.restaurant_setting.update', compact('restaurant','typeMeals'));
     }
 
     /**
@@ -76,5 +80,21 @@ class RestaurantController extends Controller
         // Return a success
         Session::flash('success', "Delete restaurant successfully !");
         return response()->json();
+    }
+
+        /**
+     * Get status default in project
+     */
+    public function getStatus(): array
+    {
+        $statusValues = [];
+        $statusCases = TypeMealEnum::cases();
+        foreach ($statusCases as $status) {
+            $statusValues[] = [
+                'value' => $status->value,
+                'name' => TypeMealEnum::getLabel($status->value)
+            ];
+        }
+        return $statusValues;
     }
 }

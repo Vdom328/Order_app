@@ -122,6 +122,28 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="mb-4">
+                                <div class="row d-flex flex-wrap">
+                                    <div class="col-12 col-md-12 p-0 m-0">
+                                        <div class="col col-12 ">Quantity table</div>
+                                        <div class="col col-12 col-lg-12 mt-2 d-flex flex-wrap">
+                                            <input class="form-control w-100" name="quantity_table" id="quantity_table" type="number" min="0" value="{{ old('quantity_table') }}">
+                                            <p class="w-100 error text-danger">{{ $errors->first('quantity_table') }}</p>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-12 p-0 m-0">
+                                        <div class="col col-12 ">Meal</div>
+                                        <div class="col col-12 col-lg-12 mt-2 d-flex flex-wrap">
+                                            @foreach ( $typeMeals as $typeMeal)
+                                                <div class="custom-control custom-checkbox col-2 pl-4 mt-5">
+                                                    <input type="checkbox" name="meal[]" class="custom-control-input" id="{{ $typeMeal['value'] }}" value="{{ $typeMeal['value'] }}">
+                                                    <label class="custom-control-label" for="{{ $typeMeal['value'] }}">{{ $typeMeal['name'] }}</label>
+                                                 </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                            </div>
                             <button type="submit" class="btn btn-success waves-effect" id="submitForm">Save</button>
                         </div>
                     </form>

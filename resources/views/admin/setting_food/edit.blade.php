@@ -83,6 +83,17 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="mb-4">
+                                <div class="row d-flex flex-wrap">
+                                    <div class="col-12 col-md-12 p-0 m-0">
+                                        <div class="col col-12 ">Memo</div>
+                                        <div class="col col-12 col-lg-12 mt-2">
+                                            <textarea name="memo" id="memo" class="col-12 form-control"  rows="10">{{ old('memo', $food->memo) }}</textarea>
+                                            <p class="w-100 error text-danger">{{ $errors->first('quantity') }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <button type="button" class="btn btn-success waves-effect" id="submitForm">Save</button>
                         </div>
                     </form>

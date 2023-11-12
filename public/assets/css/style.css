@@ -5578,9 +5578,10 @@ input:focus,
   transition-duration: .5s;
   font-family: inherit; }
 
-.form-control:disabled,
+/* .form-control:disabled,
 .form-control[readonly] {
-  background-color: #fff; }
+  background-color: #fff; 
+} */
 
 hr {
   border-top: 1px solid #eee; }

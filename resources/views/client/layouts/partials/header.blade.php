@@ -8,16 +8,25 @@
             <line x1="6" y1="20" x2="6" y2="16" />
         </svg>
     </div>
-    <div class="col-5 ">
-        <span class="fw-bold">Restaurant</span><br />
-        <span>Table 5</span>
+    <div class="col-5">
+        <span class="fw-bold name-restaurant">Restaurant</span><br>
+        <span class="table-number">Table 5</span>
     </div>
     <div class="col-5 d-flex justify-content-end align-items-center">
-        <div class="col-3">
-            <i class="fas fa-bell  fa-lg"></i>
-        </div>
-        <div class="col-3">
-            <i class="fas fa-search fa-lg"></i>
-        </div>
+        @if (Auth()->check())
+            <div class="col-3">
+                <i class="fas fa-history bell-icon"></i>
+            </div>
+            <div class="col-3">
+                <i class="fas fa-user bell-icon"></i>
+            </div>
+            <a href="{{ route('client.getLogout') }}" class="col-3">
+                <i class="fas fa-sign-out-alt bell-icon"></i>
+            </a>
+        @else
+            <a href="{{ route('client.getLogin') }}" class="col-3">
+                <i class="fas fa-sign-in-alt bell-icon"></i>
+            </a>
+        @endif
     </div>
 </div>

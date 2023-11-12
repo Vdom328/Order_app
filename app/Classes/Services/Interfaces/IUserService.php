@@ -13,4 +13,10 @@ interface IUserService
     public function updateAvatar($request, $id);
     public function delete($id);
     public function postForgotByEmail($email);
+
+    /**
+     * post create user client
+     * @param array $data
+     */
+    public function registerUserClient($data);
 }
