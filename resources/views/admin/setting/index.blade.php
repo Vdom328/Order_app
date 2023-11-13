@@ -13,16 +13,10 @@
             <!--================================-->
             <div class="col-lg-12 page-content-area">
                 <div class="inner-content">
-                    <div class="col-12 d-flex justify-content-end p-0">
-                        <button type="button" class="btn btn-primary waves-effect mb-3" data-toggle="modal"
-                            data-target="#addRole">
-                            Add Role
-                        </button>
-                    </div>
                     <div class="custom-fieldset-style mg-b-30">
                         <div class="clearfix">
                             <div class="clearfix">
-
+                                
                             </div>
                         </div>
                     </div>

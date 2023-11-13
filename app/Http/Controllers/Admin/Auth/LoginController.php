@@ -68,6 +68,37 @@ class LoginController extends Controller
     public function postForgot(Request $request)
     {
         $this->IUserService->postForgotByEmail($request->email);
-        dd($request->all());
+        Session::flash('success', "Email sent successfully!");
+        return redirect()->back();
+    }
+
+    /**
+     * reset password
+     */
+    public function resetPassword(Request $request)
+    {
+        $token = $request->input('token');
+        $email = $this->IUserService->getEmailByToken($token);
+        $email = $email->email;
+        return view('admin.auth.aut-reset-password', compact('email'));
+    }
+
+    /**
+     * submit forgot password reset
+     */
+    public function submitResetPassword(Request $request)
+    {
+        $password = $request->input('password');
+        if ($request->input('password') != $request->input('confirm-password')) {
+            Session::flash('error', "You must enter the same password and confirm password!");
+            return redirect()->back();
+        }
+        $update = $this->IUserService->updatePassword($request->all());
+        if ($update == false) {
+            Session::flash('error', "Error updating password");
+            return redirect()->back();
+        }
+        Session::flash('success', "Reset password in successfully !");
+        return redirect()->back();
     }
 }

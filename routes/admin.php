@@ -4,9 +4,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\EmailController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\FoodController;
+use App\Http\Controllers\Admin\LayoutController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\TableSettingController;
 use App\Http\Controllers\Admin\RestaurantController;
@@ -22,8 +24,9 @@ Route::group(['prefix' => 'admin'], function () {
         // forgot password
         Route::get('/forgot', [LoginController::class, 'getForgot'])->name('admin.auth.getForgot');
         Route::post('/postForgot', [LoginController::class, 'postForgot'])->name('admin.auth.postForgot');
+        Route::get('/reset-password', [LoginController::class, 'resetPassword'])->name('admin.auth.resetPassword');
 
-
+        Route::post('/reset-password-submit', [LoginController::class, 'submitResetPassword'])->name('admin.auth.submitResetPassword');
     });
     // route user profile
     Route::group(['prefix' => 'user', 'middleware' => "auth"], function () {
@@ -98,4 +101,12 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/delete-coupon/{id}', [CouponController::class, 'deleteCoupon'])->name('admin.coupons.delete');
         Route::get('/edit-coupon', [CouponController::class, 'editCoupon'])->name('admin.coupons.edit');
     });
+
+    // route email address
+    Route::group(['prefix' => 'email', 'middleware' => "auth"], function () {
+        Route::get('/', [EmailController::class, 'index'])->name('admin.emails');
+        Route::get('/edit/{id}', [EmailController::class, 'edit'])->name('admin.emails.edit');
+        Route::post('/postEdit', [EmailController::class, 'postEdit'])->name('admin.emails.postEdit');
+    });
+
 });

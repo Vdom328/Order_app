@@ -32,7 +32,7 @@
 
 </head>
 
-<body>
+<body class="page-footer-fixed">
     <div id="spinner" style="display:none;">
         <i class="fa fa-spinner fa-spin"></i>
     </div>
@@ -75,7 +75,7 @@
     <script src="{{ asset('assets/js/app.js') }}"></script>
     <script src="{{ asset('assets/js/adata-init.js') }}"></script>
     <script src="{{ asset('assets/plugins/jquery.growl/jquery.growl.js') }}"></script>
-    @include('admin.layouts.partials.setting')
+    {{-- @include('admin.layouts.partials.setting') --}}
     @include('admin.layouts.partials.message')
     @yield('js')
 </body>

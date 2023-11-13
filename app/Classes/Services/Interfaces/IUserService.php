@@ -19,4 +19,15 @@ interface IUserService
      * @param array $data
      */
     public function registerUserClient($data);
+
+    /**
+     * get email by token
+     */
+    public function getEmailByToken($token);
+
+    /**
+     * update password by email
+     * @param array $data
+     */
+    public function updatePassword($data);
 }

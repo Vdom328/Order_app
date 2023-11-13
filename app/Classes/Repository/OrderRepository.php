@@ -4,6 +4,7 @@ namespace App\Classes\Repository;
 
 use App\Classes\Repository\Interfaces\IOrderRepository;
 use App\Models\Order;
+use Carbon\Carbon;
 
 class OrderRepository  extends BaseRepository implements IOrderRepository
 {
@@ -39,5 +40,35 @@ class OrderRepository  extends BaseRepository implements IOrderRepository
         }
 
         return $query->get();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function findByDate($date)
+    {
+        $query = $this->model;
+        return $query->whereDate('time_order', $date)->get();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function findByMonth($month)
+    {
+        $query = $this->model;
+        return $query->whereYear('time_order', '=', Carbon::parse($month)->year)
+                        ->whereMonth('time_order', '=', Carbon::parse($month)->month)
+                        ->get();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function findByYear($year)
+    {
+        $query = $this->model;
+
+        return $query->whereYear('time_order', '=', $year)->get();
     }
 }

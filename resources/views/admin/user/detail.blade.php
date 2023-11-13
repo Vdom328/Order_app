@@ -107,15 +107,6 @@
                                                 name="last_name" value="{{ $user->last_name ?? '' }}">
                                         </div>
                                     </div>
-                                    <div class="alert alert-warning alert-dismissible mb-2" role="alert">
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        <p class="mb-0">
-                                            Your email is not confirmed. Please check your inbox.
-                                        </p>
-                                        <a href="">Resend confirmation</a>
-                                    </div>
                                     <div class="row mg-t-20">
                                         <label class="col-lg-3 form-control-label tx-left tx-lg-right form-label"><span
                                                 class="tx-danger">*</span> Email:</label>
@@ -179,7 +170,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="setting-change-password" role="tabpanel">
+                    <form method="POST" action="{{ route('admin.auth.submitResetPassword') }}" class="tab-pane fade" id="setting-change-password" role="tabpanel">
+                        @csrf
                         <div class="card">
                             <div class="card-header d-flex align-items-center justify-content-between pd-15">
                                 <h6 class="mb-0">Change Password</h6>
@@ -202,40 +194,29 @@
                                 </div>
                                 <div>
                                     <div class="row">
-                                        <label class="col-lg-3 form-control-label tx-left tx-lg-right form-label">Old
-                                            Password:</label>
+                                        <input type="hidden" name="email" value="{{ $user->email }}">
+                                        <label class="col-lg-3 form-control-label tx-left tx-lg-right form-label">
+                                            New Password:</label>
                                         <div class="col-lg-6 mg-t-10 mg-sm-t-0">
                                             <input type="password" class="form-control" required=""
-                                                placeholder="Old Password"
-                                                data-validation-required-message="This old password field is required">
-                                            <a href="" class="tx-10">Forgot password ?</a>
-                                        </div>
-                                    </div>
-                                    <div class="row mg-t-20">
-                                        <label class="col-lg-3 form-control-label tx-left tx-lg-right form-label">New
-                                            Password:</label>
-                                        <div class="col-lg-6 mg-t-10 mg-sm-t-0">
-                                            <input type="password" name="password" class="form-control"
-                                                placeholder="New Password" required=""
-                                                data-validation-required-message="The password field is required"
-                                                minlength="6">
-                                        </div>
-                                    </div>
-                                    <div class="row mg-t-20">
-                                        <label class="col-lg-3 form-control-label tx-left tx-lg-right form-label">Retype
-                                            Password:</label>
-                                        <div class="col-lg-6 mg-t-10 mg-sm-t-0">
-                                            <input type="password" name="con-password" class="form-control"
-                                                required="" data-validation-match-match="password"
+                                                name="password"
                                                 placeholder="New Password"
-                                                data-validation-required-message="The Confirm password field is required"
-                                                minlength="6">
+                                                data-validation-required-message="This old password field is required">
                                         </div>
                                     </div>
+                                    <div class="row mg-t-20">
+                                        <label class="col-lg-3 form-control-label tx-left tx-lg-right form-label">
+                                            Confirm Password:</label>
+                                        <div class="col-lg-6 mg-t-10 mg-sm-t-0">
+                                            <input type="password" name="confirm-password" class="form-control"
+                                                placeholder="Confirm Password">
+                                        </div>
+                                    </div>
+
                                     <div class="row mg-t-30">
                                         <div class="col-sm-8 mg-l-auto">
                                             <div class="form-layout-footer">
-                                                <button class="btn btn-primary waves-effect">Save Changes</button>
+                                                <button class="btn btn-primary waves-effect" id="update-password">Save Changes</button>
                                                 <a href="{{ route('admin.user.list') }}"
                                                     class="btn btn-default waves-effect">Cancel</a>
                                             </div>
@@ -244,7 +225,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                     <div class="tab-pane fade" id="setting-social-link" role="tabpanel">
                         <div class="card">
                             <div class="card-header d-flex align-items-center justify-content-between pd-15">
@@ -412,6 +393,12 @@
                                                 alert('An error occurred, please try again !');
                     },
                 });
+            });
+
+            // update passwords
+            $('#update-password').click(function(event) {
+                event.preventDefault();
+                $('#setting-change-password').submit();
             });
         });
     </script>

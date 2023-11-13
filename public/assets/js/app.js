@@ -16,7 +16,7 @@ $(document).ready(function () {
 		page_sidebar = $('.page-sidebar'),
 		page_content = $('.page-content');
 
-	// Boxed Page 
+	// Boxed Page
 	var boxed_page = function () {
 		if (page_boxed === true) {
 			$('.page-container').addClass('container');
@@ -327,7 +327,7 @@ $(document).ready(function () {
 	});
 
 
-	// Fixed Header Setting  
+	// Fixed Header Setting
 	var toggle_fixed_header = function (fixed) {
 		let body = $("body");
 		if (!fixed) {
@@ -346,7 +346,7 @@ $(document).ready(function () {
 	});
 
 
-	// Fixed Footer Setting  
+	// Fixed Footer Setting
 	var toggle_fixed_footer = function (fixedfooter) {
 		let body = $("body");
 		if (!fixedfooter) {
@@ -355,6 +355,7 @@ $(document).ready(function () {
 			body.addClass("page-footer-fixed");
 		}
 	};
+    
 	$("#fixed_footer_setting").on("change", function () {
 		var _val = $(this).is(":checked") ? "checked" : "unchecked";
 		if (_val === "checked") {
@@ -365,7 +366,7 @@ $(document).ready(function () {
 	});
 
 
-	// Collapsed Sidebar Setting   
+	// Collapsed Sidebar Setting
 	var toggle_sidebar_collapsed = function (collapsed) {
 		let body = $("body");
 		if (!collapsed) {
@@ -383,7 +384,7 @@ $(document).ready(function () {
 		}
 	});
 
-	// Box Style Setting   
+	// Box Style Setting
 	var toggle_box_style = function (box) {
 		let container = $(".page-container");
 		let body = $("body");
@@ -404,7 +405,7 @@ $(document).ready(function () {
 		}
 	});
 
-	// Box Shadow Setting 
+	// Box Shadow Setting
 	var toggle_box_shadow = function (shadow) {
 		let body = $("body");
 		if (!shadow) {

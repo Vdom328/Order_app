@@ -169,7 +169,7 @@
                         <h6 class="setting-list-name tx-15">Fixed Footer</h6>
                         <div class="setting-list-switch">
                             <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" id="fixed_footer_setting">
+                                <input type="checkbox" checked class="custom-control-input" id="fixed_footer_setting">
                                 <label class="custom-control-label" for="fixed_footer_setting"></label>
                             </div>
                         </div>

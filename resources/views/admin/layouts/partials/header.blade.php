@@ -253,8 +253,7 @@
                                     @endif
                                 </div>
                                 <div class="profile-text">
-                                    <h6>Ruhul Hasan</h6>
-                                    <span class="tx-rubik">Balance: $1,425</span>
+                                    <h6>{{ Auth()->user()->last_name . ' ' . Auth()->user()->first_name }}</h6>
                                 </div>
                             </div>
                             <a href="{{ route('admin.user.getProfile', Auth()->user()->id) }}" class="dropdown-item d-flex align-items-center"><span

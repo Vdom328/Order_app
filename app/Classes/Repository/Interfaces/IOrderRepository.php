@@ -15,4 +15,19 @@ interface IOrderRepository extends IBaseRepository
      * @param array $data
      */
     public function getOrders($data);
+
+    /**
+     * find by date
+     */
+    public function findByDate($date);
+
+    /**
+     * find by month
+     */
+    public function findByMonth($month);
+
+    /**
+     * find by year
+     */
+    public function findByYear($year);
 }

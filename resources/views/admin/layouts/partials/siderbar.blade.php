@@ -38,18 +38,12 @@
                         <span class="mt-5">SETTING ROLE</span>
                     </a>
                 </li>
-                {{-- <li class="">
-                    <a href="">
-                        <i class="fa  fa-ticket mr-2"></i>
-                        <span class="mt-5">SETTING DISCOUNT</span>
+                <li class="@if (Request::routeIs('admin.emails') || Request::routeIs('admin.emails.edit')) active @endif">
+                    <a href="{{ route('admin.emails') }}">
+                        <i class="fa fa-spin fa-envelope-open-o mr-2"></i>
+                        <span>SETTING EMAIL</span>
                     </a>
                 </li>
-                <li class="">
-                    <a href="">
-                        <i class="fa  fa-envelope-open-o mr-2"></i>
-                        <span class="mt-5">SETTING EMAIL</span>
-                    </a>
-                </li> --}}
                 {{-- end admin --}}
                 {{-- restaurant --}}
                 <li class="menu-label mt-2">RESTAURANT</li>

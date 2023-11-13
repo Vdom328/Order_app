@@ -191,7 +191,7 @@ class UserService extends BaseService implements IUserService
                 'token' => $token,
             ];
             $password_token = $this->passwordResetToken->create($attr);
-            Mail::to($user->email)->send(new ResetPassword($user));
+            Mail::to($user->email)->send(new ResetPassword($user, $password_token));
             return true;
         }
         return false;
@@ -209,7 +209,7 @@ class UserService extends BaseService implements IUserService
                 'last_name' => $data['last_name'],
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
-                'role_id' => 1,
+                'role_id' => 5,
             ];
             $this->userRepository->create($attribute);
             DB::commit();
@@ -219,5 +219,27 @@ class UserService extends BaseService implements IUserService
             Log::error('Error while create user : ' . $e->getMessage());
             return false;
         }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getEmailByToken($token)
+    {
+        return $this->passwordResetToken->findOne(['token' => $token]);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function updatePassword($data)
+    {
+        $user = $this->userRepository->findOne(['email' => $data['email']]);
+        if (!$user) {
+            return false;
+        }
+        $user->password = Hash::make($data['password']);
+        $user->save();
+        return true;
     }
 }
