@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Client;
 
+use App\Classes\Enum\StatusOrderEnum;
 use App\Classes\Enum\TypeMealEnum;
 use App\Classes\Services\Interfaces\IOrderService;
 use App\Classes\Services\Interfaces\IRestaurantService;
 use App\Classes\Services\Interfaces\ISettingFoodService;
 use App\Http\Controllers\Controller;
+use App\Models\CouponSetting;
+use App\Models\Order;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -40,7 +43,8 @@ class HomeController extends Controller
         //     return view('client.error.time',compact('time_error'));
         // }
         $data = $request->all();
-        return view('client.home', compact('restaurant','data'));
+        $coupons = CouponSetting::where('status', 0)->get();
+        return view('client.home', compact('restaurant','data','coupons'));
     }
 
 
@@ -154,6 +158,7 @@ class HomeController extends Controller
      */
     public function getHistory()
     {
-        return view('client.history.index');
+        $historyByUser = Order::where('user_id', Auth::user()->id)->where('status',StatusOrderEnum::PAID->value)->get();
+        return view('client.history.index',compact('historyByUser'));
     }
 }

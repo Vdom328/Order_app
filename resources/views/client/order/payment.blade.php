@@ -25,10 +25,27 @@
                     <a href="/history" class="pay-Notification1-item">
                         <p class="pay-Notification1-tittle">Order Confirmation</p>
                     </a>
+                    <p class="price-product" id="price">0$</p>
                 </div>
                 <div>
                     <img src="{{ asset('images/payment.png') }}" alt="" width="100%" height="auto">
                 </div>
+            </div>
+            {{-- coupons --}}
+            <div class="col-12 mt-3">
+                <label for="" class="fw-bold">Coupons</label>
+                <div class="col-12 d-flex">
+                    <div class="col-9 ">
+                        <input type="text" name="coupons" id="coupons-value"  class="form-control">
+                    </div>
+                    <div class="col-3">
+                        <button class="sk-fill-button button-odder" id="coupons">Save</button>
+                    </div>
+                </div>
+            </div>
+            {{-- price --}}
+            <div class="col-12 mt-3">
+                <label for="" class="fw-bold">Total price: 4000$ - 300$ = 3700$</label>
             </div>
             <div>
                 <div class="paycard">Again</div>
@@ -76,6 +93,33 @@
                 // Submit form
                 $("#payment-form").submit();
             });
+
+            // click coupons
+            let totalPrice = 0;
+            for (let i = 0; i < attrCart.length; i++) {
+                const product = attrCart[i];
+                totalPrice += product.quantity * product.price;
+            }
+            $(document).on("click", "#coupons", function() {
+                let coupon = $('#coupons-value').val();
+                if (!coupon || coupon == '') {
+                    return;
+                }
+                $.ajax({
+                    url: "{{ route('admin.coupons.create') }}",
+                    type: 'POST',
+                    data: {
+                        coupon: coupon,
+                        totalPrice: totalPrice
+                    },
+                    success: function(response) {
+                        console.log(response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            })
         });
     </script>
 @endsection

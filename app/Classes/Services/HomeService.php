@@ -4,20 +4,24 @@ namespace App\Classes\Services;
 
 use App\Classes\Repository\Interfaces\IOrderFoodRepository;
 use App\Classes\Repository\Interfaces\IOrderRepository;
+use App\Classes\Repository\Interfaces\IUserRepository;
 use App\Classes\Services\Interfaces\IHomeService;
+use App\Classes\Services\Interfaces\IUserService;
 use App\Models\Order;
 use Carbon\Carbon;
 
 class HomeService extends BaseService implements IHomeService
 {
 
-    protected $orderFoodRepository, $orderRepository, $settingFoodRepository;
+    protected $orderFoodRepository, $orderRepository, $userRepository;
     public function __construct(
         IOrderFoodRepository $orderFoodRepository,
         IOrderRepository $orderRepository,
+        IUserRepository $userRepository,
     ) {
         $this->orderFoodRepository = $orderFoodRepository;
         $this->orderRepository = $orderRepository;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -33,13 +37,17 @@ class HomeService extends BaseService implements IHomeService
 
         $orderLast10Years = $this->dataChartOrderLast10Years();
 
+        $newUser = $this->dataChartNewUser();
+
         return [
             "orderDay"=> $orderDay['data'],
             "totalCountOrder"=> $orderDay['totalCount'],
             "totalPriceOrder"=> $orderDay['totalPrice'],
             "orderMonth"=> $orderMonth,
             "orderYear"=> $orderYear,
-            "orderLast10Years"=> $orderLast10Years
+            "orderLast10Years"=> $orderLast10Years,
+            'newUser' => $newUser['data'],
+            'totalNewUser' => $newUser['totalNewUser'],
         ];
     }
 
@@ -142,5 +150,29 @@ class HomeService extends BaseService implements IHomeService
         }
 
         return $data;
+    }
+
+    /**
+     * data char new user data
+     */
+    private function dataChartNewUser()
+    {
+        $startOfWeek = Carbon::now()->startOfWeek();
+        $data = [];
+        $totalNewUser = 0;
+        for ($i = 0; $i < 7; $i++) {
+            $currentDate = $startOfWeek->copy()->addDays($i);
+            $dailyData = $this->userRepository->findByDate($currentDate->toDateString());
+            $dailyCount = $dailyData->count();
+            $totalNewUser += $dailyCount;
+            $data[] = [
+                'date' => $currentDate->format('D'),
+                'count' => $dailyCount,
+            ];
+        }
+
+        // Add the total count to the returned data
+
+        return ['data'=>$data , 'totalNewUser' => $totalNewUser];
     }
 }

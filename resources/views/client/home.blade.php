@@ -1,3 +1,6 @@
+@php
+    use App\Classes\Enum\CouponTypeEnum;
+@endphp
 @extends('client.layouts.master')
 
 @section('css')
@@ -6,15 +9,15 @@
 
 @section('content')
     {{-- <div class="ps-1 pt-4 col-12 d-flex">
-        <h4 class="fw-bold col-6">Best selling
+        <h4 class="fw-bold col-6">Coupon
         </h4>
-    </div> --}}
-    <div class="col-12 fw-bold pt-3">
+    </div>
+    <div class="col-12 fw-bold pt-3"> --}}
         {{-- <div class="mt-1 mb-3 p-3 item_w d-flex  bg_img" style="background-image: url('{{ asset('images/hinh-1.jpg') }}')">
             <div class="col-7 d-flex flex-column justify-content-between">
                 <div>
-                    <h5>Pizza</h5>
-                    <span class="mb-0 opa">Ejnoy Pizaa from Food Ejnoy Pizaa from Food</span>
+                    <h5 class="food-name">sấdasdasd</h5>
+                    <span class="mb-0 opa">ádasdasd</span>
                 </div>
             </div>
         </div>
@@ -24,7 +27,7 @@
                     style="background-image: url('{{ asset('images/hinh-1.jpg') }}')">
                     <div class="col-7 d-flex flex-column justify-content-between">
                         <div>
-                            <h5>Pizza</h5>
+                            <h5 class="food-name">Pizza</h5>
                         </div>
                     </div>
                 </div>
@@ -34,44 +37,60 @@
                     style="background-image: url('{{ asset('images/hinh-1.jpg') }}')">
                     <div class="col-7 d-flex flex-column justify-content-between">
                         <div>
-                            <h5>Pizza</h5>
+                            <h5 class="food-name">Pizza</h5>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div> --}}
         {{-- deals --}}
-        {{-- <div class="ps-1 pt-4 col-12 d-flex">
-            <h4 class="fw-bold col-6">Deals
+        <div class="ps-1 pt-4 col-12 d-flex">
+            <h4 class="fw-bold col-6">Coupons
             </h4>
-            <div class="col-6 text-end pe-2">
+            {{-- <div class="col-6 text-end pe-2">
                 <i class="fas fa-arrow-right"></i>
-            </div>
+            </div> --}}
         </div>
+        <style>
+            .coupon{
+                    position: relative;
+                    text-decoration: none;
+                    color: #000;
+                    width: 100%;
+                    height: 170px;
+                    border-radius: 30px;
+            }
+        </style>
         <div class="col-12 mt-1">
             <div id="food-slider" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
-                    @for ($i = 0; $i < 5; $i++)
+                    @for ($i = 0; $i < $coupons->count(); $i++)
+                        @php
+                            $coupon = $coupons[$i];
+                        @endphp
                         <div class="carousel-item @if ($i == 0) active @endif">
-                            <div class="p-3 item_w  d-flex flex-column justify-content-end bg_img"
+                            <div class="p-3 coupon  d-flex flex-column justify-content-end bg_img"
                                 style="background-image: url('{{ asset('images/a.jpg') }}')">
-                                <div class="minute_icon col-1">5 %</div>
                             </div>
                             <div class="col-12 d-flex mt-2">
-                                <div class="col-7 ps-1">Pizaaa</div>
+                                <div class="col-7 ps-1">Insert code {{ $coupon->code }}</div>
                                 <div class="col-5 text-end pe-3">
-                                    <i class="fas fa-star text-warning"></i>
-                                    <span class="pl-1">4.5</span>
+                                    {{-- <i class="fas fa-star text-warning"></i> --}}
+                                    <span class="pl-1">
+                                        @if ($coupon->type == CouponTypeEnum::PERCENT->value)
+                                            -{{ $coupon->percent }}%
+                                        @else
+                                            -{{ $coupon->price }}$
+                                        @endif
+                                    </span>
                                 </div>
                             </div>
-                            <div class="ps-1 col-12 opa text_note">Ejnoy Pizaa from Food Ejnoy Pizaa from Food Ejnoy Pizaa
-                                from Food</div>
+                            <div class="ps-1 col-12 opa text_note">{{ $coupon->memo }}</div>
                         </div>
                     @endfor
                 </div>
             </div>
-        </div> --}}
+        </div>
         {{--  --}}
         @if (isset($restaurant->restaurantMeal))
             @foreach ($restaurant->restaurantMeal as $restaurantMeal)

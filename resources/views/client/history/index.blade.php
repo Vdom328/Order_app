@@ -74,35 +74,23 @@
 @section('content')
 <div class="col-12 mt-3">
     <h2 class="mb-3">Order History</h2>
-    <div class="order-card" onclick="toggleOrderItems(this)">
-        <h3>Order #1</h3>
-        <div class="order-details">
-            <span>Items: Item 1, Item 2</span>
-            <span>Total: $25.99</span>
+    @foreach ($historyByUser as $item)
+        <div class="order-card" onclick="toggleOrderItems(this)">
+            <h3>Order #1</h3>
+            <div class="order-details">
+                <span>Items: Item 1, Item 2</span>
+                <span>Total: $25.99</span>
+            </div>
+            <div class="order-details">
+                <span>Date: 2023-11-12 14:30:00</span>
+            </div>
+            <ul class="order-items">
+                <li>Item 1</li>
+                <li>Item 2</li>
+            </ul>
         </div>
-        <div class="order-details">
-            <span>Date: 2023-11-12 14:30:00</span>
-        </div>
-        <ul class="order-items">
-            <li>Item 1</li>
-            <li>Item 2</li>
-        </ul>
-    </div>
+    @endforeach
 
-    <div class="order-card" onclick="toggleOrderItems(this)">
-        <h3>Order #2</h3>
-        <div class="order-details">
-            <span>Items: Item 3, Item 4</span>
-            <span>Total: $35.99</span>
-        </div>
-        <div class="order-details">
-            <span>Date: 2023-11-13 10:45:00</span>
-        </div>
-        <ul class="order-items">
-            <li>Item 3</li>
-            <li>Item 4</li>
-        </ul>
-    </div>
 </div>
 @endsection
 

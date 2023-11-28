@@ -37,4 +37,13 @@ class UserRepository extends BaseRepository implements IUserRepository
                 ->select('users.*', 'roles.name as role_name')
                 ->find($id);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function findByDate($date)
+    {
+        $query = $this->model;
+        return $query->whereDate('created_at', $date)->get();
+    }
 }

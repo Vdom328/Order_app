@@ -83,13 +83,13 @@
                     <div class="col-md-6 col-lg-4">
                         <div class="card mg-b-20">
                             <div class="card-body">
-                                <h2 class="tx-15 tx-menium">Sessions</h2>
-                                <span class="tx-20 tx-menium tx-rubik">1,254</span>
+                                <h2 class="tx-15 tx-menium">New user</h2>
+                                <span class="tx-20 tx-menium tx-rubik">{{ number_format($order['totalNewUser']) }}</span>
                                 <canvas id="audienceSessions" height="100"></canvas>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-lg-4">
+                    {{-- <div class="col-md-6 col-lg-4">
                         <div class="card mg-b-20">
                             <div class="card-body">
                                 <h2 class="tx-15 tx-menium">Pageviews</h2>
@@ -115,16 +115,16 @@
                                 <canvas id="audienceBounceRate" height="100"></canvas>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
-            <div class="col-lg-4 hidden-md hidden-sm">
+            {{-- <div class="col-lg-4 hidden-md hidden-sm">
                 <div class="card mg-b-20">
                     <div class="card-body">
                         <canvas id="sessionsDeviceDount" height="260"></canvas>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 @endsection
@@ -169,6 +169,13 @@
         $.each(dataOrder.orderDay, function(key, value) {
             labelsOrderCount.push(value.date);
             dataOrderCount.push(value.count);
+        });
+        // data new user
+        let labelsNewUser = [];
+        let dataNewUser = [];
+        $.each(dataOrder.newUser, function(key, value) {
+            labelsNewUser.push(value.date);
+            dataNewUser.push(value.count);
         });
         window.onload = function() {
             /*--================================--*/
@@ -596,15 +603,15 @@
 
                 type: 'line',
                 data: {
-                    labels: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
+                    labels: labelsNewUser,
                     datasets: [{
-                        label: 'Sessions',
+                        label: 'New user',
                         fill: true,
                         backgroundColor: 'rgba(76, 175, 80, 0.15)',
                         borderColor: '#4caf50',
                         borderWidth: 1,
                         pointStyle: 'cross',
-                        data: [680, 450, 560, 530, 590, 520, 690],
+                        data: dataNewUser,
                     }]
                 },
                 options: {
@@ -653,267 +660,267 @@
             // Audience Pageviews Chart
             /*--================================--*/
 
-            var ctx1 = document.getElementById('audiencePageviews').getContext('2d');
-            window.audiencePageviews = new Chart(ctx1, {
+            // var ctx1 = document.getElementById('audiencePageviews').getContext('2d');
+            // window.audiencePageviews = new Chart(ctx1, {
 
-                type: 'line',
-                data: {
-                    labels: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
-                    datasets: [{
-                        label: 'Pageviews',
-                        fill: true,
-                        backgroundColor: 'rgba(33, 150, 243, 0.15)',
-                        borderColor: '#2196f3',
-                        borderWidth: 1,
-                        pointStyle: 'cross',
-                        data: [2680, 2450, 2160, 2530, 2750, 2520, 2690],
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    tooltips: {
-                        bodyFontSize: 13,
-                        bodyFontFamily: '"IBM Plex Sans", sans-serif',
-                    },
+            //     type: 'line',
+            //     data: {
+            //         labels: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
+            //         datasets: [{
+            //             label: 'Pageviews',
+            //             fill: true,
+            //             backgroundColor: 'rgba(33, 150, 243, 0.15)',
+            //             borderColor: '#2196f3',
+            //             borderWidth: 1,
+            //             pointStyle: 'cross',
+            //             data: [2680, 2450, 2160, 2530, 2750, 2520, 2690],
+            //         }]
+            //     },
+            //     options: {
+            //         responsive: true,
+            //         tooltips: {
+            //             bodyFontSize: 13,
+            //             bodyFontFamily: '"IBM Plex Sans", sans-serif',
+            //         },
 
-                    scales: {
-                        yAxes: [{
-                            display: false,
-                            ticks: {
-                                fontColor: '#868DAA',
-                                fontSize: 8,
-                                fontStyle: "normal",
-                                fontFamily: '"IBM Plex Sans", sans-serif',
-                            },
-                            gridLines: {
-                                display: false,
-                                color: '#eee',
-                            },
-                        }],
-                        xAxes: [{
-                            display: true,
-                            ticks: {
-                                fontColor: '#868DAA',
-                                fontSize: 8,
-                                fontStyle: "normal",
-                                fontFamily: '"IBM Plex Sans", sans-serif',
-                            },
-                            gridLines: {
-                                display: false,
-                                color: '#eee',
-                            },
-                        }],
+            //         scales: {
+            //             yAxes: [{
+            //                 display: false,
+            //                 ticks: {
+            //                     fontColor: '#868DAA',
+            //                     fontSize: 8,
+            //                     fontStyle: "normal",
+            //                     fontFamily: '"IBM Plex Sans", sans-serif',
+            //                 },
+            //                 gridLines: {
+            //                     display: false,
+            //                     color: '#eee',
+            //                 },
+            //             }],
+            //             xAxes: [{
+            //                 display: true,
+            //                 ticks: {
+            //                     fontColor: '#868DAA',
+            //                     fontSize: 8,
+            //                     fontStyle: "normal",
+            //                     fontFamily: '"IBM Plex Sans", sans-serif',
+            //                 },
+            //                 gridLines: {
+            //                     display: false,
+            //                     color: '#eee',
+            //                 },
+            //             }],
 
-                    },
-                    legend: {
-                        display: false,
-                    },
-                }
-            });
+            //         },
+            //         legend: {
+            //             display: false,
+            //         },
+            //     }
+            // });
 
             /*--================================--*/
             // Audience Avg. Session Duration Chart
             /*--================================--*/
 
-            var ctx1 = document.getElementById('audienceSessionDuration').getContext('2d');
-            window.audienceSessionDuration = new Chart(ctx1, {
+            // var ctx1 = document.getElementById('audienceSessionDuration').getContext('2d');
+            // window.audienceSessionDuration = new Chart(ctx1, {
 
-                type: 'line',
-                data: {
-                    labels: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
-                    datasets: [{
-                        label: 'Avg. Session',
-                        fill: true,
-                        backgroundColor: 'rgba(74, 199, 236, 0.15)',
-                        borderColor: '#4ac7ec',
-                        borderWidth: 1,
-                        pointStyle: 'cross',
-                        data: [268, 275, 245, 252, 253, 216, 269],
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    tooltips: {
-                        bodyFontSize: 13,
-                        bodyFontFamily: '"IBM Plex Sans", sans-serif',
-                    },
+            //     type: 'line',
+            //     data: {
+            //         labels: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
+            //         datasets: [{
+            //             label: 'Avg. Session',
+            //             fill: true,
+            //             backgroundColor: 'rgba(74, 199, 236, 0.15)',
+            //             borderColor: '#4ac7ec',
+            //             borderWidth: 1,
+            //             pointStyle: 'cross',
+            //             data: [268, 275, 245, 252, 253, 216, 269],
+            //         }]
+            //     },
+            //     options: {
+            //         responsive: true,
+            //         tooltips: {
+            //             bodyFontSize: 13,
+            //             bodyFontFamily: '"IBM Plex Sans", sans-serif',
+            //         },
 
-                    scales: {
-                        yAxes: [{
-                            display: false,
-                            ticks: {
-                                fontColor: '#868DAA',
-                                fontSize: 8,
-                                fontStyle: "normal",
-                                fontFamily: '"IBM Plex Sans", sans-serif',
-                            },
-                            gridLines: {
-                                display: false,
-                                color: '#eee',
-                            },
-                        }],
-                        xAxes: [{
-                            display: true,
-                            ticks: {
-                                fontColor: '#868DAA',
-                                fontSize: 8,
-                                fontStyle: "normal",
-                                fontFamily: '"IBM Plex Sans", sans-serif',
-                            },
-                            gridLines: {
-                                display: false,
-                                color: '#eee',
-                            },
-                        }],
+            //         scales: {
+            //             yAxes: [{
+            //                 display: false,
+            //                 ticks: {
+            //                     fontColor: '#868DAA',
+            //                     fontSize: 8,
+            //                     fontStyle: "normal",
+            //                     fontFamily: '"IBM Plex Sans", sans-serif',
+            //                 },
+            //                 gridLines: {
+            //                     display: false,
+            //                     color: '#eee',
+            //                 },
+            //             }],
+            //             xAxes: [{
+            //                 display: true,
+            //                 ticks: {
+            //                     fontColor: '#868DAA',
+            //                     fontSize: 8,
+            //                     fontStyle: "normal",
+            //                     fontFamily: '"IBM Plex Sans", sans-serif',
+            //                 },
+            //                 gridLines: {
+            //                     display: false,
+            //                     color: '#eee',
+            //                 },
+            //             }],
 
-                    },
-                    legend: {
-                        display: false,
-                    },
-                }
-            });
+            //         },
+            //         legend: {
+            //             display: false,
+            //         },
+            //     }
+            // });
 
             /*--================================--*/
             // Audience Bounce Rate Chart
             /*--================================--*/
 
-            var ctx1 = document.getElementById('audienceBounceRate').getContext('2d');
-            window.audienceBounceRate = new Chart(ctx1, {
+            // var ctx1 = document.getElementById('audienceBounceRate').getContext('2d');
+            // window.audienceBounceRate = new Chart(ctx1, {
 
-                type: 'line',
-                data: {
-                    labels: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
-                    datasets: [{
-                        label: 'Bounce Rate',
-                        fill: true,
-                        backgroundColor: 'rgba(156, 39, 176, 0.15)',
-                        borderColor: '#9c27b0',
-                        borderWidth: 1,
-                        pointStyle: 'cross',
-                        data: [252, 275, 253, 268, 245, 216, 300],
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    tooltips: {
-                        fontColor: '#868DAA',
-                        fontSize: 13,
-                        fontStyle: "normal",
-                        fontFamily: '"IBM Plex Sans", sans-serif',
-                        callbacks: {
-                            label: function(tooltipItem, data) {
-                                var dataset = data.datasets[tooltipItem.datasetIndex];
-                                var total = dataset.data.reduce(function(previousValue, currentValue,
-                                    currentIndex, array) {
-                                    return previousValue + currentValue;
-                                });
-                                var currentValue = dataset.data[tooltipItem.index];
-                                var percentage = Math.floor(((currentValue / total) * 100) + 0.5);
+            //     type: 'line',
+            //     data: {
+            //         labels: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
+            //         datasets: [{
+            //             label: 'Bounce Rate',
+            //             fill: true,
+            //             backgroundColor: 'rgba(156, 39, 176, 0.15)',
+            //             borderColor: '#9c27b0',
+            //             borderWidth: 1,
+            //             pointStyle: 'cross',
+            //             data: [252, 275, 253, 268, 245, 216, 300],
+            //         }]
+            //     },
+            //     options: {
+            //         responsive: true,
+            //         tooltips: {
+            //             fontColor: '#868DAA',
+            //             fontSize: 13,
+            //             fontStyle: "normal",
+            //             fontFamily: '"IBM Plex Sans", sans-serif',
+            //             callbacks: {
+            //                 label: function(tooltipItem, data) {
+            //                     var dataset = data.datasets[tooltipItem.datasetIndex];
+            //                     var total = dataset.data.reduce(function(previousValue, currentValue,
+            //                         currentIndex, array) {
+            //                         return previousValue + currentValue;
+            //                     });
+            //                     var currentValue = dataset.data[tooltipItem.index];
+            //                     var percentage = Math.floor(((currentValue / total) * 100) + 0.5);
 
-                                return percentage + "%";
-                            }
-                        }
-                    },
-                    scales: {
-                        yAxes: [{
-                            display: false,
-                            ticks: {
-                                fontColor: '#868DAA',
-                                fontSize: 8,
-                                fontStyle: "normal",
-                                fontFamily: '"IBM Plex Sans", sans-serif',
-                            },
-                            gridLines: {
-                                display: false,
-                                color: '#eee',
-                            },
-                        }],
-                        xAxes: [{
-                            display: true,
-                            ticks: {
-                                fontColor: '#868DAA',
-                                fontSize: 8,
-                                fontStyle: "normal",
-                                fontFamily: '"IBM Plex Sans", sans-serif',
-                            },
-                            gridLines: {
-                                display: false,
-                                color: '#eee',
-                            },
-                        }],
+            //                     return percentage + "%";
+            //                 }
+            //             }
+            //         },
+            //         scales: {
+            //             yAxes: [{
+            //                 display: false,
+            //                 ticks: {
+            //                     fontColor: '#868DAA',
+            //                     fontSize: 8,
+            //                     fontStyle: "normal",
+            //                     fontFamily: '"IBM Plex Sans", sans-serif',
+            //                 },
+            //                 gridLines: {
+            //                     display: false,
+            //                     color: '#eee',
+            //                 },
+            //             }],
+            //             xAxes: [{
+            //                 display: true,
+            //                 ticks: {
+            //                     fontColor: '#868DAA',
+            //                     fontSize: 8,
+            //                     fontStyle: "normal",
+            //                     fontFamily: '"IBM Plex Sans", sans-serif',
+            //                 },
+            //                 gridLines: {
+            //                     display: false,
+            //                     color: '#eee',
+            //                 },
+            //             }],
 
-                    },
-                    legend: {
-                        display: false,
-                    },
-                }
-            });
+            //         },
+            //         legend: {
+            //             display: false,
+            //         },
+            //     }
+            // });
 
             /*--================================--*/
             // Sessions Device Doughnut
             /*--================================--*/
 
-            var value1 = 40;
-            var value2 = 85;
-            var value3 = 80;
-            var value4 = 95;
-            var data = {
-                labels: [
-                    "Desktop",
-                    "Tablet",
-                    "Mobile",
-                    "Others"
-                ],
-                datasets: [{
-                    data: [value1, 100 - value2, 100 - value3, 100 - value4],
-                    backgroundColor: [
-                        "#3355FF",
-                        "#E0E7FD",
-                        "#4AC7EC",
-                        "#FF6384"
-                    ]
-                }]
-            };
+            // var value1 = 40;
+            // var value2 = 85;
+            // var value3 = 80;
+            // var value4 = 95;
+            // var data = {
+            //     labels: [
+            //         "Desktop",
+            //         "Tablet",
+            //         "Mobile",
+            //         "Others"
+            //     ],
+            //     datasets: [{
+            //         data: [value1, 100 - value2, 100 - value3, 100 - value4],
+            //         backgroundColor: [
+            //             "#3355FF",
+            //             "#E0E7FD",
+            //             "#4AC7EC",
+            //             "#FF6384"
+            //         ]
+            //     }]
+            // };
 
-            var sessionsDeviceDount = new Chart(document.getElementById('sessionsDeviceDount'), {
-                type: 'doughnut',
-                data: data,
-                options: {
-                    responsive: true,
-                    legend: {
-                        display: true,
-                        position: 'bottom',
-                        labels: {
-                            boxWidth: 13,
-                            fontColor: '#868DAA',
-                            fontSize: 13,
-                            fontStyle: "normal",
-                            fontFamily: '"IBM Plex Sans", sans-serif',
-                        },
-                    },
-                    cutoutPercentage: 80,
-                    tooltips: {
-                        fontColor: '#868DAA',
-                        fontSize: 13,
-                        fontStyle: "normal",
-                        fontFamily: '"IBM Plex Sans", sans-serif',
-                        callbacks: {
-                            label: function(tooltipItem, data) {
-                                var dataset = data.datasets[tooltipItem.datasetIndex];
-                                var total = dataset.data.reduce(function(previousValue, currentValue,
-                                    currentIndex, array) {
-                                    return previousValue + currentValue;
-                                });
-                                var currentValue = dataset.data[tooltipItem.index];
-                                var percentage = Math.floor(((currentValue / total) * 100) + 0.5);
+            // var sessionsDeviceDount = new Chart(document.getElementById('sessionsDeviceDount'), {
+            //     type: 'doughnut',
+            //     data: data,
+            //     options: {
+            //         responsive: true,
+            //         legend: {
+            //             display: true,
+            //             position: 'bottom',
+            //             labels: {
+            //                 boxWidth: 13,
+            //                 fontColor: '#868DAA',
+            //                 fontSize: 13,
+            //                 fontStyle: "normal",
+            //                 fontFamily: '"IBM Plex Sans", sans-serif',
+            //             },
+            //         },
+            //         cutoutPercentage: 80,
+            //         tooltips: {
+            //             fontColor: '#868DAA',
+            //             fontSize: 13,
+            //             fontStyle: "normal",
+            //             fontFamily: '"IBM Plex Sans", sans-serif',
+            //             callbacks: {
+            //                 label: function(tooltipItem, data) {
+            //                     var dataset = data.datasets[tooltipItem.datasetIndex];
+            //                     var total = dataset.data.reduce(function(previousValue, currentValue,
+            //                         currentIndex, array) {
+            //                         return previousValue + currentValue;
+            //                     });
+            //                     var currentValue = dataset.data[tooltipItem.index];
+            //                     var percentage = Math.floor(((currentValue / total) * 100) + 0.5);
 
-                                return percentage + "%";
-                            }
-                        }
-                    }
+            //                     return percentage + "%";
+            //                 }
+            //             }
+            //         }
 
-                }
-            });
+            //     }
+            // });
 
         }
     </script>

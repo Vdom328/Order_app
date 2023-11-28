@@ -17,9 +17,9 @@
             <a href="{{ route('client.history') }}" class="col-3">
                 <i class="fas fa-history bell-icon"></i>
             </a>
-            <div class="col-3">
+            {{-- <div class="col-3">
                 <i class="fas fa-user bell-icon"></i>
-            </div>
+            </div> --}}
             <a href="{{ route('client.getLogout') }}" class="col-3">
                 <i class="fas fa-sign-out-alt bell-icon"></i>
             </a>

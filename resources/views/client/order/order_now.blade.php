@@ -52,6 +52,6 @@
     </div>
 @endsection
 <script>
-        localStorage.removeItem('cart');
+        // localStorage.removeItem('cart');
 </script>
 @section('js')
