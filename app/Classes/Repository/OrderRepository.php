@@ -2,6 +2,7 @@
 
 namespace App\Classes\Repository;
 
+use App\Classes\Enum\StatusOrderEnum;
 use App\Classes\Repository\Interfaces\IOrderRepository;
 use App\Models\Order;
 use Carbon\Carbon;
@@ -70,5 +71,13 @@ class OrderRepository  extends BaseRepository implements IOrderRepository
         $query = $this->model;
 
         return $query->whereYear('time_order', '=', $year)->get();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getHistoryByUser($user_id)
+    {
+        return Order::where('user_id', $user_id)->where('status',StatusOrderEnum::PAID->value)->get();
     }
 }

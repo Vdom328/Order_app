@@ -22,12 +22,12 @@
             @endforeach
         </td>
         <td>
-            @php
-                $total_price = $order->order_food->reduce(function ($carry, $item) {
-                    return $carry + $item->price * $item->quantity;
-                }, 0);
-            @endphp
-            {{ number_format($total_price) }}$
+            @if (isset($order->coupon_user))
+                {{ $order->coupon_user->coupon->code }}
+            @endif
+        </td>
+        <td>
+            {{ number_format( $order->total_price) }}$
         </td>
         <td>
             <a class="table-action edit_order  mg-r-10" data-id={{ $order->id }}><i class="fa fa-pencil"></i></a>

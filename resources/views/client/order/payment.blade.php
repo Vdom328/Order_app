@@ -45,7 +45,7 @@
             </div>
             {{-- price --}}
             <div class="col-12 mt-3">
-                <label for="" class="fw-bold">Total price: 4000$ - 300$ = 3700$</label>
+                <label for="" class="fw-bold" id="new_price"></label>
             </div>
             <div>
                 <div class="paycard">Again</div>
@@ -73,7 +73,9 @@
         <form id="payment-form" method="post" action="{{ route('client.getOrderSuccess') }}">
             @csrf
             <input type="hidden" name="attrCart" id="attrCart">
+            <input type="hidden" name="coupon" id="valuecoupon">
             <input type="hidden" name="inforOrder" id="inforOrder">
+            <input type="hidden" name="price" id="price_order">
         </form>
     </div>
 @endsection
@@ -85,11 +87,12 @@
             $(document).on("click", "#submit_form_order", function() {
                 const attrCartJson = JSON.stringify(attrCart);
                 const inforOrderJson = JSON.stringify(inforOrder);
-
+                const coupon = $('#coupons-value').val();
                 // Đặt giá trị cho các trường input ẩn
                 $("#attrCart").val(attrCartJson);
                 $("#inforOrder").val(inforOrderJson);
-
+                $("#valuecoupon").val(coupon);
+                $("#price_order").val(totalPrice);
                 // Submit form
                 $("#payment-form").submit();
             });
@@ -105,15 +108,23 @@
                 if (!coupon || coupon == '') {
                     return;
                 }
+                $('#new_price').html('');
                 $.ajax({
-                    url: "{{ route('admin.coupons.create') }}",
-                    type: 'POST',
+                    url: "{{ route('client.getCouponOrder') }}",
+                    type: 'get',
                     data: {
                         coupon: coupon,
                         totalPrice: totalPrice
                     },
                     success: function(response) {
-                        console.log(response);
+                        if (response.text) {
+                            $('#new_price').html(response.text);
+                            return;
+                        }
+                        if (response == 'error') {
+                            $('#new_price').html('');
+                            return;
+                        }
                     },
                     error: function(xhr, status, error) {
                         console.error(error);

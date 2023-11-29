@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Classes\Enum\StatusOrderEnum;
 use App\Classes\Enum\TypeMealEnum;
+use App\Classes\Services\Interfaces\ICouponService;
 use App\Classes\Services\Interfaces\IOrderService;
 use App\Classes\Services\Interfaces\IRestaurantService;
 use App\Classes\Services\Interfaces\ISettingFoodService;
@@ -18,16 +19,18 @@ class HomeController extends Controller
 {
 
 
-    protected $restaurantService, $settingFoodService, $orderService;
+    protected $restaurantService, $settingFoodService, $orderService, $couponService;
 
     public function __construct(
         IRestaurantService $restaurantService,
         ISettingFoodService $settingFoodService,
-        IOrderService $orderService
+        IOrderService $orderService,
+        ICouponService $couponService
     ) {
         $this->restaurantService = $restaurantService;
         $this->settingFoodService = $settingFoodService;
         $this->orderService = $orderService;
+        $this->couponService = $couponService;
     }
 
     public function index(Request $request)
@@ -38,10 +41,10 @@ class HomeController extends Controller
             return view('client.error.error');
         }
         $checkTime = $this->checkTimeRestaurant($restaurant->id);
-        // if ($checkTime['type'] == false) {
-        //     $time_error = $checkTime['time_error'];
-        //     return view('client.error.time',compact('time_error'));
-        // }
+        if ($checkTime['type'] == false) {
+            $time_error = $checkTime['time_error'];
+            return view('client.error.time',compact('time_error'));
+        }
         $data = $request->all();
         $coupons = CouponSetting::where('status', 0)->get();
         return view('client.home', compact('restaurant','data','coupons'));
@@ -108,14 +111,27 @@ class HomeController extends Controller
     {
         $attr_cart = json_decode($request->input('attrCart'), true);
         $infor_order = json_decode($request->input('inforOrder'), true);
+
         // check time restaurant
         $checkTime = $this->checkTimeRestaurant($infor_order['restaurant_id']);
         if ($checkTime['type'] == false) {
             $time_error = $checkTime['time_error'];
             return view('client.error.time',compact('time_error'));
         }
+
+        $price = $request->input('price');
+        $coupon = '';
+        if ($request->input('coupon')) {
+            $coupon = $request->input('coupon');
+            $price = $this->couponService->orderCoupon($price, $coupon);
+            if (!$price) {
+                $coupon = '';
+                $price = $request->input('price');
+            }
+        }
+
         // create order
-        $create_order = $this->orderService->createOrder($attr_cart,$infor_order);
+        $create_order = $this->orderService->createOrder($attr_cart,$infor_order, $price, $coupon);
         if ($create_order == false) {
             return view('client.error.error');
         }
@@ -158,7 +174,19 @@ class HomeController extends Controller
      */
     public function getHistory()
     {
-        $historyByUser = Order::where('user_id', Auth::user()->id)->where('status',StatusOrderEnum::PAID->value)->get();
+        $historyByUser = $this->orderService->getHistoryByUser(Auth::user()->id);
         return view('client.history.index',compact('historyByUser'));
+    }
+
+    /**
+     * get coupon orders
+     */
+    public function getCouponOrder(Request $request)
+    {
+        $text = $this->couponService->newPriceOrderByCoupon($request->all());
+        if (!$text) {
+            return response()->json('error');
+        }
+        return response()->json(['text' => $text]);
     }
 }

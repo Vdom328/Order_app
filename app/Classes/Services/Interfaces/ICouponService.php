@@ -28,4 +28,17 @@ interface ICouponService
      * @param int $id
      */
     public function getCouponById($id);
+
+    /**
+     * newPriceOrderByCoupon
+     * @param array $data
+     */
+    public function newPriceOrderByCoupon($data);
+
+    /**
+     * order coupon
+     * @param mixed $price
+     * @param mixed $coupon
+     */
+    public function orderCoupon($price, $coupon);
 }

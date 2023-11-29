@@ -30,4 +30,10 @@ interface IOrderRepository extends IBaseRepository
      * find by year
      */
     public function findByYear($year);
+
+    /**
+     * get list history by user_id
+     * @param int $id
+     */
+    public function getHistoryByUser($user_id);
 }

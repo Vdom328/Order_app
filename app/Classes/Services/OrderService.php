@@ -4,10 +4,13 @@ namespace App\Classes\Services;
 
 use App\Classes\Enum\PaymentOrderEnum;
 use App\Classes\Enum\StatusOrderEnum;
+use App\Classes\Repository\Interfaces\ICouponUserRepository;
 use App\Classes\Repository\Interfaces\IOrderFoodRepository;
 use App\Classes\Repository\Interfaces\IOrderRepository;
 use App\Classes\Repository\Interfaces\ISettingFoodRepository;
+use App\Classes\Services\Interfaces\ICouponService;
 use App\Classes\Services\Interfaces\IOrderService;
+use App\Models\CouponSetting;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,25 +19,30 @@ use Illuminate\Support\Facades\Log;
 class OrderService extends BaseService implements IOrderService
 {
 
-    protected $orderFoodRepository, $orderRepository, $settingFoodRepository;
+    protected $orderFoodRepository, $orderRepository, $settingFoodRepository, $couponService, $couponUserRepository;
     public function __construct(
         IOrderFoodRepository $orderFoodRepository,
         IOrderRepository $orderRepository,
-        ISettingFoodRepository $settingFoodRepository
+        ISettingFoodRepository $settingFoodRepository,
+        ICouponService $couponService,
+        ICouponUserRepository $couponUserRepository
     )
     {
         $this->orderFoodRepository = $orderFoodRepository;
         $this->orderRepository = $orderRepository;
         $this->settingFoodRepository = $settingFoodRepository;
+        $this->couponService = $couponService;
+        $this->couponUserRepository = $couponUserRepository;
     }
 
     /**
      * @inheritDoc
      */
-    public function createOrder($attr_cart, $infor_order)
+    public function createOrder($attr_cart, $infor_order, $price, $coupon)
     {
         DB::beginTransaction();
         try {
+
             $code = $this->checkExistCode();
             $attrOrder = [
                 'code' => $code,
@@ -44,9 +52,23 @@ class OrderService extends BaseService implements IOrderService
                 'time_order' => Carbon::now()->format('Y-m-d H:i:s'),
                 'payment' => PaymentOrderEnum::CASH->value,
                 'status' => StatusOrderEnum::PENDING->value,
+                'total_price' => $price,
             ];
 
             $createOrder = $this->orderRepository->create($attrOrder);
+
+            //create coupon
+            if ($coupon != null || $coupon != '') {
+                $coupon = CouponSetting::where('code', $coupon)->first();
+                $attrCoupon = [
+                    'user_id' => Auth::user()->id,
+                    'coupon_id' => $coupon->id,
+                    'order_id' => $createOrder->id,
+                    'price' => $price,
+                ];
+
+                $createCoupon = $this->couponUserRepository->create($attrCoupon);
+            }
 
             $attrOrderFood = [];
             foreach ($attr_cart as $value) {
@@ -59,6 +81,7 @@ class OrderService extends BaseService implements IOrderService
                 ];
             }
             $this->orderFoodRepository->insert($attrOrderFood);
+
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -168,5 +191,13 @@ class OrderService extends BaseService implements IOrderService
     {
         $this->orderRepository->delete($id);
         return $this->orderFoodRepository->deleteByOrderId($id);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getHistoryByUser($user_id)
+    {
+        return $this->orderRepository->getHistoryByUser($user_id);
     }
 }

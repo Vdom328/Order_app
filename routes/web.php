@@ -46,3 +46,5 @@ Route::post('/order-success', [HomeController::class, 'getOrderSuccess'])->name(
 
 // route history
 Route::get('/history', [HomeController::class, 'getHistory'])->name('client.history');
+
+Route::get('/coupon-get', [HomeController::class, 'getCouponOrder'])->name('client.getCouponOrder');

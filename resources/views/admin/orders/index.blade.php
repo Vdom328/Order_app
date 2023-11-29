@@ -84,6 +84,7 @@
                                             <th>Payment</th>
                                             <th>Status</th>
                                             <th>Items</th>
+                                            <th>Coupon</th>
                                             <th>Total price</th>
                                             <th></th>
                                         </tr>
@@ -101,6 +102,7 @@
                                             <th>Payment</th>
                                             <th>Status</th>
                                             <th>Items</th>
+                                            <th>Coupon</th>
                                             <th>Total price</th>
                                             <th></th>
                                         </tr>

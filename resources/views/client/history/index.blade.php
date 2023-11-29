@@ -76,21 +76,21 @@
     <h2 class="mb-3">Order History</h2>
     @foreach ($historyByUser as $item)
         <div class="order-card" onclick="toggleOrderItems(this)">
-            <h3>Order #1</h3>
+            <h3>Order #{{$item->code }}</h3>
             <div class="order-details">
-                <span>Items: Item 1, Item 2</span>
-                <span>Total: $25.99</span>
+                <span>Resstaurant: {{ $item->restaurant->name }}</span>
+                <span>Total: ${{ number_format($item->total_price)}}</span>
             </div>
             <div class="order-details">
-                <span>Date: 2023-11-12 14:30:00</span>
+                <span>Date: {{ $item->time_order }}</span>
             </div>
             <ul class="order-items">
-                <li>Item 1</li>
-                <li>Item 2</li>
+                @foreach ($item->order_food as $order_food)
+                    <li>{{ $order_food->food_setting->name }} x{{ $order_food->quantity }}</li>
+                @endforeach
             </ul>
         </div>
     @endforeach
-
 </div>
 @endsection
 

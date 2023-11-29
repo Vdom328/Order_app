@@ -27,4 +27,9 @@ class Order extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function coupon_user()
+    {
+        return $this->hasOne(CouponUser::class, 'order_id');
+    }
+
 }

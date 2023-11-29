@@ -9,7 +9,7 @@ interface IOrderService
      * @param array $attr_cart
      * @param array $infor_order
      */
-    public function createOrder($attr_cart, $infor_order);
+    public function createOrder($attr_cart, $infor_order, $price, $coupon);
 
     /**
      * get order
@@ -34,4 +34,10 @@ interface IOrderService
      * @param int $id
      */
     public function deleteOrderById($id) ;
+
+    /**
+     * get history by user id
+     * @param int $user_id
+     */
+    public function getHistoryByUser($user_id);
 }
